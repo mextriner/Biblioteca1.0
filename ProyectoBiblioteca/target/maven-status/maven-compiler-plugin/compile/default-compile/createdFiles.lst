@@ -1,0 +1,4 @@
+Dominio\Autor.class
+Dominio\AutorDao.class
+com\ceep\proyectobiblioteca\TesrMain.class
+AccesoDatos\Conexion.class
