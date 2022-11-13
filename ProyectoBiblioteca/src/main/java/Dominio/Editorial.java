@@ -6,7 +6,7 @@ package Dominio;
 
 /**
  *
- * @author Maximo
+ * @author MaximoMestriner
  */
 public class Editorial {
     int idEditorial;

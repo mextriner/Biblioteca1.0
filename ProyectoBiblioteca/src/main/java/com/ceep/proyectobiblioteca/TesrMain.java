@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Maximo
+ * @author MaximoMestriner
  */
 public class TesrMain {
 

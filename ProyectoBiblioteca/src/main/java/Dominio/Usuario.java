@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class Usuario {
     private String usuario;

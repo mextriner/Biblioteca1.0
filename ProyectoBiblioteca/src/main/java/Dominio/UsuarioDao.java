@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class UsuarioDao {
 

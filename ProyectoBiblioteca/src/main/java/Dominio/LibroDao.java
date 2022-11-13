@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class LibroDao {
      private static final String SQL_SELECT ="SELECT * FROM libro";

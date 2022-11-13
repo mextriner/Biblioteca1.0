@@ -14,7 +14,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class Conexion {
     

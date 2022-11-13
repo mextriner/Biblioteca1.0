@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class Libro {
     private String isbn;

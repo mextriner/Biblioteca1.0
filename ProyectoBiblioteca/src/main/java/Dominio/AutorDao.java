@@ -20,7 +20,7 @@
 
 /**
  *
- * @author Alumno Mañana
+ * @author MaximoMestriner
  */
 public class AutorDao {
     private static final String SQL_SELECT ="SELECT * FROM autor";
