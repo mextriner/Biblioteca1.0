@@ -7,6 +7,8 @@ package com.ceep.proyectobiblioteca;
 
 import Dominio.Autor;
 import Dominio.AutorDao;
+import Dominio.Libro;
+import Dominio.LibroDao;
 import Dominio.Usuario;
 import Dominio.UsuarioDao;
 import ManejoArchivos.ManejoDeArchivos;
@@ -59,9 +61,14 @@ public class TesrMain {
 //            ManejoDeArchivos.agregarArchivo("usuario.txt",usuario.usuarios().get(i).escribir());
 //        }
     
-        Usuario usuario = null;
-        usuario = usuario.archivoPk("fran");
-        System.out.println(usuario.toString());
+//        Usuario usuario = null;
+//        usuario = usuario.archivoPk("fran");
+//        System.out.println(usuario.toString());
+        LibroDao libroDao = new LibroDao();
+        Libro libro = new Libro ("123123123", "El nombre del viento", "español", Date.valueOf("2000-01-01"),true, "/C:/Users/Alumno Mañana/Desktop/imgs/El_nombre_del_viento.jpg");
+        System.out.println(libro);
+        libroDao.insertar(libro);
+        
     }
     
     //MENU PARA SELECCIONAR EL TIPO DE USUARIO (ADMIN O USUARIO)

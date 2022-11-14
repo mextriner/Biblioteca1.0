@@ -182,8 +182,19 @@ public class Usuario {
                 clave = in.nextLine();
             }
         }else{
-            System.out.println("Este usuario no existe ¿Desea darse de alta?");
-            //Funcion dardealta
+            char ac;
+            System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / \t no(n)");
+            ac = in.nextLine().charAt(0);
+            while(ac != 's' || ac != 'n'){
+                System.out.println("Introduzca si (s) o no (n)");
+                ac = in.nextLine().charAt(0);
+            }
+            if (ac == 's'){
+                usr.darAlta();
+            }else{
+                System.out.println("Operación cancelada.");
+            }
+            
         }
     }
     

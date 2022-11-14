@@ -7,6 +7,12 @@ package Dominio;
 
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -22,13 +29,14 @@ import java.util.List;
 public class LibroDao {
      private static final String SQL_SELECT ="SELECT * FROM libro";
     private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo,"
-            + "idioma, fechaPublicacion, bestSeller) VALUES (?,?,?,?,?)";
+            + "idioma, fechaPublicacion, bestSeller) VALUES (?,?,?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE libro SET "
             + "titulo = ?,"
             + "idioma = ?,"
             + "fechaPublicacion = ?,"
-            + "bestSeller = ?"
+            + "bestSeller = ?,"
+            + "portada = ?"
             + "WHERE isbn = ?";
     
     private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
@@ -67,10 +75,13 @@ public class LibroDao {
         return libros;
     }
     
+    
+    
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
     public int insertar (Libro libro){
         Connection conn =null;
         PreparedStatement stmt=null;
+        FileInputStream imagen = null;
         int registro = 0;
         
         try{
@@ -82,14 +93,23 @@ public class LibroDao {
             
             stmt = conn.prepareStatement(SQL_INSERT);
             
+            try{
+                imagen = ((FileInputStream)(ImageIO.createImageInputStream(libro.portada)));
+            }catch(IOException IOex){
+                IOex.printStackTrace(System.out);
+            }
             
+            
+            
+                
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
             stmt.setString(1, libro.getIsbn());
-            stmt.setString(1, libro.getTitulo());
-            stmt.setString(2, libro.getIdioma());
+            stmt.setString(2, libro.getTitulo());
+            stmt.setString(3, libro.getIdioma());
             stmt.setDate(4, libro.getFechaPubli());
             stmt.setBoolean(5, libro.isBestSeller());
+            stmt.setBinaryStream(6, imagen);
             
             
             //4. EJECUTO LA QUERY

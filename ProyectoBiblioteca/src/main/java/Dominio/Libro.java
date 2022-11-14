@@ -5,7 +5,9 @@
  */
 package Dominio;
 
+import java.awt.Image;
 import java.sql.Date;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,6 +19,7 @@ public class Libro {
     private String idioma;
     private Date fechaPubli;
     private boolean bestSeller;
+    Image portada;
 
     public Libro() {
     }
@@ -35,6 +38,25 @@ public class Libro {
         this.fechaPubli = fechaPubli;
         this.bestSeller = bestSeller;
     }
+
+    public Libro(String isbn, String titulo, String idioma, Date fechaPubli, boolean bestSeller, String portada) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.idioma = idioma;
+        this.fechaPubli = fechaPubli;
+        this.bestSeller = bestSeller;
+        this.portada = new ImageIcon(portada).getImage();
+    }
+
+    public Image getPortada() {
+        return portada;
+    }
+
+    public void setPortada(Image portada) {
+        this.portada = portada;
+    }
+    
+    
 
     public String getIsbn() {
         return isbn;
@@ -78,8 +100,10 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", idioma=" + idioma + ", fechaPubli=" + fechaPubli + ", bestSeller=" + bestSeller + '}';
+        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", idioma=" + idioma + ", fechaPubli=" + fechaPubli + ", bestSeller=" + bestSeller + ", portada=" + portada + '}';
     }
+
+    
     
     public String escribir() {
         return '%' + '*' + isbn + '*' + titulo + '*' + idioma + '*' + fechaPubli + '*' + bestSeller + '*' ;
