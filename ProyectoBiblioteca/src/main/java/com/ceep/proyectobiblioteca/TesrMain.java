@@ -32,8 +32,9 @@ public class TesrMain {
     
     public static Scanner input = new Scanner(System.in);
     
-    public static Usuario admin = new Usuario("admin","1234");
+    public static Usuario administrador = new Usuario("admin","1234");
     
+    public static Usuario usuario = new Usuario();
     public static void main(String[] args) {
         // TODO code application logic here
         
@@ -93,12 +94,12 @@ public class TesrMain {
             switch (opcion) {
                 case 1:
                     // FUNCION INICIAR SESION (ADMIN)
-                    admin.iniciarSesion(admin.getUsuario());
+                    administrador.iniciarSesion(administrador.getUsuario());
                     menuEntidad(true);
                     break;
                 case 2:
                     // FUNCION INICIAR SESIÓN (USUARIO)
-                    Usuario.iniciarSesion();
+                    usuario = Usuario.iniciarSesion();
                     menuEntidad(false);
                     break;
                 case 3:
@@ -111,7 +112,7 @@ public class TesrMain {
                     System.out.println("");
                     break;
                 default:
-                    admin.actualizarUsuarios();
+                    Usuario.actualizarArchivoUsuarios();
                     System.out.println("Seleccione una opción entre 0 y 3");
                     // The user input an unexpected choice.
             }
@@ -184,24 +185,28 @@ public class TesrMain {
                 }
             
             }else if(!admin){
-                System.out.println("\n\n"+"USUARIO");
+                System.out.println("\n\n"+"USUARIO: "+ usuario.getUsuario());
                 System.out.println("-------------------------\n");
-                System.out.println("1 - LIBRO");
-                System.out.println("2 - AUTOR");
-                System.out.println("3 - CATEGORÍA");
+                System.out.println("1 - LIBROS");
+                System.out.println("2 - AUTORES");
+                System.out.println("3 - CATEGORÍAS");
+                System.out.println("4 - MI CUENTA");
                 System.out.println("0 - Salir");
                 opcion = input.nextInt();
                 input.nextLine();
 
                 switch (opcion) {
                     case 1:
-                        // Perform "original number" case.
+                        menuCrud("LIBRO",admin);
                         break;
                     case 2:
-                        // Perform "encrypt number" case.
+                        menuCrud("AUTOR",admin);
                         break;
                     case 3:
-                        // Perform "decrypt number" case.
+                        menuCrud("CATEGORÍA",admin);
+                        break;
+                    case 4:
+                        menuCrud("CUENTA",admin);
                         break;
                     case 0:
                         System.out.println("");
@@ -380,18 +385,25 @@ public class TesrMain {
                     case "USUARIO":
                         switch (opcion) {
                             case 1:
-                                // Perform "original number" case.
+                                // VISUALIZAR USUARIOS
+                                for (int i = 0; i < Usuario.usuarios().size(); i++) {
+                                    System.out.println(Usuario.usuarios().get(i).toString());
+                                }
                                 break;
                             case 2:
-                                // Perform "encrypt number" case.
+                                // AÑADIR USUARIO
+                                Usuario.darAlta();
                                 break;
                             case 3:
-                                // Perform "decrypt number" case.
+                                //ACTUALIZAR.
+                                
                                 break;
                             case 4:
-                                // Perform "decrypt number" case.
+                                //ELIMINAR USUARIO
+                                Usuario.eliminarUsuario();
                                 break;
                             case 0:
+                                Usuario.actualizarArchivoUsuarios();
                                 System.out.println("");
                                 break;
                             default:
@@ -400,85 +412,115 @@ public class TesrMain {
                         break;
                 }
             }else if(!admin){
-                System.out.println("\n\n"+"USUARIO");
-                System.out.println("-------------------------\n");
-                System.out.println("1 - BUSCAR");
-                System.out.println("2 - INSERTAR");
-                System.out.println("3 - ACTUALIZAR");
-                System.out.println("4 - ELIMINAR");
-                System.out.println("0 - Salir");
-                opcion = input.nextInt();
-                input.nextLine();
-                
-                switch(entidad){
-                    case "LIBRO":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
-                        break;
-                    case "AUTOR":
-                        switch (opcion) {
-                            case 1:
-                                System.out.println("BUSCADOR DE LIBROS");
-                                for (int i = 0; i < Autor.autores().size(); i++) {
-                                    System.out.println(Autor.autores().get(i).toString());
-                                }
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
+                if (!entidad.equals("CUENTA")){
+                    
+                    System.out.println("\n\n"+ entidad +": "+ usuario.getUsuario());
+                    System.out.println("-------------------------\n");
+                    System.out.println("1 - BUSCAR");
+                    System.out.println("2 - INSERTAR");
+                    System.out.println("3 - ACTUALIZAR");
+                    System.out.println("4 - ELIMINAR");
+                    System.out.println("0 - Salir");
+                    opcion = input.nextInt();
+                    input.nextLine();
 
-                        }
-                        break;
-                    case "CATEGORÍA":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
+                    switch(entidad){
+                        case "LIBRO":
+                            switch (opcion) {
+                                case 1:
+                                    // Perform "original number" case.
+                                    break;
+                                case 2:
+                                    // Perform "encrypt number" case.
+                                    break;
+                                case 3:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 4:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 0:
+                                    System.out.println("");
+                                    break;
+                                default:
+                                    System.out.println("Seleccione una opción entre 0 y 4");
+                            }
+                            
+                            break;
+                        case "AUTOR":
+                            switch (opcion) {
+                                case 1:
+                                    System.out.println("BUSCADOR DE LIBROS");
+                                    for (int i = 0; i < Autor.autores().size(); i++) {
+                                        System.out.println(Autor.autores().get(i).toString());
+                                    }
+                                    // Perform "original number" case.
+                                    break;
+                                case 2:
+                                    // Perform "encrypt number" case.
+                                    break;
+                                case 3:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 4:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 0:
+                                    System.out.println("");
+                                    break;
+                                default:
+                                    System.out.println("Seleccione una opción entre 0 y 4");
+
+
+                            }
+                            break;
+                        case "CATEGORÍA":
+
+                            switch (opcion) {
+                                case 1:
+                                    // Perform "original number" case.
+                                    break;
+                                case 2:
+                                    // Perform "encrypt number" case.
+                                    break;
+                                case 3:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 4:
+                                    // Perform "decrypt number" case.
+                                    break;
+                                case 0:
+                                    System.out.println("");
+                                    break;
+                                default:
+                                    System.out.println("Seleccione una opción entre 0 y 4");
+                            }
+                            break;
+                    }
+                }else if (entidad.equals("CUENTA")){
+                    System.out.println("\n\n"+"MI CUENTA: "+ usuario.getUsuario());
+                    System.out.println("-------------------------\n");
+                    System.out.println("1 - ACTUALIZAR");
+                    System.out.println("2 - ELIMINAR");
+                    System.out.println("0 - Salir");
+                    opcion = input.nextInt();
+                    input.nextLine();
+                    switch(opcion){
+                        case 1:
+                            //ACTUALIZAR
+                            break;
+                        case 2:
+                            //ELIMINAR
+                            break;
+                        case 0:
+                            //ACTUALIZAR FICHERO USUARIOS Y SALIR
+                            break;
+                    }
+                    
+                        
                 }
+                    
+                
             }
             
         }

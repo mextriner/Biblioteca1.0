@@ -31,7 +31,7 @@ public interface InterfaceUsuario {
     public int insertarAll (Usuario usuario);
     
     //APLICA EL UPDATE SOBRE UN USUARIO YA EXISTENTE EN LA BASE DE DATOS
-    public int actualizar (Usuario usuario);
+    public int actualizar (Usuario usuario, String prevUsuario);
      
     //ELIMINA UN USUARIO DE LA BASE DE DATOS 
     public int eliminar (Usuario usuario);

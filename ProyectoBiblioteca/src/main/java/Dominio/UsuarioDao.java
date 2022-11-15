@@ -34,9 +34,9 @@ public class UsuarioDao implements InterfaceUsuario{
             + "apellido,direccion, fechaNac) VALUES (?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE usuario SET "
+            + "usuario = ?,"
             + "nombre = ?,"
             + "apellido = ?,"
-            + "direccion = ?,"
             + "fechaNac = ?"
             + "WHERE usuario = ?";
     
@@ -202,6 +202,48 @@ public class UsuarioDao implements InterfaceUsuario{
         return registro;
     }
     
+    public int actualizar (Usuario usuario, String prevUsuario){
+        Connection conn =null;
+        PreparedStatement stmt=null;
+        int registro = 0;
+        
+        try{
+             //1. ESTABLECER CONEXIÓN
+        
+            conn = getConnection();
+            
+            //2. PREPARO LA INSTRUCCIÓN EJECUTABLE EN MYSQL
+            
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            
+            
+            //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
+            stmt.setString(1, usuario.getUsuario());
+            stmt.setString(2, usuario.getNombre());
+            stmt.setString(3, usuario.getApellido());
+            stmt.setDate(4, usuario.getFechaNac());
+            stmt.setString(5, prevUsuario);
+            
+            //4. EJECUTO LA QUERY
+            
+            registro = stmt.executeUpdate();
+            
+            
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }finally{
+            try{
+                close(stmt);
+                close(conn);
+            }catch(SQLException ex){
+                ex.printStackTrace(System.out);
+            
+            }
+            
+        }
+        return registro;
+    }
+    
     public int actualizar (Usuario usuario){
         Connection conn =null;
         PreparedStatement stmt=null;
@@ -218,12 +260,11 @@ public class UsuarioDao implements InterfaceUsuario{
             
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
-            
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getApellido());
-            stmt.setDate(3, usuario.getFechaNac());
-            stmt.setString(4, usuario.getUsuario());
-            
+            stmt.setString(1, usuario.getUsuario());
+            stmt.setString(2, usuario.getNombre());
+            stmt.setString(3, usuario.getApellido());
+            stmt.setDate(4, usuario.getFechaNac());
+            stmt.setString(5, usuario.getUsuario());
             
             //4. EJECUTO LA QUERY
             

@@ -149,7 +149,7 @@ public class Usuario {
     
     
     //actualiza el archivo de texto de usuarios
-    public static void actualizarUsuarios(){
+    public static void actualizarArchivoUsuarios(){
         Usuario usuario = null;
         String contenido ="";
         for (int i = 0; i < usuario.usuarios().size(); i++) {
@@ -205,22 +205,43 @@ public class Usuario {
         return existe;
     }
     
-    public static void iniciarSesion(){
-        Usuario usr = null;
+    public static void eliminarUsuario(){
+        Scanner in = new Scanner (System.in);
+        System.out.println("Introduzca el usuario que quiere eliminar:");
+        String usu = in.nextLine();
+        if(entrada(usu)){
+            System.out.println("¿Desea eliminar este usuario?");
+            char ac = in.nextLine().charAt(0);
+            while(ac != 's' || ac != 'n'){
+                System.out.println("Introduzca si (s) o no (n)");
+                ac = in.nextLine().charAt(0);
+            }
+            if (ac == 's'){
+                UsuarioDao usuarioDao = new UsuarioDao();
+                usuarioDao.eliminar(comprobarClave(usu));
+            }else{
+                System.out.println("Operación cancelada.");
+            }
+        }
+    }
+    
+    public static Usuario iniciarSesion(){
+        Usuario usr = new Usuario();
         String usuario = "";
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca su usuario:");
         usuario = in.nextLine();
-        if(usr.entrada(usuario)){
+        if(entrada(usuario)){
             System.out.println("Introduzca la contraseña:");
             String clave = in.nextLine();
-            while(!clave.equals(usr.comprobarClave(usuario).clave)){
+            while(!clave.equals(comprobarClave(usuario).clave)){
+                usr = comprobarClave(usuario);
                 System.out.println("Contraseña incorrecta, pruebe de nuevo:");
                 clave = in.nextLine();
             }
         }else{
             char ac;
-            System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / \t no(n)");
+            System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / no(n)");
             ac = in.nextLine().charAt(0);
             while(ac != 's' || ac != 'n'){
                 System.out.println("Introduzca si (s) o no (n)");
@@ -233,6 +254,7 @@ public class Usuario {
             }
             
         }
+        return usr;
     }
     
     
@@ -264,4 +286,80 @@ public class Usuario {
         return usr;
     }
     
+    public static void actualizarrUsuario(String usu){
+         UsuarioDao usuarioDao = new UsuarioDao();
+        int opcion;
+        Scanner input = new Scanner(System.in);
+        opcion = -1;
+        /***************************************************/
+        
+        while (opcion != 0){
+            
+            System.out.println("\t\t"+ comprobarClave(usu).getUsuario());
+            System.out.println("ESCOJA EL CAMPO");
+            System.out.println("-----------------------------\n");
+            System.out.println("1 - NOMBRE DE USUARIO");
+            System.out.println("2 - NOMBRE");
+            System.out.println("3 - APELLIDO");
+            System.out.println("4 - FECHA DE NACIMIENTO");
+            System.out.println("5 - CONTRASEÑA");
+            System.out.println("0 - Salir");
+            System.out.println("Selecciones una opción");
+            opcion = input.nextInt();
+            input.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    // CAMBIO NOMBRE DE USUARIO
+                    System.out.println("Introduzca su contraseña:");
+                    String key = input.nextLine();
+                    while(!comprobarClave(usu).getClave().equals(key)){
+                        System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
+                        key = input.nextLine();
+                    }
+                    String prevUsuario = comprobarClave(usu).getUsuario();
+                    System.out.println("Introduzca el nuevo nombre de usuario:");
+                    String nom = input.nextLine();
+                    comprobarClave(usu).setNombre(nom);
+                    usuarioDao.actualizar(comprobarClave(usu), prevUsuario);
+                    break;
+                case 2:
+                    // CAMBIAR NOMBRE
+                    System.out.println("Introduzca su contraseña:");
+                    key = input.nextLine();
+                    while(!comprobarClave(usu).getClave().equals(key)){
+                        System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
+                        key = input.nextLine();
+                    }
+                    System.out.println("Introduzca el nuevo nombre de usuario:");
+                    nom = input.nextLine();
+                    comprobarClave(usu).setNombre(nom);
+                    usuarioDao.actualizar(comprobarClave(usu));
+                    break;
+                case 3:
+                    // CAMBIAR APELLIDOS
+                    break;
+                case 4:
+                    // CAMBIAR FECHA DE NACIMIENTO
+                    break;
+                case 5:
+                    // CAMBIAR CONTRASEÑA
+                    break;
+                case 0:
+                    System.out.println("");
+                    break;
+                default:
+                    Usuario.actualizarArchivoUsuarios();
+                    System.out.println("Seleccione una opción entre 0 y 3");
+                    // The user input an unexpected choice.
+            }
+            
+            
+        }
+       
+    }
+    
+    
+    
 }
+
