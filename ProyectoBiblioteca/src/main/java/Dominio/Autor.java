@@ -84,7 +84,7 @@ public class Autor {
 
     @Override
     public String toString() {
-        return "Autor{" + "idautor=" + idautor + ", nombre=" + nombre + ", apellido=" + apellido + ", nacionalidad=" + nacionalidad + ", fechaNac=" + fechaNac + '}';
+        return "Autor:" + "ID: " + idautor + "| Nombre: " + nombre + "| Apellido: " + apellido + "| Nacionalidad: " + nacionalidad + "| Fecha Nacimiento: " + fechaNac + '|';
     }
     
     public String escribir() {
@@ -134,7 +134,7 @@ public class Autor {
         return fileAutor;
     }
      
-    public static void actualizarAutores(){
+    public static void actualizarFicheroAutor(){
         Autor autor = null;
         String contenido ="";
         for (int i = 0; i < autor.autores().size(); i++) {
@@ -160,5 +160,91 @@ public class Autor {
         return autor;
     }
     
-    
+        
+        public static void eliminarAutor(){
+            System.out.println("TABLA AUTORES:\n\n");
+            for (int i = 0; i < autores().size(); i++) {
+                System.out.println(autores().get(i).toString());
+            }
+            Scanner in = new Scanner (System.in);
+            System.out.println("Inserte el ID del autor que quiere eliminar");
+            int id = in.nextInt();
+            System.out.println("Pulse intro para continuar");
+            in.nextLine();
+            AutorDao autorDao = new AutorDao();
+            autorDao.eliminar(autor(id));
+        }
+        
+        
+    public static void autorActualizar(){
+        AutorDao autorDao = new AutorDao();
+        int opcion;
+        opcion = -1;
+        System.out.println("TABLA AUTORES:\n\n");
+        for (int i = 0; i < autores().size(); i++) {
+            System.out.println(autores().get(i).toString());
+        }
+        Scanner in = new Scanner (System.in);
+        System.out.println("Inserte el ID del autor que quiere eliminar");
+        int id = in.nextInt();
+        System.out.println("Pulse intro para continuar");
+        in.nextLine();
+        System.out.println(autor(id).toString());
+        System.out.println("Seleccione qué el atributo a cambiar:");
+        
+        
+        /***************************************************/
+        
+        while (opcion != 0){
+            
+            System.out.println("\tATRIBUTOS");
+            System.out.println(autor(id).idautor + " " + autor(id).nombre +" "
+                    + autor(id).apellido);
+            System.out.println("-----------------------------\n");
+            System.out.println("1 - NOMBRE: "+autor(id).nombre);
+            System.out.println("2 - APELLIDOS "+ autor(id).apellido);
+            System.out.println("3 - NACIONALIDAD: "+autor(id).nacionalidad);
+            System.out.println("4 - FECHA DE NACIMIENTO: "+autor(id).fechaNac);
+            System.out.println("0 - Salir");
+            System.out.println("Selecciones una opción");
+            opcion = in.nextInt();
+            in.nextLine();
+            switch(opcion){
+                case 1:
+                    System.out.println("Introduzca el nuevo nombre:");
+                    String nombre = in.nextLine();
+                    autor(id).setNombre(nombre);
+                    autorDao.actualizar(autor(id));
+                    break;
+                
+                case 2:
+                    System.out.println("Introduzca los nuevos apellidos:");
+                    String apellido = in.nextLine();
+                    autor(id).setApellido(apellido);
+                    autorDao.actualizar(autor(id));
+                    break;
+                
+                case 3:
+                    System.out.println("Introduzca la nacionalidad:");
+                    String nac = in.nextLine();
+                    autor(id).setNacionalidad(nac);
+                    autorDao.actualizar(autor(id));
+                    break;
+                
+                case 4:
+                    System.out.println("Introduzca la Fecha de Naciomiento:");
+                    String fn = in.nextLine();
+                    autor(id).setFechaNac(Date.valueOf(fn));
+                    autorDao.actualizar(autor(id));
+                    break;
+                
+                case 0:
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+        
+    }
 }

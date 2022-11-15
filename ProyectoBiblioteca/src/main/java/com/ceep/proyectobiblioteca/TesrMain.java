@@ -38,7 +38,7 @@ public class TesrMain {
         // TODO code application logic here
         
         
-    //    menu();
+        menu();
         
  
         
@@ -134,7 +134,7 @@ public class TesrMain {
         
         while (opcion != 0){
             if (admin){
-                System.out.println("Choose from these choices");
+                System.out.println("\n\n"+"ADMINISTRADOR");
                 System.out.println("-------------------------\n");
                 System.out.println("1 - LIBRO");
                 System.out.println("2 - AUTOR");
@@ -184,7 +184,7 @@ public class TesrMain {
                 }
             
             }else if(!admin){
-                System.out.println("Choose from these choices");
+                System.out.println("\n\n"+"USUARIO");
                 System.out.println("-------------------------\n");
                 System.out.println("1 - LIBRO");
                 System.out.println("2 - AUTOR");
@@ -225,7 +225,7 @@ public class TesrMain {
         /***************************************************/
         while (opcion != 0){
             if(admin){
-                System.out.println("ADMINISTRADOR");
+                System.out.println("\n\n"+entidad);
                 System.out.println("-------------------------\n");
                 System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
@@ -262,25 +262,31 @@ public class TesrMain {
                         AutorDao autorDao = new AutorDao();
                         switch (opcion) {
                             case 1:
-                                System.out.println("BUSCADOR DE LIBROS\n\n");
+                                
+                                //BUSCAR AUTORES
+                                System.out.println("BUSCADOR DE AUTORES\n\n");
                                 for (int i = 0; i < Autor.autores().size(); i++) {
                                     System.out.println(Autor.autores().get(i).toString());
                                 }
                                 break;
                             case 2:
-                                System.out.println("INSERTAR LIBRO\n\n");
+                                //INSERTAR AUTOR
+                                System.out.println("INSERTAR AUTOR\n\n");
                                 Autor.darAlta();
                                 System.out.println("Pulse Intro para continual");
                                 input.nextLine();
                                 break;
                             case 3:
                                 // ACTUALIZAR
+                                Autor.autorActualizar();
                                 break;
                             case 4:
                                 // ELIMINAR
+                                System.out.println("ELIMINAR AUTOR");
+                                Autor.eliminarAutor();
                                 break;
                             case 0:
-                                Autor.actualizarAutores();
+                                Autor.actualizarFicheroAutor();
                                 System.out.println("");
                                 break;
                             default:
@@ -394,7 +400,7 @@ public class TesrMain {
                         break;
                 }
             }else if(!admin){
-                System.out.println("USUARIO");
+                System.out.println("\n\n"+"USUARIO");
                 System.out.println("-------------------------\n");
                 System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
