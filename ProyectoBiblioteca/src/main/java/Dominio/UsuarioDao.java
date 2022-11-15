@@ -5,6 +5,7 @@
  */
 package Dominio;
 
+import Interfaces.InterfaceUsuario;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
 import java.sql.Connection;
@@ -12,7 +13,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author MaximoMestriner
  */
-public class UsuarioDao {
+public class UsuarioDao implements InterfaceUsuario{
 
     private static final String SQL_SELECT ="SELECT * FROM usuario";
     

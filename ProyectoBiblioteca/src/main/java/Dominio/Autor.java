@@ -5,9 +5,11 @@
  */
 package Dominio;
 
+import ManejoArchivos.ManejoDeArchivos;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -86,7 +88,7 @@ public class Autor {
     }
     
     public String escribir() {
-        return '%' + '*' + idautor + '*' + nombre + '*' + apellido + '*' + nacionalidad + '*' + fechaNac + '*' ;
+        return idautor + "º" + nombre + 'º' + apellido + 'º' + nacionalidad + 'º' + fechaNac + 'º'+'/' ;
     }
     
     
@@ -114,8 +116,49 @@ public class Autor {
         return nAutor;
     }
      
+    
+    public static Autor archivoPk(int primaryKey){
+        Autor fileAutor = null;
+        
+        String nombre [] = ManejoDeArchivos.cadenaArchivo("autor.txt").split("/");
+        for (int i = 0; i < nombre.length; i++) {
+            System.out.println(nombre[i]);
+            String col [] = nombre[i].split("º");
+            if (col[0].equals(primaryKey)){
+                fileAutor = new Autor (Integer.valueOf(col[0]),col[1],(col[2]),col[3],Date.valueOf(col[4]));
+                
+            }else{
+                System.out.println("ENTRADA NO ENCONTRADA");
+            }
+        }
+        return fileAutor;
+    }
      
+    public static void actualizarAutores(){
+        Autor autor = null;
+        String contenido ="";
+        for (int i = 0; i < autor.autores().size(); i++) {
+            contenido += (autor.autores().get(i).escribir());
+        }
+        System.out.println(contenido);
+        ManejoDeArchivos.escribirArchivo("autor.txt",contenido);
+    }
      
+        public static Autor darAlta(){
+        Scanner in = new Scanner (System.in);
+        AutorDao autorDao = new AutorDao();
+        System.out.println("Nombre de Autor");
+        String nom = in.nextLine();
+        System.out.println("Apellidos de Autor");
+        String ape = in.nextLine();
+        System.out.println("Nacionalidad de Autor");
+        String nac = in.nextLine();
+        System.out.println("Fecha de nacimiento de Autor (aaaa-mm-dd)");
+        String fn = in.nextLine();
+        Autor autor = new Autor (nom,ape,nac,Date.valueOf(fn));
+        autorDao.insertar(autor);
+        return autor;
+    }
     
     
 }

@@ -147,6 +147,8 @@ public class Usuario {
         return usuario;
     }
     
+    
+    //actualiza el archivo de texto de usuarios
     public static void actualizarUsuarios(){
         Usuario usuario = null;
         String contenido ="";
@@ -246,21 +248,18 @@ public class Usuario {
     }
     
     public static Usuario darAlta(){
-        Usuario usr = new Usuario();
         Scanner in = new Scanner (System.in);
         UsuarioDao usuarioDao = new UsuarioDao();
         System.out.println("Introduzca su usuario");
         String usar = in.nextLine();
-        while(usr.entrada(usar)){
+        while(Usuario.entrada(usar)){
             System.out.println("Este nombre ya existe"
                     + "Escoja otro nombre de usuario");
             usar = in.nextLine();
         }
-        usr.setUsuario(usar);
         System.out.println("Introduzca su contraseña:");
         String clave = in.nextLine();
-        usr.setClave(clave);
-        usr.setFechaAlt(Date.valueOf(LocalDate.now()));
+        Usuario usr = new Usuario(usar,clave,Date.valueOf(LocalDate.now()));
         usuarioDao.insertar(usr);
         return usr;
     }

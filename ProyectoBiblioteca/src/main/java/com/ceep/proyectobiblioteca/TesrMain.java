@@ -14,7 +14,6 @@ import Dominio.UsuarioDao;
 import ManejoArchivos.ManejoDeArchivos;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,27 +30,18 @@ public class TesrMain {
     
     public static UsuarioDao usuarioDao = new UsuarioDao();
     
+    public static Scanner input = new Scanner(System.in);
+    
     public static Usuario admin = new Usuario("admin","1234");
     
     public static void main(String[] args) {
         // TODO code application logic here
         
-  //      usuarioDao.insertar(admin);
         
-        menu();
+    //    menu();
         
-        
-        /*Date date = new Date(70,4,5);
-        Autor autor = new Autor("Patrick","Rothfuss","EEUU",date);*/
-//        
-//        
-//        autorDao.actualizar(autor);
-
-        /*Date date1 = new Date(98,6,28);
-        Autor autor1 = new Autor("Máximo","Mestriner","España",date1);
-        autorDao.insertar(autor1);
-        autorDao.insertar(autor);*/
  
+        
         //Recorro el List de autores y añado a traves del id los autores en el archivp de texto
 
         /*for (int i = 1; i <= autor.autores().size(); i++) {
@@ -72,7 +62,7 @@ public class TesrMain {
 //        System.out.println(usuario.toString());
 
 //        LibroDao libroDao = new LibroDao();
-//        Libro libro = new Libro ("123123123", "El nombre del viento", "español",Date.valueOf("2000-01-01"),true, "C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/endv.jpg");
+//        Libro libro = new Libro ("987987987", "El nombre del viento", "español",Date.valueOf("2000-01-01"),true, "C:/Users/Alumno Mañana/Documents/NetBeansProjects/Biblioteca1.0/img/endv.jpg");
 //        System.out.println(libro);
 //        libroDao.insertar(libro);
         
@@ -83,13 +73,13 @@ public class TesrMain {
     public static void menu(){
         
         int opcion;
-        Scanner input = new Scanner(System.in);
+        
         opcion = -1;
         /***************************************************/
         
         while (opcion != 0){
             
-            System.out.println("\tBIBLIOTECA");
+            System.out.println("\tBIBLIOTECA VIRTUAL");
             System.out.println("INICIAR SESIÓN");
             System.out.println("-----------------------------\n");
             System.out.println("1 - INICIAR SESIÓN COMO ADMIN");
@@ -136,7 +126,7 @@ public class TesrMain {
     public static void menuEntidad(boolean admin){
         
         int opcion;
-        Scanner input = new Scanner(System.in);
+        
         opcion = -1;
         /***************************************************/
      //SI ES ADMIN ACCEDE A TODO EL CRUD DE LAS TABLAS
@@ -230,12 +220,12 @@ public class TesrMain {
     
     public static void menuCrud(String entidad, boolean admin){
          int opcion;
-        Scanner input = new Scanner(System.in);
+       
         opcion = -1;
         /***************************************************/
         while (opcion != 0){
             if(admin){
-                System.out.println("Choose from these choices");
+                System.out.println("ADMINISTRADOR");
                 System.out.println("-------------------------\n");
                 System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
@@ -261,6 +251,7 @@ public class TesrMain {
                                 // Perform "decrypt number" case.
                                 break;
                             case 0:
+                                
                                 System.out.println("");
                                 break;
                             default:
@@ -268,20 +259,28 @@ public class TesrMain {
                         }
                         break;
                     case "AUTOR":
+                        AutorDao autorDao = new AutorDao();
                         switch (opcion) {
                             case 1:
-                                // Perform "original number" case.
+                                System.out.println("BUSCADOR DE LIBROS\n\n");
+                                for (int i = 0; i < Autor.autores().size(); i++) {
+                                    System.out.println(Autor.autores().get(i).toString());
+                                }
                                 break;
                             case 2:
-                                // Perform "encrypt number" case.
+                                System.out.println("INSERTAR LIBRO\n\n");
+                                Autor.darAlta();
+                                System.out.println("Pulse Intro para continual");
+                                input.nextLine();
                                 break;
                             case 3:
-                                // Perform "decrypt number" case.
+                                // ACTUALIZAR
                                 break;
                             case 4:
-                                // Perform "decrypt number" case.
+                                // ELIMINAR
                                 break;
                             case 0:
+                                Autor.actualizarAutores();
                                 System.out.println("");
                                 break;
                             default:
@@ -395,7 +394,7 @@ public class TesrMain {
                         break;
                 }
             }else if(!admin){
-                System.out.println("Choose from these choices");
+                System.out.println("USUARIO");
                 System.out.println("-------------------------\n");
                 System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
@@ -430,6 +429,10 @@ public class TesrMain {
                     case "AUTOR":
                         switch (opcion) {
                             case 1:
+                                System.out.println("BUSCADOR DE LIBROS");
+                                for (int i = 0; i < Autor.autores().size(); i++) {
+                                    System.out.println(Autor.autores().get(i).toString());
+                                }
                                 // Perform "original number" case.
                                 break;
                             case 2:
@@ -469,91 +472,6 @@ public class TesrMain {
                             default:
                                 System.out.println("Seleccione una opción entre 0 y 4");
                         }
-                        break;
-                    case "EDITORIAL":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
-                        break;
-                    case "UNIDAD":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
-                        break;
-                    case "PROVEEDOR":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
-                        break;
-                    case "USUARIO":
-                        switch (opcion) {
-                            case 1:
-                                // Perform "original number" case.
-                                break;
-                            case 2:
-                                // Perform "encrypt number" case.
-                                break;
-                            case 3:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 4:
-                                // Perform "decrypt number" case.
-                                break;
-                            case 0:
-                                System.out.println("");
-                                break;
-                            default:
-                                System.out.println("Seleccione una opción entre 0 y 4");
-                        }
-                        break;
                 }
             }
             

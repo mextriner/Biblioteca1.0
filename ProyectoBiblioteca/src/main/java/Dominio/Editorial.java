@@ -53,4 +53,7 @@ public class Editorial {
         return "Editorial{" + "idEditorial=" + idEditorial + ", nombre=" + nombre + ", direccion=" + direccion + '}';
     }
     
+    public String escribir() {
+        return   idEditorial + "º" + nombre + "º" + direccion + '/';
+    }
 }

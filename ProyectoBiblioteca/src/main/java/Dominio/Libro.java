@@ -19,7 +19,7 @@ public class Libro {
     private String idioma;
     private Date fechaPubli;
     private boolean bestSeller;
-    String portada;
+    private String portada;
 
     public Libro() {
     }

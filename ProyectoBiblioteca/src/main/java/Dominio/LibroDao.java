@@ -89,7 +89,7 @@ public class LibroDao {
             stmt = conn.prepareStatement(SQL_INSERT);
             
             try{
-                imagen = new FileInputStream(libro.portada);
+                imagen = new FileInputStream(libro.getPortada());
             }catch(IOException IOex){
                 IOex.printStackTrace(System.out);
             }

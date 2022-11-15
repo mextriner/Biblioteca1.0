@@ -1,4 +1,12 @@
-Dominio\Autor.class
+Dominio\Editorial.class
+Dominio\UsuarioDao.class
 Dominio\AutorDao.class
+Dominio\Usuario.class
 com\ceep\proyectobiblioteca\TesrMain.class
 AccesoDatos\Conexion.class
+Dominio\InterfaceUsuario.class
+ManejoArchivos\ManejoDeArchivos.class
+Dominio\EditorialDao.class
+Dominio\Libro.class
+Dominio\Autor.class
+Dominio\LibroDao.class
