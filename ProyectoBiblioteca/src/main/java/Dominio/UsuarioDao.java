@@ -25,7 +25,7 @@ public class UsuarioDao {
     private static final String SQL_SELECT ="SELECT * FROM usuario";
     
     private static final String SQL_DECRYPT = "SELECT usuario, "
-            + "CAST(AES_DECRYPT(?,'key'))AS clave FROM idUsuario";
+            + "CAST(AES_DECRYPT(clave,'key')AS CHAR)AS clave, fechaAlt FROM usuario";
     
     private static final String SQL_INSERT = "INSERT INTO usuario (usuario,"
             + "clave,fechaAlt) VALUES (?,AES_ENCRYPT(?,'key'),?)";
@@ -56,7 +56,6 @@ public class UsuarioDao {
         conn = getConnection();
         stmt = conn.prepareStatement(SQL_SELECT);
         rs = stmt.executeQuery();
-        
         while(rs.next()){
             String usuario = rs.getString("usuario");
             String clave = rs.getString("clave");
@@ -78,13 +77,15 @@ public class UsuarioDao {
         return usuarios;
     }
     
-    public List<Usuario> verClaves() throws SQLException {
+    
+    public List<Usuario> seleccionarUsuarioClave() throws SQLException {
         //INICIALIZAR VARIABLES
         
         Connection conn = null;
         PreparedStatement stmt= null;
         ResultSet rs = null;
-        Usuario usuario = null;
+        
+        //he quitado usuario = nell
         List<Usuario> usuarios = new ArrayList<>();
         
         conn = getConnection();
@@ -92,11 +93,12 @@ public class UsuarioDao {
         rs = stmt.executeQuery();
         
         while(rs.next()){
-            String usuarioId = rs.getString("usuario");
-            String clave = rs.getString("cast(aes_decrypt(clave,'key'))as char");
+            String usuario = rs.getString("usuario");
+            String clave = rs.getString("clave");
+            Date fechaAlt = rs.getDate("fechaAlt");
             
             //Instancio un nuevo objeto
-            usuarios.add(new Usuario(usuarioId, clave));
+            usuarios.add(new Usuario(usuario,clave,fechaAlt));
             
         }
         
@@ -107,6 +109,8 @@ public class UsuarioDao {
         
         return usuarios;
     }
+    
+    
     
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
     public int insertar (Usuario usuario){

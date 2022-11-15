@@ -133,6 +133,30 @@ public class Usuario {
         return usuario;
     }
     
+    //UNA LISTA DE USUARIOS PERO SÓLO CON SU NOMBRE, CLAVE (DESENCRIPTADA) Y FECHA DE REGISTRO
+    
+    public static List <Usuario> usuariosClave(){
+        UsuarioDao usuarioDao = new UsuarioDao();
+        List <Usuario> usuario = null;
+        try{
+            List <Usuario> u = usuarioDao.seleccionarUsuarioClave();
+            usuario = u;
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }
+        return usuario;
+    }
+    
+    public static void actualizarUsuarios(){
+        Usuario usuario = null;
+        String contenido ="";
+        for (int i = 0; i < usuario.usuarios().size(); i++) {
+            
+            contenido += (usuario.usuarios().get(i).escribir());
+        }
+        System.out.println(contenido);
+        ManejoDeArchivos.escribirArchivo("usuario.txt",contenido);
+    }
     
     //Devuelve un usuario comprobando col[0], la primary key a partir
     //del archivo de texto de usaurios.
@@ -147,11 +171,22 @@ public class Usuario {
                 fileUsur = new Usuario (col[0],col[1],Date.valueOf(col[2]));
             }else{
                 System.out.println("ENTRADA NO ENCONTRADA");
-
+                
             }
         }
         return fileUsur;
     }
+    
+    public static Usuario comprobarClave(String primaryKey){
+        Usuario usur = null;
+        for (int i = 0; i < usur.usuariosClave().size(); i++) {
+            if(usur.usuariosClave().get(i).getUsuario().equals(primaryKey)){
+                usur = usuariosClave().get(i);
+            }
+        }
+        return usur;
+    }
+    
     
     
     //Comprueba si el nombre introducido ya existe
@@ -177,7 +212,7 @@ public class Usuario {
         if(usr.entrada(usuario)){
             System.out.println("Introduzca la contraseña:");
             String clave = in.nextLine();
-            while(!clave.equals(usr.archivoPk(usuario).clave)){
+            while(!clave.equals(usr.comprobarClave(usuario).clave)){
                 System.out.println("Contraseña incorrecta, pruebe de nuevo:");
                 clave = in.nextLine();
             }
@@ -198,18 +233,36 @@ public class Usuario {
         }
     }
     
-    public static void darAlta(){
+    
+    public static void iniciarSesion(String admin){
         Usuario usr = null;
+        Scanner in = new Scanner (System.in);
+        System.out.println("Introduzca la contraseña de Administrador:");
+        String clave = in.nextLine();
+        while(!clave.equals(usr.comprobarClave(admin).clave)){
+            System.out.println("Contraseña incorrecta, pruebe de nuevo:");
+            clave = in.nextLine();
+        }
+    }
+    
+    public static Usuario darAlta(){
+        Usuario usr = new Usuario();
         Scanner in = new Scanner (System.in);
         UsuarioDao usuarioDao = new UsuarioDao();
         System.out.println("Introduzca su usuario");
         String usar = in.nextLine();
+        while(usr.entrada(usar)){
+            System.out.println("Este nombre ya existe"
+                    + "Escoja otro nombre de usuario");
+            usar = in.nextLine();
+        }
         usr.setUsuario(usar);
         System.out.println("Introduzca su contraseña:");
         String clave = in.nextLine();
         usr.setClave(clave);
         usr.setFechaAlt(Date.valueOf(LocalDate.now()));
         usuarioDao.insertar(usr);
+        return usr;
     }
     
 }

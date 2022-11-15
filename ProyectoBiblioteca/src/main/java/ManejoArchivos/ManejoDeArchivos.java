@@ -28,8 +28,6 @@ public class ManejoDeArchivos {
         }catch (FileNotFoundException ex){
             ex.printStackTrace(System.out);
         }
-        
-
     }
     
     
@@ -40,7 +38,7 @@ public class ManejoDeArchivos {
          try{
             salida = new PrintWriter(archivo);
             salida.print(contenido);
-             System.out.println("Se ha creado el archivo");
+            System.out.println("Se ha creado el archivo");
         }catch (FileNotFoundException ex){
             ex.printStackTrace(System.out);
             
@@ -63,6 +61,8 @@ public class ManejoDeArchivos {
              salida.close(); //siempre se ejecuta
         }
     }
+    
+    
     
      public static String cadenaArchivo(String nombre){
          File archivo = new File(nombre);

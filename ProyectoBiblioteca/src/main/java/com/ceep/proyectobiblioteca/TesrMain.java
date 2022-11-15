@@ -31,9 +31,15 @@ public class TesrMain {
     
     public static UsuarioDao usuarioDao = new UsuarioDao();
     
+    public static Usuario admin = new Usuario("admin","1234");
     
     public static void main(String[] args) {
         // TODO code application logic here
+        
+  //      usuarioDao.insertar(admin);
+        
+        menu();
+        
         
         /*Date date = new Date(70,4,5);
         Autor autor = new Autor("Patrick","Rothfuss","EEUU",date);*/
@@ -52,7 +58,7 @@ public class TesrMain {
             ManejoDeArchivos.agregarArchivo("autores.txt",autor.autor(i).escribir());
         }*/
 
-//        menu();
+
 //        Usuario usuario = new Usuario("mextrienr","1234");
 //        
 //        usuarioDao.insertar(usuario);
@@ -64,10 +70,11 @@ public class TesrMain {
 //        Usuario usuario = null;
 //        usuario = usuario.archivoPk("fran");
 //        System.out.println(usuario.toString());
-        LibroDao libroDao = new LibroDao();
-        Libro libro = new Libro ("123123123", "El nombre del viento", "español", Date.valueOf("2000-01-01"),true, "/C:/Users/Alumno Mañana/Desktop/imgs/El_nombre_del_viento.jpg");
-        System.out.println(libro);
-        libroDao.insertar(libro);
+
+//        LibroDao libroDao = new LibroDao();
+//        Libro libro = new Libro ("123123123", "El nombre del viento", "español",Date.valueOf("2000-01-01"),true, "C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/endv.jpg");
+//        System.out.println(libro);
+//        libroDao.insertar(libro);
         
     }
     
@@ -81,10 +88,13 @@ public class TesrMain {
         /***************************************************/
         
         while (opcion != 0){
+            
+            System.out.println("\tBIBLIOTECA");
             System.out.println("INICIAR SESIÓN");
-            System.out.println("-------------------------\n");
+            System.out.println("-----------------------------\n");
             System.out.println("1 - INICIAR SESIÓN COMO ADMIN");
             System.out.println("2 - INICIAR SESIÓN COMO USUARIO");
+            System.out.println("3 - REGISTRAR NUEVO USUARIO");
             System.out.println("0 - Salir");
             System.out.println("Selecciones una opción");
             opcion = input.nextInt();
@@ -93,16 +103,26 @@ public class TesrMain {
             switch (opcion) {
                 case 1:
                     // FUNCION INICIAR SESION (ADMIN)
+                    admin.iniciarSesion(admin.getUsuario());
                     menuEntidad(true);
                     break;
                 case 2:
                     // FUNCION INICIAR SESIÓN (USUARIO)
+                    Usuario.iniciarSesion();
+                    menuEntidad(false);
+                    break;
+                case 3:
+                    // FUNCION INICIAR SESIÓN (USUARIO)
+                    Usuario usuarioAlta = null;
+                    usuarioAlta=usuarioAlta.darAlta();
                     menuEntidad(false);
                     break;
                 case 0:
                     System.out.println("");
                     break;
                 default:
+                    admin.actualizarUsuarios();
+                    System.out.println("Seleccione una opción entre 0 y 3");
                     // The user input an unexpected choice.
             }
             
@@ -170,7 +190,7 @@ public class TesrMain {
                         System.out.println("");
                         break;
                     default:
-                        // The user input an unexpected choice.
+                        System.out.println("Seleccione una opción entre 0 y 7");
                 }
             
             }else if(!admin){
@@ -197,7 +217,7 @@ public class TesrMain {
                         System.out.println("");
                         break;
                     default:
-                        // The user input an unexpected choice.
+                        System.out.println("Seleccione una opción entre 0 y 3");
                 }
             }
             
@@ -244,7 +264,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "AUTOR":
@@ -265,7 +285,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "CATEGORÍA":
@@ -286,7 +306,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "EDITORIAL":
@@ -307,7 +327,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "UNIDAD":
@@ -328,7 +348,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "PROVEEDOR":
@@ -349,7 +369,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "USUARIO":
@@ -370,7 +390,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                 }
@@ -404,7 +424,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "AUTOR":
@@ -425,7 +445,8 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
+
                         }
                         break;
                     case "CATEGORÍA":
@@ -446,7 +467,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "EDITORIAL":
@@ -467,7 +488,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "UNIDAD":
@@ -488,7 +509,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "PROVEEDOR":
@@ -509,7 +530,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                     case "USUARIO":
@@ -530,7 +551,7 @@ public class TesrMain {
                                 System.out.println("");
                                 break;
                             default:
-                                // The user input an unexpected choice.
+                                System.out.println("Seleccione una opción entre 0 y 4");
                         }
                         break;
                 }

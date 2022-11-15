@@ -19,7 +19,7 @@ public class Libro {
     private String idioma;
     private Date fechaPubli;
     private boolean bestSeller;
-    Image portada;
+    String portada;
 
     public Libro() {
     }
@@ -45,14 +45,14 @@ public class Libro {
         this.idioma = idioma;
         this.fechaPubli = fechaPubli;
         this.bestSeller = bestSeller;
-        this.portada = new ImageIcon(portada).getImage();
+        this.portada = portada;
     }
 
-    public Image getPortada() {
+    public String getPortada() {
         return portada;
     }
 
-    public void setPortada(Image portada) {
+    public void setPortada(String portada) {
         this.portada = portada;
     }
     
