@@ -5,21 +5,29 @@
  */
 package Dominio;
 
-import java.awt.Image;
+import Datos.LibroDao;
+import ManejoArchivos.ManejoDeArchivos;
+import java.io.Serializable;
 import java.sql.Date;
-import javax.swing.ImageIcon;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
  * @author MaximoMestriner
  */
-public class Libro {
+public class Libro implements Serializable{
+
+    
     private String isbn;
     private String titulo;
     private String idioma;
     private Date fechaPubli;
     private boolean bestSeller;
     private String portada;
+    
+    static private LibroDao libroDao = new LibroDao();
 
     public Libro() {
     }
@@ -107,6 +115,221 @@ public class Libro {
     
     public String escribir() {
         return '%' + '*' + isbn + '*' + titulo + '*' + idioma + '*' + fechaPubli + '*' + bestSeller + '*' ;
+    }
+    
+    public List <Libro> listarLibro(){
+        List <Libro> libros = null;
+        try{
+            libros = libroDao.seleccionar();
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }
+        return libros;
+    }
+    
+    public static Libro libroIsbn(String isbn){
+        Libro lb = new Libro();
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            
+            if(lb.listarLibro().get(i).getIsbn().equals(isbn)){
+                lb = lb.listarLibro().get(i);
+            }
+        }
+        return lb;
+    }
+    
+    public static boolean entrada(String isbn){
+        Libro lb = new Libro();
+        boolean existe = false;
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            
+            if(lb.listarLibro().get(i).getIsbn().equals(isbn)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+    public static void eliminarLibro(){
+        
+        Scanner in = new Scanner (System.in);
+        Libro lb = new Libro();
+        System.out.println("TABLA LIBROS:\n\n");
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            System.out.println(lb.listarLibro().get(i).toString());
+        }
+
+        System.out.println("Inserte el ISBN del libro que quiere eliminar");
+        String isbn = in.nextLine();
+        while(!entrada(isbn)){
+            System.out.println("Este libro no existe en la Base de Datos.\n"
+                    + "Introduzca un ISBN correcto.");
+            isbn = in.nextLine();
+        }
+        libroDao.eliminar(libroIsbn(isbn));
+    }
+    
+    public static Libro darAlta(){
+        Scanner in = new Scanner (System.in);
+        System.out.println("Introduzca el ISBN del libro");
+        String isbn = in.nextLine();
+        while(entrada(isbn)){
+            System.out.println("Este libro ya existe."
+                    + "Introdúzcalo de nuevo.");
+            isbn = in.nextLine();
+        }
+        System.out.println("TÍTULO:");
+        String titulo = in.nextLine();
+        while(titulo.isEmpty()){
+            System.out.println("Este campo no puede ser vacío."
+                    + " Introduca un valor:");
+            titulo = in.nextLine();
+        }
+        
+        System.out.println("FECHA DE PUBLICACIÓN:");
+        String fecha = in.nextLine();
+        while(fecha.isEmpty()){
+            System.out.println("Este campo no puede ser vacío."
+                    + " Introduca un valor:");
+            fecha = in.nextLine();
+        }
+        
+        System.out.println("IDIOMA:");
+        String idioma = in.nextLine();
+        while(idioma.isEmpty()){
+            System.out.println("Este campo no puede ser vacío."
+                    + " Introduca un valor:");
+            idioma = in.nextLine();
+        }
+        
+        System.out.println("BESTSELLER:");
+        boolean bestSeller = in.nextBoolean();
+        
+        
+        System.out.println("RUTA DE IMAGEN DE LA PORTADA");
+        String ruta = in.nextLine();
+        
+        Libro libro = new Libro(isbn,titulo,idioma,Date.valueOf(fecha),bestSeller,ruta);
+        libroDao.insertar(libro);
+        actualizarArchivoLibros();
+        return libro;
+    }
+    
+    public static void actualizarArchivoLibros() {
+        Libro libro = null;
+        String contenido ="";
+        for (int i = 0; i < libro.listarLibro().size(); i++) {
+            
+            contenido += (libro.listarLibro().get(i).escribir());
+        }
+        ManejoDeArchivos.escribirArchivo("usuario.txt",contenido);
+    }
+    
+    public static void libroActualizar(){
+        Libro lb = new Libro();
+        int opcion;
+        opcion = -1;
+        System.out.println("TABLA LIBROS:\n\n");
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            System.out.println(lb.listarLibro().get(i).toString());
+        }
+        Scanner in = new Scanner (System.in);
+        System.out.println("Inserte el ISBN del libro que quiere actualizar");
+        String isbn = in.nextLine();
+        
+        System.out.println(libroIsbn(isbn).toString());
+        System.out.println("Seleccione el atributo a cambiar:");
+        
+        
+        /***************************************************/
+        
+        while (opcion != 0){
+            
+            System.out.println("\tATRIBUTOS");
+            System.out.println(libroIsbn(isbn).isbn + " | " + libroIsbn(isbn).titulo);
+            System.out.println("----------------------------------------------------\n");
+            System.out.println("1 - ISBN: "+libroIsbn(isbn).isbn);
+            System.out.println("2 - TITULO "+ libroIsbn(isbn).titulo);
+            System.out.println("3 - IDIOMA: "+libroIsbn(isbn).idioma);
+            System.out.println("4 - FECHA DE PUBLICACIÓN: "+libroIsbn(isbn).fechaPubli);
+            System.out.println("5 - BESTSELLER: "+libroIsbn(isbn).bestSeller);
+            System.out.println("6 - RUTA DE PORTADA: "+libroIsbn(isbn).portada);
+            System.out.println("0 - Salir");
+            System.out.println("Selecciones una opción");
+            opcion = in.nextInt();
+            in.nextLine();
+            switch(opcion){
+                case 1:
+                    System.out.println("Introduzca el nuevo ISBN:");
+                    String vl = in.nextLine();
+                    
+                    while(vl.isEmpty()){
+                        System.out.println("Este campo no puede ser vacío."
+                                + " Introduca un valor:");
+                        vl = in.nextLine();
+                    }
+                    lb.libroIsbn(isbn).setIsbn(vl);
+                    libroDao.actualizar(libroIsbn(isbn));
+                    break;
+                
+                case 2:
+                    
+                    System.out.println("Introduzca el nuevo TÍTULO:");
+                    vl = in.nextLine();
+                    
+                    while(vl.isEmpty()){
+                        System.out.println("Este campo no puede ser vacío."
+                                + " Introduca un valor:");
+                        vl = in.nextLine();
+                    }
+                    lb.libroIsbn(isbn).setTitulo(vl);
+                    libroDao.actualizar(libroIsbn(isbn));
+                    
+                    break;
+                
+                case 3:
+                    
+                    System.out.println("Introduzca el nuevo IDIOMA:");
+                    vl = in.nextLine();
+                    
+                    while(vl.isEmpty()){
+                        System.out.println("Este campo no puede ser vacío."
+                                + " Introduca un valor:");
+                        vl = in.nextLine();
+                    }
+                    lb.libroIsbn(isbn).setIdioma(vl);
+                    break;
+                
+                case 4:
+                    System.out.println("Introduzca el nuevo FECHA:");
+                    vl = in.nextLine();
+                    
+                    while(vl.isEmpty()){
+                        System.out.println("Este campo no puede ser vacío."
+                                + " Introduca un valor:");
+                        vl = in.nextLine();
+                    }
+                    lb.libroIsbn(isbn).setFechaPubli(Date.valueOf(vl));
+                    break;
+                case 5:
+                    boolean v = false;
+                    System.out.println("¿Es o fue Best Seller?");
+                    v = in.nextBoolean();
+                    lb.libroIsbn(isbn).setBestSeller(v);
+                    break;
+                case 6:
+                    System.out.println("Introduzca la RUTA de la imagen de PORTADA:");
+                    vl = in.nextLine();
+                    lb.libroIsbn(isbn).setFechaPubli(Date.valueOf(vl));
+                    break;
+                
+                case 0:
+                    break;
+                
+                default:
+                    break;
+            }
+        }
     }
     
     

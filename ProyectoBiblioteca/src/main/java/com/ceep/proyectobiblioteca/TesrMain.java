@@ -53,7 +53,7 @@ public class TesrMain {
         
         while (opcion != 0){
             
-            System.out.println("\tBIBLIOTECA VIRTUAL");
+            System.out.println("\tBIBLIOTECA VIRTUAL\n");
             System.out.println("INICIAR SESIÓN");
             System.out.println("-----------------------------\n");
             System.out.println("1 - INICIAR SESIÓN COMO ADMIN");
@@ -244,21 +244,29 @@ public class TesrMain {
                 
                 switch(entidad){
                     case "LIBRO":
+                        Libro lb = new Libro();
                         switch (opcion) {
                             case 1:
-                                // Perform "original number" case.
+                                System.out.println("LISTA DE LIBROS");
+                                for (int i = 0; i < lb.listarLibro().size(); i++) {
+                                    System.out.println(lb.listarLibro().get(i));
+                                }
                                 break;
                             case 2:
-                                // Perform "encrypt number" case.
+                                System.out.println("INTRODUCIR LIBRO:");
+                                lb.darAlta();
                                 break;
                             case 3:
-                                // Perform "decrypt number" case.
+                                System.out.println("ACTUALIZAR LIBRO");
+                                lb.libroActualizar();
                                 break;
                             case 4:
+                                System.out.println("ELIMINAR LIBRO");
+                                lb.eliminarLibro();
                                 // Perform "decrypt number" case.
                                 break;
                             case 0:
-                                
+                                lb.actualizarArchivoLibros();
                                 System.out.println("");
                                 break;
                             default:

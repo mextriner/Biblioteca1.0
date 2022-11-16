@@ -7,6 +7,7 @@ package Dominio;
 
 import Datos.AutorDao;
 import ManejoArchivos.ManejoDeArchivos;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Scanner;
  *
  * @author MaximoMestriner
  */
-public class Autor {
+public class Autor implements Serializable{
     private int idautor;
     private String nombre;
     private String apellido;

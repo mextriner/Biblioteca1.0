@@ -11,6 +11,7 @@
     import Dominio.Autor;
 import Dominio.Autor;
     import static AccesoDatos.Conexion.getConnection;
+import Interfaces.InterfaceAutor;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
     import java.sql.ResultSet;
@@ -23,7 +24,7 @@ import Dominio.Autor;
  *
  * @author MaximoMestriner
  */
-public class AutorDao {
+public class AutorDao implements InterfaceAutor{
     private static final String SQL_SELECT ="SELECT * FROM autor ORDER BY nombre";
     private static final String SQL_INSERT = "INSERT INTO autor (nombre,"
             + "apellido,nacionalidad, fechaNac) VALUES (?,?,?,?)";

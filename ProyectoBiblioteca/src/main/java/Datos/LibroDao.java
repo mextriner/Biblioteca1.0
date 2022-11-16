@@ -53,8 +53,8 @@ public class LibroDao {
         
         while(rs.next()){
             String isbn = rs.getString("isbn");
-            String titulo = rs.getString("nombre");
-            String idioma = rs.getString("apellido");
+            String titulo = rs.getString("titulo");
+            String idioma = rs.getString("fechaPublicacion");
             boolean bestSeller = rs.getBoolean("bestSeller");
             Date fechaPubli = rs.getDate("fechaPublicacion");
             
