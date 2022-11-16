@@ -35,6 +35,7 @@ public class UsuarioDao implements InterfaceUsuario{
     
     private static final String SQL_UPDATE = "UPDATE usuario SET "
             + "usuario = ?,"
+            + "clave = AES_ENCRYPT(?,'key'),"
             + "nombre = ?,"
             + "apellido = ?,"
             + "fechaNac = ?"
@@ -219,10 +220,11 @@ public class UsuarioDao implements InterfaceUsuario{
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             stmt.setString(1, usuario.getUsuario());
-            stmt.setString(2, usuario.getNombre());
-            stmt.setString(3, usuario.getApellido());
-            stmt.setDate(4, usuario.getFechaNac());
-            stmt.setString(5, prevUsuario);
+            stmt.setString(2, usuario.getClave());
+            stmt.setString(3, usuario.getNombre());
+            stmt.setString(4, usuario.getApellido());
+            stmt.setDate(5, usuario.getFechaNac());
+            stmt.setString(6, prevUsuario);
             
             //4. EJECUTO LA QUERY
             
@@ -261,10 +263,11 @@ public class UsuarioDao implements InterfaceUsuario{
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             stmt.setString(1, usuario.getUsuario());
-            stmt.setString(2, usuario.getNombre());
-            stmt.setString(3, usuario.getApellido());
-            stmt.setDate(4, usuario.getFechaNac());
-            stmt.setString(5, usuario.getUsuario());
+            stmt.setString(2, usuario.getClave());
+            stmt.setString(3, usuario.getNombre());
+            stmt.setString(4, usuario.getApellido());
+            stmt.setDate(5, usuario.getFechaNac());
+            stmt.setString(6, usuario.getUsuario());
             
             //4. EJECUTO LA QUERY
             

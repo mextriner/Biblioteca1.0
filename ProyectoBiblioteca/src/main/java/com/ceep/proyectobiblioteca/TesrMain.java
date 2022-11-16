@@ -105,14 +105,15 @@ public class TesrMain {
                 case 3:
                     // FUNCION INICIAR SESIÓN (USUARIO)
                     Usuario usuarioAlta = null;
-                    usuarioAlta=usuarioAlta.darAlta();
+                    usuarioAlta = usuarioAlta.darAlta();
                     menuEntidad(false);
                     break;
                 case 0:
+                    Usuario.actualizarArchivoUsuarios();
                     System.out.println("");
                     break;
                 default:
-                    Usuario.actualizarArchivoUsuarios();
+                    
                     System.out.println("Seleccione una opción entre 0 y 3");
                     // The user input an unexpected choice.
             }
@@ -508,12 +509,15 @@ public class TesrMain {
                     switch(opcion){
                         case 1:
                             //ACTUALIZAR
+                            Usuario.actualizarUsuario(usuario.getUsuario());
                             break;
                         case 2:
                             //ELIMINAR
+                            Usuario.eliminarUsuario(usuario);
                             break;
                         case 0:
                             //ACTUALIZAR FICHERO USUARIOS Y SALIR
+                            Usuario.actualizarArchivoUsuarios();
                             break;
                     }
                     
