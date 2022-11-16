@@ -3,62 +3,62 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
 
-import static AccesoDatos.Conexion.close;
-import static AccesoDatos.Conexion.getConnection;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+    package Datos;
+    
+    
+    import static AccesoDatos.Conexion.close;
+    import Dominio.Autor;
+import Dominio.Autor;
+    import static AccesoDatos.Conexion.getConnection;
+    import java.sql.Connection;
+    import java.sql.PreparedStatement;
+    import java.sql.ResultSet;
+    import java.sql.SQLException;
+    import java.sql.Date;
+    import java.util.ArrayList;
+    import java.util.List;
 
 /**
  *
  * @author MaximoMestriner
  */
-public class LibroDao {
-     private static final String SQL_SELECT ="SELECT * FROM libro";
-    private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo,"
-            + "idioma, fechaPublicacion, bestSeller, portada) VALUES (?,?,?,?,?,?)";
+public class AutorDao {
+    private static final String SQL_SELECT ="SELECT * FROM autor ORDER BY nombre";
+    private static final String SQL_INSERT = "INSERT INTO autor (nombre,"
+            + "apellido,nacionalidad, fechaNac) VALUES (?,?,?,?)";
     
-    private static final String SQL_UPDATE = "UPDATE libro SET "
-            + "titulo = ?,"
-            + "idioma = ?,"
-            + "fechaPublicacion = ?,"
-            + "bestSeller = ?,"
-            + "portada = ?"
-            + "WHERE isbn = ?";
+    private static final String SQL_UPDATE = "UPDATE autor SET "
+            + "nombre = ?,"
+            + "apellido = ?,"
+            + "nacionalidad = ?,"
+            + "fechaNac = ? WHERE idAutor = ?";
     
-    private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
+    private static final String SQL_DELETE = "DELETE FROM autor WHERE idAutor = ?";
     
 //    Método que nos lista todas las personas de nuestro sistema
-    public List<Libro> seleccionar() throws SQLException {
+    public List<Autor> seleccionar() throws SQLException {
         //INICIALIZAR VARIABLES
         
         Connection conn = null;
         PreparedStatement stmt= null;
         ResultSet rs = null;
-        Libro libro = null;
-        List<Libro> libros = new ArrayList<>();
+        Autor autor = null;
+        List<Autor> autores = new ArrayList<>();
         
         conn = getConnection();
         stmt = conn.prepareStatement(SQL_SELECT);
         rs = stmt.executeQuery();
         
         while(rs.next()){
-            String isbn = rs.getString("isbn");
-            String titulo = rs.getString("nombre");
-            String idioma = rs.getString("apellido");
-            boolean bestSeller = rs.getBoolean("bestSeller");
-            Date fechaPubli = rs.getDate("fechaPublicacion");
+            int idautor = rs.getInt("idAutor");
+            String nombre = rs.getString("nombre");
+            String apellido = rs.getString("apellido");
+            String nacionalidad = rs.getString("nacionalidad");
+            Date fechaNac = rs.getDate("fechaNac");
             
             //Instancio un nuevo objeto
-            libros.add(new Libro(isbn, titulo,idioma,fechaPubli,bestSeller));
+            autores.add(new Autor(idautor, nombre,apellido,nacionalidad,fechaNac));
             
         }
         
@@ -67,16 +67,13 @@ public class LibroDao {
         close(stmt);
         close(conn);
         
-        return libros;
+        return autores;
     }
     
-    
-    
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
-    public int insertar (Libro libro){
+    public int insertar (Autor autor){
         Connection conn =null;
         PreparedStatement stmt=null;
-        FileInputStream imagen = null;
         int registro = 0;
         
         try{
@@ -88,23 +85,13 @@ public class LibroDao {
             
             stmt = conn.prepareStatement(SQL_INSERT);
             
-            try{
-                imagen = new FileInputStream(libro.getPortada());
-            }catch(IOException IOex){
-                IOex.printStackTrace(System.out);
-            }
             
-            
-            
-                
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setString(1, libro.getIsbn());
-            stmt.setString(2, libro.getTitulo());
-            stmt.setString(3, libro.getIdioma());
-            stmt.setDate(4, libro.getFechaPubli());
-            stmt.setBoolean(5, libro.isBestSeller());
-            stmt.setBlob(6, imagen);
+            stmt.setString(1, autor.getNombre());
+            stmt.setString(2, autor.getApellido());
+            stmt.setString(3, autor.getNacionalidad());
+            stmt.setDate(4, autor.getFechaNac());
             
             
             //4. EJECUTO LA QUERY
@@ -127,7 +114,7 @@ public class LibroDao {
         return registro;
     }
     
-    public int actualizar (Libro libro){
+    public int actualizar (Autor autor){
         Connection conn =null;
         PreparedStatement stmt=null;
         int registro = 0;
@@ -144,11 +131,11 @@ public class LibroDao {
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setString(1, libro.getIsbn());
-            stmt.setString(1, libro.getTitulo());
-            stmt.setString(2, libro.getIdioma());
-            stmt.setDate(4, libro.getFechaPubli());
-            stmt.setBoolean(5, libro.isBestSeller());
+            stmt.setString(1, autor.getNombre());
+            stmt.setString(2, autor.getApellido());
+            stmt.setString(3, autor.getNacionalidad());
+            stmt.setDate(4, autor.getFechaNac());
+            stmt.setInt(5, autor.getIdautor());
             
             
             //4. EJECUTO LA QUERY
@@ -171,7 +158,7 @@ public class LibroDao {
         return registro;
     }
     
-    public int eliminar (Libro libro){
+    public int eliminar (Autor autor){
         Connection conn =null;
         PreparedStatement stmt=null;
         int registro = 0;
@@ -188,7 +175,7 @@ public class LibroDao {
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setString(1, libro.getIsbn());
+            stmt.setInt(1, autor.getIdautor());
             
             
             //4. EJECUTO LA QUERY

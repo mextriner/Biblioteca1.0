@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Datos;
 
+import Dominio.Usuario;
 import Interfaces.InterfaceUsuario;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
@@ -25,21 +26,22 @@ public class UsuarioDao implements InterfaceUsuario{
     private static final String SQL_SELECT ="SELECT * FROM usuario";
     
     private static final String SQL_DECRYPT = "SELECT usuario, "
-            + "CAST(AES_DECRYPT(clave,'key')AS CHAR)AS clave, fechaAlt FROM usuario";
+            + "CAST(AES_DECRYPT(clave,'key')AS CHAR)AS clave, fechaAlt, "
+            + "nombre, apellido, fechaNac FROM usuario";
     
     private static final String SQL_INSERT = "INSERT INTO usuario (usuario,"
             + "clave,fechaAlt) VALUES (?,AES_ENCRYPT(?,'key'),?)";
     
-    private static final String SQL_INSERT_ALL = "INSERT INTO usuario (nombre,"
+    private static final String SQL_INSERT_ALL = "INSERT INTO usuario (usuario,"
             + "apellido,direccion, fechaNac) VALUES (?,?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE usuario SET "
-            + "usuario = ?,"
             + "clave = AES_ENCRYPT(?,'key'),"
             + "nombre = ?,"
             + "apellido = ?,"
-            + "fechaNac = ?"
-            + "WHERE usuario = ?";
+            + "fechaNac = ? WHERE usuario = ?";
+     private static final String SQL_UPDATE_ID = "UPDATE usuario SET "
+            + "usuario = ? WHERE usuario = ?;";
     
     private static final String SQL_DELETE = "DELETE FROM usuario WHERE usuario = ?";
     
@@ -97,9 +99,13 @@ public class UsuarioDao implements InterfaceUsuario{
             String usuario = rs.getString("usuario");
             String clave = rs.getString("clave");
             Date fechaAlt = rs.getDate("fechaAlt");
+            String nombre = rs.getString("nombre");
+            String apellido = rs.getString("nombre");
+            Date fechaNac = rs.getDate("fechaNac");
+
             
             //Instancio un nuevo objeto
-            usuarios.add(new Usuario(usuario,clave,fechaAlt));
+            usuarios.add(new Usuario(usuario,clave,fechaAlt,nombre,apellido,fechaNac));
             
         }
         
@@ -203,7 +209,7 @@ public class UsuarioDao implements InterfaceUsuario{
         return registro;
     }
     
-    public int actualizar (Usuario usuario, String prevUsuario){
+    public int actualizarId (Usuario usuario, String prevUsuario){
         Connection conn =null;
         PreparedStatement stmt=null;
         int registro = 0;
@@ -215,16 +221,12 @@ public class UsuarioDao implements InterfaceUsuario{
             
             //2. PREPARO LA INSTRUCCIÓN EJECUTABLE EN MYSQL
             
-            stmt = conn.prepareStatement(SQL_UPDATE);
+            stmt = conn.prepareStatement(SQL_UPDATE_ID);
             
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             stmt.setString(1, usuario.getUsuario());
-            stmt.setString(2, usuario.getClave());
-            stmt.setString(3, usuario.getNombre());
-            stmt.setString(4, usuario.getApellido());
-            stmt.setDate(5, usuario.getFechaNac());
-            stmt.setString(6, prevUsuario);
+            stmt.setString(2, prevUsuario);
             
             //4. EJECUTO LA QUERY
             
@@ -262,12 +264,11 @@ public class UsuarioDao implements InterfaceUsuario{
             
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
-            stmt.setString(1, usuario.getUsuario());
-            stmt.setString(2, usuario.getClave());
-            stmt.setString(3, usuario.getNombre());
-            stmt.setString(4, usuario.getApellido());
-            stmt.setDate(5, usuario.getFechaNac());
-            stmt.setString(6, usuario.getUsuario());
+            stmt.setString(1, usuario.getClave());
+            stmt.setString(2, usuario.getNombre());
+            stmt.setString(3, usuario.getApellido());
+            stmt.setDate(4, usuario.getFechaNac());
+            stmt.setString(5, usuario.getUsuario());
             
             //4. EJECUTO LA QUERY
             

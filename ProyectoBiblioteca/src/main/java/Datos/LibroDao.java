@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dominio;
+package Datos;
 
+import Dominio.Libro;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -17,41 +20,46 @@ import java.util.List;
 
 /**
  *
- * @author MaximoMestrienr
+ * @author MaximoMestriner
  */
-public class EditorialDao {
-    private static final String SQL_SELECT ="SELECT * FROM editorial";
-    private static final String SQL_INSERT = "INSERT INTO autor (idEditorial,"
-            + "nombre,direccion) VALUES (?,?,?)";
+public class LibroDao {
+     private static final String SQL_SELECT ="SELECT * FROM libro";
+    private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo,"
+            + "idioma, fechaPublicacion, bestSeller, portada) VALUES (?,?,?,?,?,?)";
     
-    private static final String SQL_UPDATE = "UPDATE editorial SET "
-            + "nombre = ?,"
-            + "direccion = ?,"
-            + "WHERE idEditorial = ?";
+    private static final String SQL_UPDATE = "UPDATE libro SET "
+            + "titulo = ?,"
+            + "idioma = ?,"
+            + "fechaPublicacion = ?,"
+            + "bestSeller = ?,"
+            + "portada = ?"
+            + "WHERE isbn = ?";
     
-    private static final String SQL_DELETE = "DELETE FROM editorial WHERE idEditorial = ?";
+    private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
     
 //    Método que nos lista todas las personas de nuestro sistema
-    public List<Editorial> seleccionar() throws SQLException {
+    public List<Libro> seleccionar() throws SQLException {
         //INICIALIZAR VARIABLES
         
         Connection conn = null;
         PreparedStatement stmt= null;
         ResultSet rs = null;
-        Editorial editorial = null;
-        List<Editorial> editoriales = new ArrayList<>();
+        Libro libro = null;
+        List<Libro> libros = new ArrayList<>();
         
         conn = getConnection();
         stmt = conn.prepareStatement(SQL_SELECT);
         rs = stmt.executeQuery();
         
         while(rs.next()){
-            int ideditorial = rs.getInt("idEditorial");
-            String nombre = rs.getString("nombre");
-            String direccion = rs.getString("direccion");
+            String isbn = rs.getString("isbn");
+            String titulo = rs.getString("nombre");
+            String idioma = rs.getString("apellido");
+            boolean bestSeller = rs.getBoolean("bestSeller");
+            Date fechaPubli = rs.getDate("fechaPublicacion");
             
             //Instancio un nuevo objeto
-            editoriales.add(new Editorial(ideditorial, nombre,direccion));
+            libros.add(new Libro(isbn, titulo,idioma,fechaPubli,bestSeller));
             
         }
         
@@ -60,13 +68,16 @@ public class EditorialDao {
         close(stmt);
         close(conn);
         
-        return editoriales;
+        return libros;
     }
     
+    
+    
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
-    public int insertar (Editorial editorial){
+    public int insertar (Libro libro){
         Connection conn =null;
         PreparedStatement stmt=null;
+        FileInputStream imagen = null;
         int registro = 0;
         
         try{
@@ -78,12 +89,23 @@ public class EditorialDao {
             
             stmt = conn.prepareStatement(SQL_INSERT);
             
+            try{
+                imagen = new FileInputStream(libro.getPortada());
+            }catch(IOException IOex){
+                IOex.printStackTrace(System.out);
+            }
             
+            
+            
+                
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setInt(1, editorial.getIdEditorial());
-            stmt.setString(2, editorial.getNombre());
-            stmt.setString(3, editorial.getDireccion());
+            stmt.setString(1, libro.getIsbn());
+            stmt.setString(2, libro.getTitulo());
+            stmt.setString(3, libro.getIdioma());
+            stmt.setDate(4, libro.getFechaPubli());
+            stmt.setBoolean(5, libro.isBestSeller());
+            stmt.setBlob(6, imagen);
             
             
             //4. EJECUTO LA QUERY
@@ -106,7 +128,7 @@ public class EditorialDao {
         return registro;
     }
     
-    public int actualizar (Editorial editorial){
+    public int actualizar (Libro libro){
         Connection conn =null;
         PreparedStatement stmt=null;
         int registro = 0;
@@ -123,9 +145,11 @@ public class EditorialDao {
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setString(1, editorial.getNombre());
-            stmt.setString(2, editorial.getDireccion());
-            stmt.setInt(3, editorial.getIdEditorial());
+            stmt.setString(1, libro.getIsbn());
+            stmt.setString(1, libro.getTitulo());
+            stmt.setString(2, libro.getIdioma());
+            stmt.setDate(4, libro.getFechaPubli());
+            stmt.setBoolean(5, libro.isBestSeller());
             
             
             //4. EJECUTO LA QUERY
@@ -148,7 +172,7 @@ public class EditorialDao {
         return registro;
     }
     
-    public int eliminar (Editorial editorial){
+    public int eliminar (Libro libro){
         Connection conn =null;
         PreparedStatement stmt=null;
         int registro = 0;
@@ -165,7 +189,7 @@ public class EditorialDao {
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setInt(1, editorial.getIdEditorial());
+            stmt.setString(1, libro.getIsbn());
             
             
             //4. EJECUTO LA QUERY

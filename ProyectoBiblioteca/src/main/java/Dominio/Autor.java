@@ -5,6 +5,7 @@
  */
 package Dominio;
 
+import Datos.AutorDao;
 import ManejoArchivos.ManejoDeArchivos;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -185,7 +186,7 @@ public class Autor {
             System.out.println(autores().get(i).toString());
         }
         Scanner in = new Scanner (System.in);
-        System.out.println("Inserte el ID del autor que quiere eliminar");
+        System.out.println("Inserte el ID del autor que quiere actualizar");
         int id = in.nextInt();
         System.out.println("Pulse intro para continuar");
         in.nextLine();

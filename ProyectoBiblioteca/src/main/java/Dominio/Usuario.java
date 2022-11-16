@@ -5,8 +5,10 @@
  */
 package Dominio;
 
+import Datos.UsuarioDao;
 import ManejoArchivos.ManejoDeArchivos;
 import com.ceep.proyectobiblioteca.TesrMain;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ import java.util.Scanner;
  *
  * @author MaximoMestriner
  */
-public class Usuario {
+public class Usuario implements Serializable{
     private String usuario;
     private String clave;
     private Date fechaAlt;
@@ -122,12 +124,11 @@ public class Usuario {
                 + "º" + apellido + "º" + fechaNac + "º" +"/"  ;
     }
     
-    public static List <Usuario> usuarios(){
+    public static List <Usuario> ListarUsuarios(){
         UsuarioDao usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
-            List <Usuario> u = usuarioDao.seleccionar();
-            usuario = u;
+            usuario = usuarioDao.seleccionar();
         }catch(SQLException ex){
             ex.printStackTrace(System.out);
         }
@@ -136,12 +137,11 @@ public class Usuario {
     
     //UNA LISTA DE USUARIOS PERO SÓLO CON SU NOMBRE, CLAVE (DESENCRIPTADA) Y FECHA DE REGISTRO
     
-    public static List <Usuario> usuariosClave(){
+    public static List <Usuario> ListarUsuariosClave(){
         UsuarioDao usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
-            List <Usuario> u = usuarioDao.seleccionarUsuarioClave();
-            usuario = u;
+            usuario = usuarioDao.seleccionarUsuarioClave();
         }catch(SQLException ex){
             ex.printStackTrace(System.out);
         }
@@ -153,11 +153,10 @@ public class Usuario {
     public static void actualizarArchivoUsuarios(){
         Usuario usuario = null;
         String contenido ="";
-        for (int i = 0; i < usuario.usuarios().size(); i++) {
+        for (int i = 0; i < usuario.ListarUsuarios().size(); i++) {
             
-            contenido += (usuario.usuarios().get(i).escribir());
+            contenido += (usuario.ListarUsuarios().get(i).escribir());
         }
-        System.out.println(contenido);
         ManejoDeArchivos.escribirArchivo("usuario.txt",contenido);
     }
     
@@ -180,27 +179,28 @@ public class Usuario {
         return fileUsur;
     }
     
-    public static Usuario comprobarClave(String primaryKey){
+    public static Usuario comprobarId(String primaryKey){
         Usuario usur = null;
-        for (int i = 0; i < usuariosClave().size(); i++) {
-            if(usuariosClave().get(i).getUsuario().equals(primaryKey)){
-                usur = usuariosClave().get(i);
+        for (int i = 0; i < ListarUsuariosClave().size(); i++) {
+//            System.out.println(ListarUsuariosClave().get(i).toString());
+            if(ListarUsuariosClave().get(i).getUsuario().equals(primaryKey)){
+                usur = ListarUsuariosClave().get(i);
             }
         }
         return usur;
     }
     
+   
+    
     
     
     //Comprueba si el nombre introducido ya existe
-    public static boolean entrada(String usuario){
+    public static boolean entrada(String nom){
         Usuario usr = null;
         boolean existe = false;
-        for (int i = 0; i < usr.usuarios().size() ; i++) {
-            if(usuario.equals(usr.usuarios().get(i).usuario)){
+        for (int i = 0; i < usr.ListarUsuarios().size() ; i++) {
+            if(nom.equals(usr.ListarUsuarios().get(i).getUsuario())){
                 existe = true;
-            }else{
-                existe = false;
             }
         }
         return existe;
@@ -220,7 +220,7 @@ public class Usuario {
             if (ac == 's'){
                 
                 UsuarioDao usuarioDao = new UsuarioDao();
-                usuarioDao.eliminar(comprobarClave(usu));
+                usuarioDao.eliminar(comprobarId(usu));
                 
             }else{
                 System.out.println("Operación cancelada.");
@@ -232,12 +232,12 @@ public class Usuario {
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca la contraseña:");
         String key = in.nextLine();
-        while(!key.equals(comprobarClave(usuraio.getUsuario()).getClave())){
+        while(!key.equals(comprobarId(usuraio.getUsuario()).getClave())){
             System.out.println("Contraseña incorrecta, pruebe de nuevo:");
             key = in.nextLine();
         }
 
-        System.out.println("¿Desea eliminar este usuario?");
+        System.out.println("¿Desea eliminar este usuario? sí(s) / no(n)");
         char ac = in.nextLine().charAt(0);
         while(ac != 's' && ac != 'n'){
             System.out.println("Introduzca si (s) o no (n)");
@@ -253,47 +253,15 @@ public class Usuario {
     }
     
     
-    public static Usuario iniciarSesion(){
-        Usuario usr = new Usuario();
-        String nom = "";
-        Scanner in = new Scanner (System.in);
-        System.out.println("Introduzca su usuario:");
-        nom = in.nextLine();
-        if(entrada(nom)){
-            System.out.println("Introduzca la contraseña:");
-            String clave = in.nextLine();
-            while(!clave.equals(comprobarClave(nom).clave)){
-                System.out.println("Contraseña incorrecta, pruebe de nuevo:");
-                clave = in.nextLine();
-            }
-            usr = comprobarClave(nom);
-        }else{
-            char ac;
-            System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / no(n)");
-            ac = in.nextLine().charAt(0);
-            while(ac != 's' && ac != 'n'){
-                System.out.println("Introduzca si (s) o no (n)");
-                ac = in.nextLine().charAt(0);
-            }
-            if (ac == 's'){
-                usr.darAlta();
-            }else{
-                System.out.println("Operación cancelada.");
-            }
-            
-        }
-        return usr;
-    }
-    
     
     public static void iniciarSesion(String admin){
         Usuario usr = null;
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca la contraseña de Administrador:");
-        String clave = in.nextLine();
-        while(!clave.equals(usr.comprobarClave(admin).clave)){
+        String key = in.nextLine();
+        while(!key.equals(usr.comprobarId(admin).clave)){
             System.out.println("Contraseña incorrecta, pruebe de nuevo:");
-            clave = in.nextLine();
+            key = in.nextLine();
         }
     }
     
@@ -311,10 +279,12 @@ public class Usuario {
         String clave = in.nextLine();
         Usuario usr = new Usuario(usar,clave,Date.valueOf(LocalDate.now()));
         usuarioDao.insertar(usr);
+        actualizarArchivoUsuarios();
         return usr;
     }
     
     public static void actualizarUsuario(String usu){
+        Usuario u = comprobarId(usu);
          UsuarioDao usuarioDao = new UsuarioDao();
         int opcion;
         Scanner input = new Scanner(System.in);
@@ -323,13 +293,13 @@ public class Usuario {
         
         while (opcion != 0){
             
-            System.out.println("\t\t"+ comprobarClave(usu).getUsuario());
+            System.out.println("\n\n\n\t\t"+ u.getUsuario());
             System.out.println("ESCOJA EL CAMPO");
             System.out.println("-----------------------------\n");
-            System.out.println("1 - NOMBRE DE USUARIO");
-            System.out.println("2 - NOMBRE");
-            System.out.println("3 - APELLIDO");
-            System.out.println("4 - FECHA DE NACIMIENTO");
+            System.out.println("1 - NOMBRE DE USUARIO: " +u.usuario);
+            System.out.println("2 - NOMBRE: " +u.nombre);
+            System.out.println("3 - APELLIDO: " +u.apellido);
+            System.out.println("4 - FECHA DE NACIMIENTO: " +u.fechaNac);
             System.out.println("5 - CONTRASEÑA");
             System.out.println("0 - Salir");
             System.out.println("Selecciones una opción");
@@ -341,67 +311,71 @@ public class Usuario {
                     // CAMBIO NOMBRE DE USUARIO
                     System.out.println("Introduzca su contraseña:");
                     String key = input.nextLine();
-                    while(!comprobarClave(usu).getClave().equals(key)){
+                    while(!u.getClave().equals(key)){
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
-                    String prevUsuario = comprobarClave(usu).getUsuario();
+                    String prevUsuario = u.getUsuario();
                     System.out.println("Introduzca el nuevo nombre de usuario:");
                     String nom = input.nextLine();
-                    comprobarClave(usu).setNombre(nom);
-                    usuarioDao.actualizar(comprobarClave(usu), prevUsuario);
+                    while(entrada(nom)){
+                        System.out.println("Ese nombre ya existe, introduzca otro");
+                        nom = input.nextLine();
+                    }
+                    u.setUsuario(nom);
+                    usuarioDao.actualizarId(u, prevUsuario);
                     break;
                 case 2:
                     // CAMBIAR NOMBRE
                     System.out.println("Introduzca su contraseña:");
                     key = input.nextLine();
-                    while(!comprobarClave(usu).getClave().equals(key)){
+                    while(!u.getClave().equals(key)){
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
                     System.out.println("Introduzca su nombre:");
                     nom = input.nextLine();
-                    comprobarClave(usu).setNombre(nom);
-                    usuarioDao.actualizar(comprobarClave(usu));
+                    u.setNombre(nom);
+                    usuarioDao.actualizar(u);
                     break;
                 case 3:
                     // CAMBIAR APELLIDOS
                     System.out.println("Introduzca su contraseña:");
                     key = input.nextLine();
-                    while(!comprobarClave(usu).getClave().equals(key)){
+                    while(!u.getClave().equals(key)){
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
                     System.out.println("Introduzca sus apellidos:");
                     nom = input.nextLine();
-                    comprobarClave(usu).setApellido(nom);
-                    usuarioDao.actualizar(comprobarClave(usu));
+                    u.setApellido(nom);
+                    usuarioDao.actualizar(u);
                     break;
                 case 4:
                     // CAMBIAR FECHA DE NACIMIENTO
                     System.out.println("Introduzca su contraseña:");
                     key = input.nextLine();
-                    while(!comprobarClave(usu).getClave().equals(key)){
+                    while(!u.getClave().equals(key)){
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
-                    System.out.println("Introduzca su fecha de nacimiento:");
+                    System.out.println("Introduzca su fecha de nacimiento (aaaa/mm/dd):");
                     nom = input.nextLine();
-                    comprobarClave(usu).setFechaNac(Date.valueOf(nom));
-                    usuarioDao.actualizar(comprobarClave(usu));
+                    u.setFechaNac(Date.valueOf(nom));
+                    usuarioDao.actualizar(u);
                     break;
                 case 5:
                     // CAMBIAR CONTRASEÑA
                     System.out.println("Introduzca su antigua contraseña:");
                     key = input.nextLine();
-                    while(!comprobarClave(usu).getClave().equals(key)){
+                    while(!u.getClave().equals(key)){
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
                     System.out.println("Introduzca la nueva contraseña:");
                     nom = input.nextLine();
-                    comprobarClave(usu).setClave(nom);
-                    usuarioDao.actualizar(comprobarClave(usu));
+                    u.setClave(nom);
+                    usuarioDao.actualizar(u);
                     
                     break;
                 case 0:

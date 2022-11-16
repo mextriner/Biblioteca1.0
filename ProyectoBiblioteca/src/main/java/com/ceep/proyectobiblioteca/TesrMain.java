@@ -6,15 +6,14 @@
 package com.ceep.proyectobiblioteca;
 
 import Dominio.Autor;
-import Dominio.AutorDao;
+import Datos.AutorDao;
 import Dominio.Libro;
-import Dominio.LibroDao;
+import Datos.LibroDao;
 import Dominio.Usuario;
-import Dominio.UsuarioDao;
+import Datos.UsuarioDao;
+import static Dominio.Usuario.entrada;
 import ManejoArchivos.ManejoDeArchivos;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -35,44 +34,18 @@ public class TesrMain {
     public static Usuario administrador = new Usuario("admin","1234");
     
     public static Usuario usuario = new Usuario();
+    
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        
         menu();
         
- 
-        
-        //Recorro el List de autores y añado a traves del id los autores en el archivp de texto
-
-        /*for (int i = 1; i <= autor.autores().size(); i++) {
-            ManejoDeArchivos.agregarArchivo("autores.txt",autor.autor(i).escribir());
-        }*/
-
-
-//        Usuario usuario = new Usuario("mextrienr","1234");
-//        
-//        usuarioDao.insertar(usuario);
-//        for (int i = 0; i < usuario.usuarios().size(); i++) {
-//            System.out.println(usuario.usuarios().get(i).toString());
-//            ManejoDeArchivos.agregarArchivo("usuario.txt",usuario.usuarios().get(i).escribir());
-//        }
-    
-//        Usuario usuario = null;
-//        usuario = usuario.archivoPk("fran");
-//        System.out.println(usuario.toString());
-
-//        LibroDao libroDao = new LibroDao();
-//        Libro libro = new Libro ("987987987", "El nombre del viento", "español",Date.valueOf("2000-01-01"),true, "C:/Users/Alumno Mañana/Documents/NetBeansProjects/Biblioteca1.0/img/endv.jpg");
-//        System.out.println(libro);
-//        libroDao.insertar(libro);
         
     }
     
     //MENU PARA SELECCIONAR EL TIPO DE USUARIO (ADMIN O USUARIO)
     
     public static void menu(){
-        
+        Usuario.actualizarArchivoUsuarios();
         int opcion;
         
         opcion = -1;
@@ -99,13 +72,38 @@ public class TesrMain {
                     break;
                 case 2:
                     // FUNCION INICIAR SESIÓN (USUARIO)
-                    usuario = Usuario.iniciarSesion();
-                    menuEntidad(false);
+                    System.out.println("Introduzca su usuario:");
+                    String nom = input.nextLine();
+                    if(usuario.entrada(nom)){
+                        System.out.println("Introduzca la contraseña:");
+                        String clave = input.nextLine();
+                        while(!clave.equals(Usuario.comprobarId(nom).getClave())){
+                            System.out.println("Contraseña incorrecta, pruebe de nuevo:");
+                            clave = input.nextLine();
+                        }
+                        usuario = Usuario.comprobarId(nom);
+                        menuEntidad(false);
+                    }else{
+                        char ac;
+                        System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / no(n)");
+                        ac = input.nextLine().charAt(0);
+                        while(ac != 's' && ac != 'n'){
+                            System.out.println("Introduzca si (s) o no (n)");
+                            ac = input.nextLine().charAt(0);
+                        }
+                        if (ac == 's'){
+                            usuario = usuario.darAlta();
+                        }else{
+                            System.out.println("Operación cancelada.");
+                            break;
+                        }
+
+                    }
+                    
                     break;
                 case 3:
-                    // FUNCION INICIAR SESIÓN (USUARIO)
-                    Usuario usuarioAlta = null;
-                    usuarioAlta = usuarioAlta.darAlta();
+                    // REGISTRAR
+                    usuario = usuario.darAlta();
                     menuEntidad(false);
                     break;
                 case 0:
@@ -126,6 +124,7 @@ public class TesrMain {
     //COMPRUEBA SI ES O NO ADMIN EN BASE A LO CUAL LE PERMITE ACCEDER A UNAS U OTRASENTIDADES
     
     public static void menuEntidad(boolean admin){
+        
         
         int opcion;
         
@@ -186,6 +185,8 @@ public class TesrMain {
                 }
             
             }else if(!admin){
+                
+                Usuario.actualizarArchivoUsuarios();
                 System.out.println("\n\n"+"USUARIO: "+ usuario.getUsuario());
                 System.out.println("-------------------------\n");
                 System.out.println("1 - LIBROS");
@@ -231,7 +232,7 @@ public class TesrMain {
         /***************************************************/
         while (opcion != 0){
             if(admin){
-                System.out.println("\n\n"+entidad);
+                System.out.println("\n\nADMINISTRADOR: "+entidad);
                 System.out.println("-------------------------\n");
                 System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
@@ -265,7 +266,6 @@ public class TesrMain {
                         }
                         break;
                     case "AUTOR":
-                        AutorDao autorDao = new AutorDao();
                         switch (opcion) {
                             case 1:
                                 
@@ -387,8 +387,8 @@ public class TesrMain {
                         switch (opcion) {
                             case 1:
                                 // VISUALIZAR USUARIOS
-                                for (int i = 0; i < Usuario.usuarios().size(); i++) {
-                                    System.out.println(Usuario.usuarios().get(i).toString());
+                                for (int i = 0; i < Usuario.ListarUsuarios().size(); i++) {
+                                    System.out.println(Usuario.ListarUsuarios().get(i).toString());
                                 }
                                 break;
                             case 2:
@@ -414,6 +414,7 @@ public class TesrMain {
                 }
             }else if(!admin){
                 if (!entidad.equals("CUENTA")){
+                    
                     
                     System.out.println("\n\n"+ entidad +": "+ usuario.getUsuario());
                     System.out.println("-------------------------\n");
@@ -514,6 +515,10 @@ public class TesrMain {
                         case 2:
                             //ELIMINAR
                             Usuario.eliminarUsuario(usuario);
+                            Usuario.actualizarArchivoUsuarios();
+                            System.exit(0);
+                            opcion = 0;
+                            
                             break;
                         case 0:
                             //ACTUALIZAR FICHERO USUARIOS Y SALIR
@@ -529,4 +534,5 @@ public class TesrMain {
             
         }
     }
+ 
 }
