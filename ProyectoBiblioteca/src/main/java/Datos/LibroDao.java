@@ -32,8 +32,7 @@ public class LibroDao {
             + "idioma = ?,"
             + "fechaPublicacion = ?,"
             + "bestSeller = ?,"
-            + "portada = ?"
-            + "WHERE isbn = ?";
+            + "portada = ? WHERE isbn = ?";
     
     private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
     
@@ -54,7 +53,7 @@ public class LibroDao {
         while(rs.next()){
             String isbn = rs.getString("isbn");
             String titulo = rs.getString("titulo");
-            String idioma = rs.getString("fechaPublicacion");
+            String idioma = rs.getString("idioma");
             boolean bestSeller = rs.getBoolean("bestSeller");
             Date fechaPubli = rs.getDate("fechaPublicacion");
             
@@ -89,6 +88,8 @@ public class LibroDao {
             
             stmt = conn.prepareStatement(SQL_INSERT);
             
+            
+            //SE TRANSFORMA LA RUTA DE LA IMAGEN A FLIEINPUTSTREAM
             try{
                 imagen = new FileInputStream(libro.getPortada());
             }catch(IOException IOex){
@@ -131,8 +132,8 @@ public class LibroDao {
     public int actualizar (Libro libro){
         Connection conn =null;
         PreparedStatement stmt=null;
+        FileInputStream imagen = null;
         int registro = 0;
-        
         try{
              //1. ESTABLECER CONEXIÓN
         
@@ -142,14 +143,21 @@ public class LibroDao {
             
             stmt = conn.prepareStatement(SQL_UPDATE);
             
-            
+            //SE TRANSFORMA LA RUTA DE LA IMAGEN A FLIEINPUTSTREAM
+            try{
+                imagen = new FileInputStream(libro.getPortada());
+            }catch(IOException IOex){
+                IOex.printStackTrace(System.out);
+            }
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setString(1, libro.getIsbn());
+            
             stmt.setString(1, libro.getTitulo());
             stmt.setString(2, libro.getIdioma());
-            stmt.setDate(4, libro.getFechaPubli());
-            stmt.setBoolean(5, libro.isBestSeller());
+            stmt.setDate(3, libro.getFechaPubli());
+            stmt.setBoolean(4, libro.isBestSeller());
+            stmt.setBlob(5, imagen);
+            stmt.setString(6, libro.getIsbn());
             
             
             //4. EJECUTO LA QUERY

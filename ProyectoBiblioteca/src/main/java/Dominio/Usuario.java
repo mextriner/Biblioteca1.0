@@ -318,10 +318,16 @@ public class Usuario implements Serializable{
                     String prevUsuario = u.getUsuario();
                     System.out.println("Introduzca el nuevo nombre de usuario:");
                     String nom = input.nextLine();
-                    while(entrada(nom)){
-                        System.out.println("Ese nombre ya existe, introduzca otro");
-                        nom = input.nextLine();
+                    while(entrada(nom) || nom.isEmpty()){
+                        if(nom.equals("")){
+                            System.out.println("Este campo es obligatorio");;
+                            nom = input.nextLine();
+                        }else{
+                            System.out.println("Ese nombre ya existe, introduzca otro");
+                            nom = input.nextLine();
+                        }
                     }
+                    
                     u.setUsuario(nom);
                     usuarioDao.actualizarId(u, prevUsuario);
                     break;
@@ -335,6 +341,10 @@ public class Usuario implements Serializable{
                     }
                     System.out.println("Introduzca su nombre:");
                     nom = input.nextLine();
+                    while(nom.isEmpty()){
+                        System.out.println("Este campo es obligatorio");;
+                        nom = input.nextLine();
+                    }
                     u.setNombre(nom);
                     usuarioDao.actualizar(u);
                     break;

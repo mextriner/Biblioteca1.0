@@ -172,11 +172,17 @@ public class Libro implements Serializable{
     public static Libro darAlta(){
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca el ISBN del libro");
-        String isbn = in.nextLine();
-        while(entrada(isbn)){
-            System.out.println("Este libro ya existe."
+        String vl = in.nextLine();
+        while(entrada(vl) || vl.isEmpty()){
+            if(vl.isEmpty()){
+                System.out.println("Este campo es obligatorio");
+                vl = in.nextLine();
+            }else{
+                System.out.println("Este libro ya existe."
                     + "Introdúzcalo de nuevo.");
-            isbn = in.nextLine();
+                vl = in.nextLine();
+            }
+            
         }
         System.out.println("TÍTULO:");
         String titulo = in.nextLine();
@@ -203,15 +209,19 @@ public class Libro implements Serializable{
         }
         
         System.out.println("BESTSELLER:");
-        boolean bestSeller = in.nextBoolean();
+        boolean bestSeller = false;
+        System.out.println("¿Es o fue Best Seller?");
+        String v = in.nextLine().toLowerCase();
+        if(v.equals("si")){
+            bestSeller =true;
+        }
         
+        System.out.println("INTRODUZCA EL NOMBRE DEL ARCHIVO DE LA IMAGEN:");
+        v = "/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/"+in.nextLine();
         
-        System.out.println("RUTA DE IMAGEN DE LA PORTADA");
-        String ruta = in.nextLine();
-        
-        Libro libro = new Libro(isbn,titulo,idioma,Date.valueOf(fecha),bestSeller,ruta);
+        Libro libro = new Libro(vl,titulo,idioma,Date.valueOf(fecha),bestSeller,v);
         libroDao.insertar(libro);
-        actualizarArchivoLibros();
+       
         return libro;
     }
     
@@ -312,15 +322,19 @@ public class Libro implements Serializable{
                     lb.libroIsbn(isbn).setFechaPubli(Date.valueOf(vl));
                     break;
                 case 5:
-                    boolean v = false;
                     System.out.println("¿Es o fue Best Seller?");
-                    v = in.nextBoolean();
-                    lb.libroIsbn(isbn).setBestSeller(v);
+                    vl = in.nextLine().toLowerCase();
+                    if(vl.equals("si")){
+                        lb.libroIsbn(isbn).setBestSeller(true);
+                    }else{
+                        lb.libroIsbn(isbn).setBestSeller(false);
+                    }
+                    
                     break;
                 case 6:
-                    System.out.println("Introduzca la RUTA de la imagen de PORTADA:");
-                    vl = in.nextLine();
-                    lb.libroIsbn(isbn).setFechaPubli(Date.valueOf(vl));
+                    System.out.println("Introduzca el nombre de la imagen:");
+                    vl = "/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/"+in.nextLine();
+                    lb.libroIsbn(isbn).setPortada(vl);
                     break;
                 
                 case 0:

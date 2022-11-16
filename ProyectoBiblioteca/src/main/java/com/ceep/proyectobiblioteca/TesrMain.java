@@ -13,6 +13,7 @@ import Dominio.Usuario;
 import Datos.UsuarioDao;
 import static Dominio.Usuario.entrada;
 import ManejoArchivos.ManejoDeArchivos;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -38,7 +39,9 @@ public class TesrMain {
     public static void main(String[] args) {
         // TODO code application logic here
         menu();
-        
+//        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/jdt.jpg");
+//        LibroDao libroDao = new LibroDao();
+//        libroDao.actualizar(libro);
         
     }
     
@@ -266,7 +269,7 @@ public class TesrMain {
                                 // Perform "decrypt number" case.
                                 break;
                             case 0:
-                                lb.actualizarArchivoLibros();
+                                Libro.actualizarArchivoLibros();
                                 System.out.println("");
                                 break;
                             default:
@@ -310,15 +313,19 @@ public class TesrMain {
                     case "CATEGORÍA":
                         switch (opcion) {
                             case 1:
+                                System.out.println("EN CONSTRUCCIÓN");
                                 // Perform "original number" case.
                                 break;
                             case 2:
+                                System.out.println("EN CONSTRUCCIÓN");
                                 // Perform "encrypt number" case.
                                 break;
                             case 3:
+                                System.out.println("EN CONSTRUCCIÓN");
                                 // Perform "decrypt number" case.
                                 break;
                             case 4:
+                                System.out.println("EN CONSTRUCCIÓN");
                                 // Perform "decrypt number" case.
                                 break;
                             case 0:
@@ -427,9 +434,9 @@ public class TesrMain {
                     System.out.println("\n\n"+ entidad +": "+ usuario.getUsuario());
                     System.out.println("-------------------------\n");
                     System.out.println("1 - BUSCAR");
-                    System.out.println("2 - INSERTAR");
-                    System.out.println("3 - ACTUALIZAR");
-                    System.out.println("4 - ELIMINAR");
+                    System.out.println("2 - [EN DESARROLLO]");
+                    System.out.println("3 - [EN DESARROLLO]");
+                    System.out.println("4 - [EN DESARROLLO]");
                     System.out.println("0 - Salir");
                     opcion = input.nextInt();
                     input.nextLine();
@@ -467,12 +474,15 @@ public class TesrMain {
                                     // Perform "original number" case.
                                     break;
                                 case 2:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "encrypt number" case.
                                     break;
                                 case 3:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "decrypt number" case.
                                     break;
                                 case 4:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "decrypt number" case.
                                     break;
                                 case 0:
@@ -488,15 +498,19 @@ public class TesrMain {
 
                             switch (opcion) {
                                 case 1:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "original number" case.
                                     break;
                                 case 2:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "encrypt number" case.
                                     break;
                                 case 3:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "decrypt number" case.
                                     break;
                                 case 4:
+                                    System.out.println("EN CONSTRUCCIÓN");
                                     // Perform "decrypt number" case.
                                     break;
                                 case 0:
