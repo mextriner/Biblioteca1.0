@@ -8,6 +8,7 @@ package Datos;
 import Dominio.Editorial;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
+import Interfaces.InterfaceEditorial;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +20,9 @@ import java.util.List;
  *
  * @author MaximoMestrienr
  */
-public class EditorialDao {
+public class EditorialDao implements InterfaceEditorial{
     private static final String SQL_SELECT ="SELECT * FROM editorial";
-    private static final String SQL_INSERT = "INSERT INTO autor (nombre,direccion) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO editorial (nombre,direccion) VALUES (?,?)";
     
     private static final String SQL_UPDATE = "UPDATE editorial SET "
             + "nombre = ?,"
@@ -79,9 +80,8 @@ public class EditorialDao {
             
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
-            stmt.setInt(1, editorial.getIdEditorial());
-            stmt.setString(2, editorial.getNombre());
-            stmt.setString(3, editorial.getDireccion());
+            stmt.setString(1, editorial.getNombre());
+            stmt.setString(2, editorial.getDireccion());
             
             
             //4. EJECUTO LA QUERY

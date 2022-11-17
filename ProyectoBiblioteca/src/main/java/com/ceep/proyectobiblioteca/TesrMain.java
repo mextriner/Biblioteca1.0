@@ -6,15 +6,20 @@
 package com.ceep.proyectobiblioteca;
 
 import Datos.AutorDao;
+import Datos.EditorialDao;
 import Dominio.Autor;
 
 import Dominio.Libro;
 
 import Dominio.Usuario;
 import Datos.UsuarioDao;
+import Dominio.Editorial;
 import Interfaces.InterfaceAutor;
+import Interfaces.InterfaceEditorial;
 
 import Interfaces.InterfaceUsuario;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import java.util.Scanner;
 
@@ -28,8 +33,9 @@ public class TesrMain {
      * @param args the command line arguments
      */
     
-    InterfaceAutor autorDao = new AutorDao();
+    public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceUsuario usuarioDao = new UsuarioDao();
+    public static InterfaceEditorial editorialDao = new EditorialDao();
     
     //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
@@ -45,7 +51,15 @@ public class TesrMain {
     public static void main(String[] args) {
         // TODO code application logic here
         
-//        menu();
+        System.out.println("=========================BIENVENIDO A LA BIBLIOTECA VIRTUAL=================================");
+        System.out.println("Pulse intro para continuar");
+        input.nextLine();
+        
+//        Editorial editorial = new Editorial("Anaya","Avda. de Pardo Rosas");
+//        editorialDao.insertar(editorial);
+//        editorial.actualizarArchivoEditorial();
+        
+        menu();
 //        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"src/main/img/jdt.jpg");
 //        LibroDao libroDao = new LibroDao();
 //        libroDao.insertar(libro);
@@ -86,11 +100,20 @@ public class TesrMain {
                     String nom = input.nextLine();
                     //SI EL USUARIO EXISTE PUEDES INTRODUCIR TU CONTRASEÑA
                     if(usuario.entrada(nom)){
-                        System.out.println("Introduzca la contraseña:");
+                        System.out.println("Introduzca la contraseña o pulse intro para salir:");
                         String clave = input.nextLine();
+                        if(clave.isEmpty()){
+                            break;
+                        }
                         while(!clave.equals(Usuario.comprobarId(nom).getClave())){
-                            System.out.println("Contraseña incorrecta, pruebe de nuevo:");
+                            System.out.println("Contraseña incorrecta, pruebe de nuevo o pulse intro para salir:");
                             clave = input.nextLine();
+                            if(clave.isEmpty()){
+                                break;
+                            }
+                        }
+                        if(clave.isEmpty()){
+                                break;
                         }
                         
                         //LA VARIABLE GLOBAL usuario SE IGUALA AL Usuario CON EL
@@ -544,8 +567,22 @@ public class TesrMain {
                             break;
                     }
                 }else if (entidad.equals("CUENTA")){
+                    int edad;
+                    if(usuario.getFechaNac()==null && usuario.getFechaNac().toString().equals("") && usuario.getFechaNac().toString().contains(" ")){
+                        edad = 0;
+                    }else{
+                        edad = (int) ChronoUnit.YEARS.between(usuario.getFechaNac().toLocalDate(),LocalDate.now());
+                    }
+                    
                     System.out.println("\n\n"+"MI CUENTA: "+ usuario.getUsuario());
                     System.out.println("-------------------------\n");
+                    System.out.println("Mi Información");
+                    System.out.println("\tUsuario\t"+usuario.getUsuario());
+                    System.out.println("\tNombre\t"+usuario.getNombre());
+                    System.out.println("\tApellidos\t"+usuario.getApellido());
+                    if(edad != 0){
+                        System.out.println("\t\tEDAD: "+edad+" AÑOS");
+                    }
                     System.out.println("1 - ACTUALIZAR");
                     System.out.println("2 - ELIMINAR");
                     System.out.println("0 - Salir");

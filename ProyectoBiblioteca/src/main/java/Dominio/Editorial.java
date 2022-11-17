@@ -4,11 +4,18 @@
  */
 package Dominio;
 
+import Datos.EditorialDao;
+import Interfaces.InterfaceEditorial;
+import ManejoArchivos.ManejoDeArchivos;
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author MaximoMestriner
  */
-public class Editorial {
+public class Editorial implements Serializable{
     int idEditorial;
     String nombre;
     String direccion;
@@ -22,6 +29,9 @@ public class Editorial {
     public Editorial(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
+    }
+
+    public Editorial() {
     }
 
     public int getIdEditorial() {
@@ -55,5 +65,28 @@ public class Editorial {
     
     public String escribir() {
         return   idEditorial + "º" + nombre + "º" + direccion + '/';
+    }
+    
+    
+    public static List <Editorial> ListarEditorial(){
+        InterfaceEditorial editorialDao = new EditorialDao();
+        List <Editorial> editorial = null;
+        try{
+            editorial = editorialDao.seleccionar();
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }
+        return editorial;
+    }
+    
+    
+    public static void actualizarArchivoEditorial(){
+        Usuario usuario = null;
+        String contenido ="";
+        for (int i = 0; i < ListarEditorial().size(); i++) {
+            
+            contenido += (ListarEditorial().get(i).escribir());
+        }
+        ManejoDeArchivos.escribirArchivo("editorial.txt",contenido);
     }
 }

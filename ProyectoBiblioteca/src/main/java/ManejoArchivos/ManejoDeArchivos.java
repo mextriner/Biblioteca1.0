@@ -21,7 +21,8 @@ import java.util.Scanner;
 public class ManejoDeArchivos {
     
     public static void crearArchivo(String nombre){
-        File archivo = new File(nombre);
+        String direccion = "src/main/java/Datos/"+nombre;
+        File archivo = new File(direccion);
         try{
             PrintWriter salida = new PrintWriter(archivo);
             salida.close();
@@ -33,8 +34,10 @@ public class ManejoDeArchivos {
     
     //DESCARTA EL CONTENIDO EXISTENTE Y AÑADE EL NUEVO
     public static void escribirArchivo(String nombre, String contenido){
+        String direccion = "src/main/java/Datos/"+nombre;
         PrintWriter salida = null;
-        File archivo = new File(nombre);
+        File archivo = new File(direccion);
+        
          try{
             salida = new PrintWriter(archivo);
             salida.print(contenido);
@@ -50,8 +53,9 @@ public class ManejoDeArchivos {
     
     //AGREGA CONTENIDO ADEMÁS DEL EXISTENTE
     public static void agregarArchivo(String nombre, String contenido){
+        String direccion = "src/main/java/Datos/"+nombre;
         PrintWriter salida = null;
-        File archivo = new File(nombre);
+        File archivo = new File(direccion);
         try {
            salida = new PrintWriter(new FileWriter(nombre,true));
            salida.print(contenido);
@@ -67,7 +71,8 @@ public class ManejoDeArchivos {
     
     
      public static String cadenaArchivo(String nombre){
-         File archivo = new File(nombre);
+         String direccion = "src/main/java/Datos/"+nombre;
+         File archivo = new File(direccion);
          BufferedReader entrada = null;
          String total = "";
         try {
@@ -89,7 +94,8 @@ public class ManejoDeArchivos {
      }
      
      public static void leerArchivo(String nombre){
-         File archivo = new File(nombre);
+         String direccion = "src/main/java/Datos/"+nombre;
+         File archivo = new File(direccion);
          BufferedReader entrada = null;
         try {
             entrada = new BufferedReader (new FileReader(archivo));
@@ -107,7 +113,8 @@ public class ManejoDeArchivos {
      }
      
      public static void leerArchivoPorPalabra(String nombre){
-         File archivo = new File(nombre);
+         String direccion = "src/main/java/Datos/"+nombre;
+         File archivo = new File(direccion);
          Scanner entrada = null;
          
         try {

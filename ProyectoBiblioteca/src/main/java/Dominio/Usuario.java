@@ -211,9 +211,9 @@ public class Usuario implements Serializable{
         System.out.println("Introduzca el usuario que quiere eliminar:");
         String usu = in.nextLine();
         if(entrada(usu)){
-            System.out.println("¿Desea eliminar este usuario?");
+            System.out.println("¿Desea eliminar este usuario? si (s) o no (n)");
             char ac = in.nextLine().charAt(0);
-            while(ac != 's' || ac != 'n'){
+            while(ac != 's' && ac != 'n'){
                 System.out.println("Introduzca si (s) o no (n)");
                 ac = in.nextLine().charAt(0);
             }
