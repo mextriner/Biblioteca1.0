@@ -9,7 +9,6 @@ import Dominio.Editorial;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,13 +21,11 @@ import java.util.List;
  */
 public class EditorialDao {
     private static final String SQL_SELECT ="SELECT * FROM editorial";
-    private static final String SQL_INSERT = "INSERT INTO autor (idEditorial,"
-            + "nombre,direccion) VALUES (?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO autor (nombre,direccion) VALUES (?,?,?)";
     
     private static final String SQL_UPDATE = "UPDATE editorial SET "
             + "nombre = ?,"
-            + "direccion = ?,"
-            + "WHERE idEditorial = ?";
+            + "direccion = ?, WHERE idEditorial = ?";
     
     private static final String SQL_DELETE = "DELETE FROM editorial WHERE idEditorial = ?";
     

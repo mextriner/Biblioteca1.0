@@ -8,6 +8,7 @@ package Datos;
 import Dominio.Libro;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
+import Interfaces.InterfaceLibro;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author MaximoMestriner
  */
-public class LibroDao {
+public class LibroDao implements InterfaceLibro{
      private static final String SQL_SELECT ="SELECT * FROM libro";
     private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo,"
             + "idioma, fechaPublicacion, bestSeller, portada) VALUES (?,?,?,?,?,?)";
@@ -37,7 +38,7 @@ public class LibroDao {
     private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
     
 //    Método que nos lista todas las personas de nuestro sistema
-    public List<Libro> seleccionar() throws SQLException {
+    public List <Libro> seleccionar() throws SQLException {
         //INICIALIZAR VARIABLES
         
         Connection conn = null;

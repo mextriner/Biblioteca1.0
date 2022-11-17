@@ -32,6 +32,8 @@ public interface InterfaceUsuario {
     
     //APLICA EL UPDATE SOBRE UN USUARIO YA EXISTENTE EN LA BASE DE DATOS
     public int actualizarId (Usuario usuario, String prevUsuario);
+    
+    public int actualizar (Usuario usuario);
      
     //ELIMINA UN USUARIO DE LA BASE DE DATOS 
     public int eliminar (Usuario usuario);

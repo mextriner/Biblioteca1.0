@@ -5,16 +5,17 @@
  */
 package com.ceep.proyectobiblioteca;
 
-import Dominio.Autor;
 import Datos.AutorDao;
+import Dominio.Autor;
+
 import Dominio.Libro;
-import Datos.LibroDao;
+
 import Dominio.Usuario;
 import Datos.UsuarioDao;
-import static Dominio.Usuario.entrada;
-import ManejoArchivos.ManejoDeArchivos;
-import java.sql.Date;
-import java.sql.SQLException;
+import Interfaces.InterfaceAutor;
+
+import Interfaces.InterfaceUsuario;
+
 import java.util.Scanner;
 
 /**
@@ -27,8 +28,8 @@ public class TesrMain {
      * @param args the command line arguments
      */
     
-    
-    public static UsuarioDao usuarioDao = new UsuarioDao();
+    InterfaceAutor autorDao = new AutorDao();
+    public static InterfaceUsuario usuarioDao = new UsuarioDao();
     
     //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
@@ -43,7 +44,8 @@ public class TesrMain {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        menu();
+        
+//        menu();
 //        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"src/main/img/jdt.jpg");
 //        LibroDao libroDao = new LibroDao();
 //        libroDao.insertar(libro);

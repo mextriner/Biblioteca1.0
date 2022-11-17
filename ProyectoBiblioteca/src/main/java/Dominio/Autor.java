@@ -6,6 +6,7 @@
 package Dominio;
 
 import Datos.AutorDao;
+import Interfaces.InterfaceAutor;
 import ManejoArchivos.ManejoDeArchivos;
 import java.io.Serializable;
 import java.sql.Date;
@@ -95,7 +96,7 @@ public class Autor implements Serializable{
     
     
     public static List <Autor> autores(){
-        AutorDao autorDao = new AutorDao();
+        InterfaceAutor autorDao = new AutorDao();
         List <Autor> aut = null;
         try{
             List <Autor> a = autorDao.seleccionar();
@@ -148,7 +149,7 @@ public class Autor implements Serializable{
      
         public static Autor darAlta(){
         Scanner in = new Scanner (System.in);
-        AutorDao autorDao = new AutorDao();
+        InterfaceAutor autorDao = new AutorDao();
         System.out.println("Nombre de Autor");
         String nom = in.nextLine();
         System.out.println("Apellidos de Autor");
@@ -173,13 +174,13 @@ public class Autor implements Serializable{
             int id = in.nextInt();
             System.out.println("Pulse intro para continuar");
             in.nextLine();
-            AutorDao autorDao = new AutorDao();
+            InterfaceAutor autorDao = new AutorDao();
             autorDao.eliminar(autor(id));
         }
         
         
     public static void autorActualizar(){
-        AutorDao autorDao = new AutorDao();
+        InterfaceAutor autorDao = new AutorDao();
         int opcion;
         opcion = -1;
         System.out.println("TABLA AUTORES:\n\n");

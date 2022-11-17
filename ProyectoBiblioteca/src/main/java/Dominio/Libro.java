@@ -6,6 +6,7 @@
 package Dominio;
 
 import Datos.LibroDao;
+import Interfaces.InterfaceLibro;
 import ManejoArchivos.ManejoDeArchivos;
 import java.io.Serializable;
 import java.sql.Date;
@@ -27,7 +28,7 @@ public class Libro implements Serializable{
     private boolean bestSeller;
     private String portada;
     
-    static private LibroDao libroDao = new LibroDao();
+    static private InterfaceLibro libroDao = new LibroDao();
 
     public Libro() {
     }

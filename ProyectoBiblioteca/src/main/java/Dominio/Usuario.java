@@ -6,6 +6,7 @@
 package Dominio;
 
 import Datos.UsuarioDao;
+import Interfaces.InterfaceUsuario;
 import ManejoArchivos.ManejoDeArchivos;
 import java.io.Serializable;
 import java.sql.Date;
@@ -124,7 +125,7 @@ public class Usuario implements Serializable{
     }
     
     public static List <Usuario> ListarUsuarios(){
-        UsuarioDao usuarioDao = new UsuarioDao();
+        InterfaceUsuario usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
             usuario = usuarioDao.seleccionar();
@@ -137,7 +138,7 @@ public class Usuario implements Serializable{
     //UNA LISTA DE USUARIOS PERO SÓLO CON SU NOMBRE, CLAVE (DESENCRIPTADA) Y FECHA DE REGISTRO
     
     public static List <Usuario> ListarUsuariosClave(){
-        UsuarioDao usuarioDao = new UsuarioDao();
+        InterfaceUsuario usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
             usuario = usuarioDao.seleccionarUsuarioClave();
@@ -218,7 +219,7 @@ public class Usuario implements Serializable{
             }
             if (ac == 's'){
                 
-                UsuarioDao usuarioDao = new UsuarioDao();
+                InterfaceUsuario usuarioDao = new UsuarioDao();
                 usuarioDao.eliminar(comprobarId(usu));
                 
             }else{
@@ -243,7 +244,7 @@ public class Usuario implements Serializable{
             ac = in.nextLine().charAt(0);
         }
         if (ac == 's'){
-            UsuarioDao usuarioDao = new UsuarioDao();
+            InterfaceUsuario usuarioDao = new UsuarioDao();
             usuarioDao.eliminar(usuraio);
 
         }else{
@@ -266,7 +267,7 @@ public class Usuario implements Serializable{
     
     public static Usuario darAlta(){
         Scanner in = new Scanner (System.in);
-        UsuarioDao usuarioDao = new UsuarioDao();
+        InterfaceUsuario usuarioDao = new UsuarioDao();
         System.out.println("Introduzca su usuario");
         String usar = in.nextLine();
         while(Usuario.entrada(usar)){
@@ -284,7 +285,7 @@ public class Usuario implements Serializable{
     
     public static void actualizarUsuario(String usu){
         Usuario u = comprobarId(usu);
-         UsuarioDao usuarioDao = new UsuarioDao();
+         InterfaceUsuario usuarioDao = new UsuarioDao();
         int opcion;
         Scanner input = new Scanner(System.in);
         opcion = -1;
@@ -368,7 +369,7 @@ public class Usuario implements Serializable{
                         System.out.println("Contraseña incorrecta\ninténtelo de nuevo");
                         key = input.nextLine();
                     }
-                    System.out.println("Introduzca su fecha de nacimiento (aaaa/mm/dd):");
+                    System.out.println("Introduzca su fecha de nacimiento (aaaa-mm-dd):");
                     nom = input.nextLine();
                     u.setFechaNac(Date.valueOf(nom));
                     usuarioDao.actualizar(u);
