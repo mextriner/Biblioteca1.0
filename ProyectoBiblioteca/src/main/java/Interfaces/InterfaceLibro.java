@@ -22,5 +22,9 @@ public interface InterfaceLibro {
     
     public int actualizar (Libro libro);
     
+    public int actualizarPortada (Libro libro);
+    
     public int eliminar (Libro libro);
+    
+    
 }

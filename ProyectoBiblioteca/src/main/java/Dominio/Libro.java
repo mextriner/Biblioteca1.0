@@ -26,7 +26,7 @@ public class Libro implements Serializable{
     private String idioma;
     private Date fechaPubli;
     private boolean bestSeller;
-    private String portada;
+    private String portada = null;
     
     static private InterfaceLibro libroDao = new LibroDao();
 
@@ -109,13 +109,13 @@ public class Libro implements Serializable{
 
     @Override
     public String toString() {
-        return "LIBRO: " + "|isbn:" + isbn + "|titulo: " + titulo + "|idioma: " + idioma + "|fechaPubli: " + fechaPubli + "|bestSeller: " + bestSeller;
+        return "LIBRO: " + "|isbn:" + isbn + "|titulo: " + titulo + "|idioma: " + idioma + "|fechaPubli: " + fechaPubli + "|bestSeller: " + bestSeller+"|portada: "+portada;
     }
 
     
     
     public String escribir() {
-        return 'º' + isbn + 'º' + titulo + 'º' + idioma + 'º' + fechaPubli + 'º' + bestSeller + 'º' + '/';
+        return 'º' + isbn + 'º' + titulo + 'º' + idioma + 'º' + fechaPubli + 'º' + bestSeller + 'º' + portada +'º'+'/';
     }
     
     //DEVUELVE UN LIST CON LOS LIBROS DE LA BASE DE DATOS
@@ -225,10 +225,10 @@ public class Libro implements Serializable{
         
         System.out.println("BESTSELLER:");
         boolean bestSeller = false;
-        System.out.println("¿Es o fue Best Seller?");
+        System.out.println("¿Es o fue Best Seller? si(s) / no(n)");
         String v = in.nextLine().toLowerCase();
-        if(v.equals("si")){
-            bestSeller =true;
+        if(v.equals("s")){
+            bestSeller = true;
         }
         
         //RUTA DE LA PORTADA
@@ -253,7 +253,7 @@ public class Libro implements Serializable{
     
     
     //DESPLIEGA UN MENÚ PARA ELEGIR EL ATRIBUTO QUE QUIERE ACTUALIZAR
-    public static void libroActualizar(){
+    public static Libro libroActualizar(){
         Libro lb = new Libro();
         int opcion;
         opcion = -1;
@@ -264,8 +264,9 @@ public class Libro implements Serializable{
         Scanner in = new Scanner (System.in);
         System.out.println("Inserte el ISBN del libro que quiere actualizar");
         String isbn = in.nextLine();
+        lb = libroIsbn(isbn);
         
-        System.out.println(libroIsbn(isbn).toString());
+        System.out.println(lb.toString());
         System.out.println("Seleccione el atributo a cambiar:");
         
         
@@ -274,14 +275,14 @@ public class Libro implements Serializable{
         while (opcion != 0){
             
             System.out.println("\tATRIBUTOS");
-            System.out.println(libroIsbn(isbn).isbn + " | " + libroIsbn(isbn).titulo);
+            System.out.println(libroIsbn(isbn).isbn + ": " + lb.titulo);
             System.out.println("----------------------------------------------------\n");
-            System.out.println("1 - ISBN: "+libroIsbn(isbn).isbn);
-            System.out.println("2 - TITULO "+ libroIsbn(isbn).titulo);
-            System.out.println("3 - IDIOMA: "+libroIsbn(isbn).idioma);
-            System.out.println("4 - FECHA DE PUBLICACIÓN: "+libroIsbn(isbn).fechaPubli);
-            System.out.println("5 - BESTSELLER: "+libroIsbn(isbn).bestSeller);
-            System.out.println("6 - RUTA DE PORTADA: "+libroIsbn(isbn).portada);
+            System.out.println("1 - ISBN: "+lb.isbn);
+            System.out.println("2 - TITULO "+ lb.titulo);
+            System.out.println("3 - IDIOMA: "+lb.idioma);
+            System.out.println("4 - FECHA DE PUBLICACIÓN: "+lb.fechaPubli);
+            System.out.println("5 - BESTSELLER: "+lb.bestSeller);
+            System.out.println("6 - RUTA DE PORTADA: "+lb.portada);
             System.out.println("0 - Salir");
             System.out.println("Selecciones una opción");
             opcion = in.nextInt();
@@ -296,8 +297,8 @@ public class Libro implements Serializable{
                                 + " Introduca un valor:");
                         vl = in.nextLine();
                     }
-                    lb.libroIsbn(isbn).setIsbn(vl);
-                    libroDao.actualizar(libroIsbn(isbn));
+                    lb.setIsbn(vl);
+                    libroDao.actualizar(lb);
                     break;
                 
                 case 2:
@@ -310,9 +311,8 @@ public class Libro implements Serializable{
                                 + " Introduca un valor:");
                         vl = in.nextLine();
                     }
-                    lb.libroIsbn(isbn).setTitulo(vl);
-                    libroDao.actualizar(libroIsbn(isbn));
-                    
+                    lb.setTitulo(vl);
+                    libroDao.actualizar(lb);
                     break;
                 
                 case 3:
@@ -325,7 +325,8 @@ public class Libro implements Serializable{
                                 + " Introduca un valor:");
                         vl = in.nextLine();
                     }
-                    lb.libroIsbn(isbn).setIdioma(vl);
+                    lb.setIdioma(vl);
+                    libroDao.actualizar(lb);
                     break;
                 
                 case 4:
@@ -337,31 +338,39 @@ public class Libro implements Serializable{
                                 + " Introduca un valor:");
                         vl = in.nextLine();
                     }
-                    lb.libroIsbn(isbn).setFechaPubli(Date.valueOf(vl));
+                    lb.setFechaPubli(Date.valueOf(vl));
+                    libroDao.actualizar(lb);
                     break;
-                case 5:
-                    System.out.println("¿Es o fue Best Seller?");
-                    vl = in.nextLine().toLowerCase();
-                    if(vl.equals("si")){
-                        lb.libroIsbn(isbn).setBestSeller(true);
-                    }else{
-                        lb.libroIsbn(isbn).setBestSeller(false);
-                    }
                     
+                case 5:
+                    
+                    System.out.println("¿Es o fue Best Seller? si(s) / no(n)");
+                    vl = in.nextLine().toLowerCase();
+                    System.out.println(vl);
+                    if(vl.equals("si")){
+                        
+                        lb.setBestSeller(true);
+                        System.out.println( lb.isBestSeller());
+                    }
+                    System.out.println( lb.isBestSeller());
+                    libroDao.actualizar(lb);
                     break;
                 case 6:
                     System.out.println("Introduzca el nombre de la imagen:");
                     vl = "src/main/img/"+in.nextLine();
-                    lb.libroIsbn(isbn).setPortada(vl);
+                    lb.setPortada(vl);
+                    libroDao.actualizarPortada(lb);
                     break;
                 
                 case 0:
+                    
                     break;
                 
                 default:
                     break;
             }
         }
+        return lb;
     }
     
     

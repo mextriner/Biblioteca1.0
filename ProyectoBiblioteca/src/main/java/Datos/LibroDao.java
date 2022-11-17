@@ -32,7 +32,9 @@ public class LibroDao implements InterfaceLibro{
             + "titulo = ?,"
             + "idioma = ?,"
             + "fechaPublicacion = ?,"
-            + "bestSeller = ?,"
+            + "bestSeller = ? WHERE isbn = ?";
+    
+    private static final String SQL_UPDATE_IMAGEN = "UPDATE libro SET "
             + "portada = ? WHERE isbn = ?";
     
     private static final String SQL_DELETE = "DELETE FROM libro WHERE isbn = ?";
@@ -131,9 +133,8 @@ public class LibroDao implements InterfaceLibro{
     }
     
     public int actualizar (Libro libro){
-        Connection conn =null;
-        PreparedStatement stmt=null;
-        FileInputStream imagen = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
         int registro = 0;
         try{
              //1. ESTABLECER CONEXIÓN
@@ -145,6 +146,52 @@ public class LibroDao implements InterfaceLibro{
             stmt = conn.prepareStatement(SQL_UPDATE);
             
             //SE TRANSFORMA LA RUTA DE LA IMAGEN A FLIEINPUTSTREAM
+            
+            //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
+            
+            
+            stmt.setString(1, libro.getTitulo());
+            stmt.setString(2, libro.getIdioma());
+            stmt.setDate(3, libro.getFechaPubli());
+            stmt.setBoolean(4, libro.isBestSeller());
+            stmt.setString(5, libro.getIsbn());
+            
+            
+            //4. EJECUTO LA QUERY
+            
+            registro = stmt.executeUpdate();
+            
+            
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }finally{
+            try{
+                close(stmt);
+                close(conn);
+            }catch(SQLException ex){
+                ex.printStackTrace(System.out);
+            
+            }
+            
+        }
+        return registro;
+    }
+    
+    public int actualizarPortada(Libro libro){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        FileInputStream imagen = null;
+        int registro = 0;
+        try{
+             //1. ESTABLECER CONEXIÓN
+        
+            conn = getConnection();
+            
+            //2. PREPARO LA INSTRUCCIÓN EJECUTABLE EN MYSQL
+            
+            stmt = conn.prepareStatement(SQL_UPDATE_IMAGEN);
+            
+            //SE TRANSFORMA LA RUTA DE LA IMAGEN A FLIEINPUTSTREAM
             try{
                 imagen = new FileInputStream(libro.getPortada());
             }catch(IOException IOex){
@@ -153,12 +200,8 @@ public class LibroDao implements InterfaceLibro{
             //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
             
             
-            stmt.setString(1, libro.getTitulo());
-            stmt.setString(2, libro.getIdioma());
-            stmt.setDate(3, libro.getFechaPubli());
-            stmt.setBoolean(4, libro.isBestSeller());
-            stmt.setBlob(5, imagen);
-            stmt.setString(6, libro.getIsbn());
+            stmt.setBlob(1, imagen);
+            stmt.setString(2, libro.getIsbn());
             
             
             //4. EJECUTO LA QUERY

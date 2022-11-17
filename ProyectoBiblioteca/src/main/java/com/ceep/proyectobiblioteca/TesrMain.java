@@ -7,6 +7,7 @@ package com.ceep.proyectobiblioteca;
 
 import Datos.AutorDao;
 import Datos.EditorialDao;
+import Datos.LibroDao;
 import Dominio.Autor;
 
 import Dominio.Libro;
@@ -16,6 +17,7 @@ import Datos.UsuarioDao;
 import Dominio.Editorial;
 import Interfaces.InterfaceAutor;
 import Interfaces.InterfaceEditorial;
+import Interfaces.InterfaceLibro;
 
 import Interfaces.InterfaceUsuario;
 import java.time.LocalDate;
@@ -36,6 +38,7 @@ public class TesrMain {
     public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceUsuario usuarioDao = new UsuarioDao();
     public static InterfaceEditorial editorialDao = new EditorialDao();
+    public static InterfaceLibro libroDao = new LibroDao();
     
     //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
@@ -51,9 +54,7 @@ public class TesrMain {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        System.out.println("=========================BIENVENIDO A LA BIBLIOTECA VIRTUAL=================================");
-        System.out.println("Pulse intro para continuar");
-        input.nextLine();
+        
         
 //        Editorial editorial = new Editorial("Anaya","Avda. de Pardo Rosas");
 //        editorialDao.insertar(editorial);
