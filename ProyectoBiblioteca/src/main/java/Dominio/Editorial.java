@@ -7,9 +7,11 @@ package Dominio;
 import Datos.EditorialDao;
 import Interfaces.InterfaceEditorial;
 import ManejoArchivos.ManejoDeArchivos;
+import static com.ceep.proyectobiblioteca.TesrMain.editorialDao;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -68,7 +70,7 @@ public class Editorial implements Serializable{
     }
     
     
-    public static List <Editorial> ListarEditorial(){
+    public static List <Editorial> listarEditorial(){
         InterfaceEditorial editorialDao = new EditorialDao();
         List <Editorial> editorial = null;
         try{
@@ -80,13 +82,67 @@ public class Editorial implements Serializable{
     }
     
     
-    public static void actualizarArchivoEditorial(){
-        Usuario usuario = null;
-        String contenido ="";
-        for (int i = 0; i < ListarEditorial().size(); i++) {
+    public static Editorial editorialId(int id){
+        Editorial editorial = null;
+        for (int i = 0; i < listarEditorial().size(); i++) {
             
-            contenido += (ListarEditorial().get(i).escribir());
+            if(listarEditorial().get(i).getIdEditorial() == id){
+                editorial = listarEditorial().get(i);
+            }
+        }
+        return editorial;
+    }
+    
+    public static void actualizarArchivoEditorial(){
+        String contenido ="";
+        for (int i = 0; i < listarEditorial().size(); i++) {
+            
+            contenido += (listarEditorial().get(i).escribir());
         }
         ManejoDeArchivos.escribirArchivo("editorial.txt",contenido);
+        }
+
+    public static Editorial darAlta(){
+        Scanner in = new Scanner (System.in);
+        
+
+        System.out.println("Introduce el Nombre de la Editorial:");
+        String nombre = in.nextLine();
+        while(nombre.isEmpty()){
+            System.out.println("Este campo no puede ser vacío."
+                    + " Introduca un valor:");
+            nombre = in.nextLine();
+        }
+
+        System.out.println("Introduzca la Dirección:");
+        String direccion = in.nextLine();
+        while(direccion.isEmpty()){
+            System.out.println("Este campo no puede ser vacío."
+                    + " Introduca un valor:");
+            direccion = in.nextLine();
+        }
+        Editorial editorial = new Editorial(nombre,direccion);
+        editorialDao.insertar(editorial);
+
+        return editorial;
+    }
+    
+    public static void eliminarEditorial(){
+        
+        Scanner in = new Scanner (System.in);
+        System.out.println("TABLA Editorial:\n\n");
+        for (int i = 0; i < listarEditorial().size(); i++) {
+            System.out.println(listarEditorial().get(i).toString());
+        }
+        Editorial editorial = new Editorial();
+
+        System.out.println("Inserte el ISBN del libro que quiere eliminar");
+        String isbn = in.nextLine();
+        while(!entrada(isbn)){
+            System.out.println("Este libro no existe en la Base de Datos.\n"
+                    + "Introduzca un ISBN correcto.");
+            isbn = in.nextLine();
+        }
+        editorialDao.eliminar(libroIsbn(isbn));
     }
 }
