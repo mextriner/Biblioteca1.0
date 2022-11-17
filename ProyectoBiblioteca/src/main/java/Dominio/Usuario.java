@@ -7,7 +7,6 @@ package Dominio;
 
 import Datos.UsuarioDao;
 import ManejoArchivos.ManejoDeArchivos;
-import com.ceep.proyectobiblioteca.TesrMain;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;

@@ -30,10 +30,13 @@ public class TesrMain {
     
     public static UsuarioDao usuarioDao = new UsuarioDao();
     
+    //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
     
+    //PARA LA PARTE DE ADMINISTRADOR SE DECLARA ESTA VARIABLE GLOBAL
     public static Usuario administrador = new Usuario("admin","1234");
     
+    //ESTA VARIABLE GLOBAL SIRVE PARA OPERAR EN LA PARTE DE USUARIO
     public static Usuario usuario = new Usuario();
     
     public static Libro lb = new Libro();
@@ -79,6 +82,7 @@ public class TesrMain {
                     // FUNCION INICIAR SESIÓN (USUARIO)
                     System.out.println("Introduzca su usuario:");
                     String nom = input.nextLine();
+                    //SI EL USUARIO EXISTE PUEDES INTRODUCIR TU CONTRASEÑA
                     if(usuario.entrada(nom)){
                         System.out.println("Introduzca la contraseña:");
                         String clave = input.nextLine();
@@ -86,12 +90,17 @@ public class TesrMain {
                             System.out.println("Contraseña incorrecta, pruebe de nuevo:");
                             clave = input.nextLine();
                         }
+                        
+                        //LA VARIABLE GLOBAL usuario SE IGUALA AL Usuario CON EL
+                        //QUE SE HA INICIADO SESIÓN
                         usuario = Usuario.comprobarId(nom);
                         menuEntidad(false);
+                        //SI EL USUARIO NO EXISTE PUEDES CREAR UNA NUEVA CUENTA
                     }else{
                         char ac;
                         System.out.println("Este usuario no existe ¿Desea darse de alta? \n si(s) / no(n)");
                         ac = input.nextLine().charAt(0);
+                        //SI LA CONTRASEÑÑA ES INCORRECTA LO VUELVE A INTENTAR
                         while(ac != 's' && ac != 'n'){
                             System.out.println("Introduzca si (s) o no (n)");
                             ac = input.nextLine().charAt(0);
@@ -99,6 +108,7 @@ public class TesrMain {
                         if (ac == 's'){
                             usuario = usuario.darAlta();
                         }else{
+                            //SI NO QUIERE DARSE DE ALTA VUELVE AL MENU PRINCIPAL
                             System.out.println("Operación cancelada.");
                             break;
                         }
@@ -107,7 +117,7 @@ public class TesrMain {
                     
                     break;
                 case 3:
-                    // REGISTRAR
+                    // REGISTRAR UN NUEVO USUARIO
                     usuario = usuario.darAlta();
                     menuEntidad(false);
                     break;
@@ -556,12 +566,8 @@ public class TesrMain {
                             //ACTUALIZAR FICHERO USUARIOS Y SALIR
                             Usuario.actualizarArchivoUsuarios();
                             break;
-                    }
-                    
-                        
+                    }   
                 }
-                    
-                
             }
             
         }
