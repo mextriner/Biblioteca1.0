@@ -108,14 +108,16 @@ public class Libro implements Serializable{
 
     @Override
     public String toString() {
-        return "Libro{" + "isbn=" + isbn + ", titulo=" + titulo + ", idioma=" + idioma + ", fechaPubli=" + fechaPubli + ", bestSeller=" + bestSeller + ", portada=" + portada + '}';
+        return "LIBRO: " + "|isbn:" + isbn + "|titulo: " + titulo + "|idioma: " + idioma + "|fechaPubli: " + fechaPubli + "|bestSeller: " + bestSeller;
     }
 
     
     
     public String escribir() {
-        return '%' + '*' + isbn + '*' + titulo + '*' + idioma + '*' + fechaPubli + '*' + bestSeller + '*' ;
+        return 'º' + isbn + 'º' + titulo + 'º' + idioma + 'º' + fechaPubli + 'º' + bestSeller + 'º' + '/';
     }
+    
+    //DEVUELVE UN LIST CON LOS LIBROS DE LA BASE DE DATOS
     
     public List <Libro> listarLibro(){
         List <Libro> libros = null;
@@ -127,6 +129,8 @@ public class Libro implements Serializable{
         return libros;
     }
     
+    //DEVUELVE UN LIBRO RECORRIENDO listarLibro() Y COMPARANDO EL isbn con el 
+    //parámetro String isbn
     public static Libro libroIsbn(String isbn){
         Libro lb = new Libro();
         for (int i = 0; i < lb.listarLibro().size(); i++) {
@@ -138,6 +142,9 @@ public class Libro implements Serializable{
         return lb;
     }
     
+    
+    //COMPRUEBA SI EL PARÁMETRO String isbn YA EXISTE EN UN isbn DE 
+    //ALGUNA OCURRENCIA
     public static boolean entrada(String isbn){
         Libro lb = new Libro();
         boolean existe = false;
@@ -149,6 +156,8 @@ public class Libro implements Serializable{
         }
         return existe;
     }
+    
+    
     
     public static void eliminarLibro(){
         
@@ -169,8 +178,12 @@ public class Libro implements Serializable{
         libroDao.eliminar(libroIsbn(isbn));
     }
     
+    
+    //INICIALIZA CADA UNO DE LOS ATRIBUTOS DE LIBRO POR TECLADO
     public static Libro darAlta(){
         Scanner in = new Scanner (System.in);
+        
+        //ISBN
         System.out.println("Introduzca el ISBN del libro");
         String vl = in.nextLine();
         while(entrada(vl) || vl.isEmpty()){
@@ -184,6 +197,7 @@ public class Libro implements Serializable{
             }
             
         }
+        
         System.out.println("TÍTULO:");
         String titulo = in.nextLine();
         while(titulo.isEmpty()){
@@ -216,8 +230,9 @@ public class Libro implements Serializable{
             bestSeller =true;
         }
         
+        //RUTA DE LA PORTADA
         System.out.println("INTRODUZCA EL NOMBRE DEL ARCHIVO DE LA IMAGEN:");
-        v = "/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/"+in.nextLine();
+        v = "src/main/img/"+in.nextLine();
         
         Libro libro = new Libro(vl,titulo,idioma,Date.valueOf(fecha),bestSeller,v);
         libroDao.insertar(libro);
@@ -225,16 +240,18 @@ public class Libro implements Serializable{
         return libro;
     }
     
-    public static void actualizarArchivoLibros() {
-        Libro libro = null;
+    //ACTUALIZA EL ARCHIVO DE TEXTO A PARTIR DE LOS DATOS DE LA BASE DE DATOS
+    public void actualizarArchivoLibros() {
         String contenido ="";
-        for (int i = 0; i < libro.listarLibro().size(); i++) {
+        for (int i = 0; i < listarLibro().size(); i++) {
             
-            contenido += (libro.listarLibro().get(i).escribir());
+            contenido += (listarLibro().get(i).escribir());
         }
-        ManejoDeArchivos.escribirArchivo("usuario.txt",contenido);
+        ManejoDeArchivos.escribirArchivo("libro.txt",contenido);
     }
     
+    
+    //DESPLIEGA UN MENÚ PARA ELEGIR EL ATRIBUTO QUE QUIERE ACTUALIZAR
     public static void libroActualizar(){
         Libro lb = new Libro();
         int opcion;
@@ -333,7 +350,7 @@ public class Libro implements Serializable{
                     break;
                 case 6:
                     System.out.println("Introduzca el nombre de la imagen:");
-                    vl = "/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/"+in.nextLine();
+                    vl = "src/main/img/"+in.nextLine();
                     lb.libroIsbn(isbn).setPortada(vl);
                     break;
                 

@@ -36,12 +36,14 @@ public class TesrMain {
     
     public static Usuario usuario = new Usuario();
     
+    public static Libro lb = new Libro();
+    
     public static void main(String[] args) {
         // TODO code application logic here
-//        menu();
-        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"src/main/img/jdt.jpg");
-        LibroDao libroDao = new LibroDao();
-        libroDao.insertar(libro);
+        menu();
+//        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"src/main/img/jdt.jpg");
+//        LibroDao libroDao = new LibroDao();
+//        libroDao.insertar(libro);
         
     }
     
@@ -247,7 +249,7 @@ public class TesrMain {
                 
                 switch(entidad){
                     case "LIBRO":
-                        Libro lb = new Libro();
+                       
                         switch (opcion) {
                             case 1:
                                 System.out.println("LISTA DE LIBROS");
@@ -257,7 +259,7 @@ public class TesrMain {
                                 break;
                             case 2:
                                 System.out.println("INTRODUCIR LIBRO:");
-                                lb.darAlta();
+                                lb = Libro.darAlta();
                                 break;
                             case 3:
                                 System.out.println("ACTUALIZAR LIBRO");
@@ -266,10 +268,11 @@ public class TesrMain {
                             case 4:
                                 System.out.println("ELIMINAR LIBRO");
                                 lb.eliminarLibro();
+                                opcion = 0;
                                 // Perform "decrypt number" case.
                                 break;
                             case 0:
-                                Libro.actualizarArchivoLibros();
+                                lb.actualizarArchivoLibros();
                                 System.out.println("");
                                 break;
                             default:
@@ -301,6 +304,7 @@ public class TesrMain {
                                 // ELIMINAR
                                 System.out.println("ELIMINAR AUTOR");
                                 Autor.eliminarAutor();
+                                opcion = 0;
                                 break;
                             case 0:
                                 Autor.actualizarFicheroAutor();
@@ -330,6 +334,7 @@ public class TesrMain {
                                 break;
                             case 0:
                                 System.out.println("");
+                                opcion = 0;
                                 break;
                             default:
                                 System.out.println("Seleccione una opción entre 0 y 4");
@@ -417,6 +422,7 @@ public class TesrMain {
                             case 4:
                                 //ELIMINAR USUARIO
                                 Usuario.eliminarUsuario();
+                                opcion = 0;
                                 break;
                             case 0:
                                 Usuario.actualizarArchivoUsuarios();
@@ -445,7 +451,12 @@ public class TesrMain {
                         case "LIBRO":
                             switch (opcion) {
                                 case 1:
-                                    // Perform "original number" case.
+                                    //BUSCADOR DE LIBROS
+                                    System.out.println("LISTA DE LIBROS");
+                                    for (int i = 0; i < lb.listarLibro().size(); i++) {
+                                        System.out.println(lb.listarLibro().get(i));
+                                    }
+                                    
                                     break;
                                 case 2:
                                     // Perform "encrypt number" case.
@@ -495,7 +506,6 @@ public class TesrMain {
                             }
                             break;
                         case "CATEGORÍA":
-
                             switch (opcion) {
                                 case 1:
                                     System.out.println("EN CONSTRUCCIÓN");

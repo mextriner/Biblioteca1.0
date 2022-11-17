@@ -114,9 +114,9 @@ public class Usuario implements Serializable{
 
     @Override
     public String toString() {
-        return  "usuario=" + usuario + ", clave=" + clave + ", fechaAlt=" 
-                + fechaAlt + ", nombre=" + nombre + ", apellido=" + apellido 
-                + ", fechaNac=" + fechaNac + '}';
+        return  "USUARIO: " + usuario + "| pswrd: " + clave + "| fechaAlt: " 
+                + fechaAlt + "| nombre: " + nombre + "| apellido: " + apellido 
+                + "| fechaNac: " + fechaNac + '|';
     }
     
     public String escribir() {
