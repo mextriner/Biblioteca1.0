@@ -38,10 +38,10 @@ public class TesrMain {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        menu();
-//        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"/C:/Users/mextr/OneDrive/Documents/GitHub/Biblioteca1.0/img/jdt.jpg");
-//        LibroDao libroDao = new LibroDao();
-//        libroDao.actualizar(libro);
+//        menu();
+        Libro libro = new Libro("999999999","Juego de Tronos","español",Date.valueOf("2002-05-04"),true,"src/main/img/jdt.jpg");
+        LibroDao libroDao = new LibroDao();
+        libroDao.insertar(libro);
         
     }
     
