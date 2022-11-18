@@ -124,7 +124,7 @@ public class Usuario implements Serializable{
                 + "º" + apellido + "º" + fechaNac + "º" +"/"  ;
     }
     
-    public static List <Usuario> ListarUsuarios(){
+    public static List <Usuario> listarUsuarios(){
         InterfaceUsuario usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
@@ -137,7 +137,7 @@ public class Usuario implements Serializable{
     
     //UNA LISTA DE USUARIOS PERO SÓLO CON SU NOMBRE, CLAVE (DESENCRIPTADA) Y FECHA DE REGISTRO
     
-    public static List <Usuario> ListarUsuariosClave(){
+    public static List <Usuario> listarUsuariosClave(){
         InterfaceUsuario usuarioDao = new UsuarioDao();
         List <Usuario> usuario = null;
         try{
@@ -153,9 +153,9 @@ public class Usuario implements Serializable{
     public static void actualizarArchivoUsuarios(){
         Usuario usuario = null;
         String contenido ="";
-        for (int i = 0; i < usuario.ListarUsuarios().size(); i++) {
+        for (int i = 0; i < usuario.listarUsuarios().size(); i++) {
             
-            contenido += (usuario.ListarUsuarios().get(i).escribir());
+            contenido += (usuario.listarUsuarios().get(i).escribir());
         }
         ManejoDeArchivos.escribirArchivo("usuario.txt",contenido);
     }
@@ -181,10 +181,10 @@ public class Usuario implements Serializable{
     
     public static Usuario comprobarId(String primaryKey){
         Usuario usur = null;
-        for (int i = 0; i < ListarUsuariosClave().size(); i++) {
-//            System.out.println(ListarUsuariosClave().get(i).toString());
-            if(ListarUsuariosClave().get(i).getUsuario().equals(primaryKey)){
-                usur = ListarUsuariosClave().get(i);
+        for (int i = 0; i < listarUsuariosClave().size(); i++) {
+//            System.out.println(listarUsuariosClave().get(i).toString());
+            if(listarUsuariosClave().get(i).getUsuario().equals(primaryKey)){
+                usur = listarUsuariosClave().get(i);
             }
         }
         return usur;
@@ -198,8 +198,8 @@ public class Usuario implements Serializable{
     public static boolean entrada(String nom){
         Usuario usr = null;
         boolean existe = false;
-        for (int i = 0; i < usr.ListarUsuarios().size() ; i++) {
-            if(nom.equals(usr.ListarUsuarios().get(i).getUsuario())){
+        for (int i = 0; i < usr.listarUsuarios().size() ; i++) {
+            if(nom.equals(usr.listarUsuarios().get(i).getUsuario())){
                 existe = true;
             }
         }
@@ -402,7 +402,44 @@ public class Usuario implements Serializable{
        
     }
     
+    public static void buscarUsuario(String usur){
+        
+        for (int i = 0; i < listarUsuarios().size(); i++) {
+            if(listarUsuarios().get(i).getUsuario().equals(usur) &&
+                    listarUsuarios().get(i).getUsuario().contains(usur)){
+                System.out.println(listarUsuarios());
+            }
+        }
+    }
+    public static void buscarNombre(String usur){
+        
+        for (int i = 0; i < listarUsuarios().size(); i++) {
+            if(listarUsuarios().get(i).getNombre().equals(usur) &&
+                    listarUsuarios().get(i).getNombre().contains(usur)){
+                System.out.println(listarUsuarios());
+            }
+        }
+    }
     
+    public static void buscarApellido(String usur){
+        
+        for (int i = 0; i < listarUsuarios().size(); i++) {
+            if(listarUsuarios().get(i).getApellido().equals(usur) &&
+                    listarUsuarios().get(i).getNombre().contains(usur)){
+                System.out.println(listarUsuarios());
+            }
+        }
+    }
+    
+    public static void termino(String bus, String term){
+       if (bus.equals("usuario")){
+            buscarNombre(term);
+       }else if(bus.equals("nombre")){
+           buscarNombre(term);
+       }else if (bus.equals("apellidos")){
+           buscarApellido(term);
+       }
+    }
     
 }
 

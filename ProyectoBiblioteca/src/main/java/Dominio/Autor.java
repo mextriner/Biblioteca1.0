@@ -119,6 +119,36 @@ public class Autor implements Serializable{
         return nAutor;
     }
      
+    //ESTO ES NUEVO
+    public static void buscarAutorNombre(String titulo){
+       
+        for (int i = 0; i < autores().size(); i++) {
+            if(autores().get(i).getNombre().equals(titulo) &&
+                    autores().get(i).getNombre().contains(titulo)){
+                System.out.println(autores().get(i));
+            }
+        }
+    }
+    
+    public static void buscarAutorApellido(String isbn){
+        for (int i = 0; i < autores().size(); i++) {
+            if(autores().get(i).getApellido().equals(isbn) &&
+                    autores().get(i).getApellido().contains(isbn)){
+                System.out.println(autores().get(i));
+            }
+        } 
+    }
+    
+    public static void termino(String bus, String term){
+       if (bus.equals("nombre")){
+            buscarAutorNombre(term);
+       }else if(bus.equals("apellidos")){
+           buscarAutorApellido(term);
+       }
+    }
+    
+    //HASTA AQUÍ ES LO NUEVO
+    
     
     public static Autor archivoPk(int primaryKey){
         Autor fileAutor = null;
@@ -147,24 +177,24 @@ public class Autor implements Serializable{
         ManejoDeArchivos.escribirArchivo("autor.txt",contenido);
     }
      
-        public static Autor darAlta(){
-        Scanner in = new Scanner (System.in);
-        InterfaceAutor autorDao = new AutorDao();
-        System.out.println("Nombre de Autor");
-        String nom = in.nextLine();
-        System.out.println("Apellidos de Autor");
-        String ape = in.nextLine();
-        System.out.println("Nacionalidad de Autor");
-        String nac = in.nextLine();
-        System.out.println("Fecha de nacimiento de Autor (aaaa-mm-dd)");
-        String fn = in.nextLine();
-        Autor autor = new Autor (nom,ape,nac,Date.valueOf(fn));
-        autorDao.insertar(autor);
-        return autor;
-    }
-    
-        
-        public static void eliminarAutor(){
+    public static Autor darAlta(){
+    Scanner in = new Scanner (System.in);
+    InterfaceAutor autorDao = new AutorDao();
+    System.out.println("Nombre de Autor");
+    String nom = in.nextLine();
+    System.out.println("Apellidos de Autor");
+    String ape = in.nextLine();
+    System.out.println("Nacionalidad de Autor");
+    String nac = in.nextLine();
+    System.out.println("Fecha de nacimiento de Autor (aaaa-mm-dd)");
+    String fn = in.nextLine();
+    Autor autor = new Autor (nom,ape,nac,Date.valueOf(fn));
+    autorDao.insertar(autor);
+    return autor;
+}
+
+
+    public static void eliminarAutor(){
             System.out.println("TABLA AUTORES:\n\n");
             for (int i = 0; i < autores().size(); i++) {
                 System.out.println(autores().get(i).toString());

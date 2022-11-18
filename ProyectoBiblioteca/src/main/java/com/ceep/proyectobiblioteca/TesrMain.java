@@ -9,16 +9,12 @@ import Datos.AutorDao;
 import Datos.EditorialDao;
 import Datos.LibroDao;
 import Dominio.Autor;
-
 import Dominio.Libro;
-
 import Dominio.Usuario;
 import Datos.UsuarioDao;
-import Dominio.Editorial;
 import Interfaces.InterfaceAutor;
 import Interfaces.InterfaceEditorial;
 import Interfaces.InterfaceLibro;
-
 import Interfaces.InterfaceUsuario;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -30,12 +26,7 @@ import java.util.Scanner;
  * @author MaximoMestriner
  */
 public class TesrMain {
-
-    /**
-     * @param args the command line arguments
-     */
-    
-    public static InterfaceAutor autorDao = new AutorDao();
+public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceUsuario usuarioDao = new UsuarioDao();
     public static InterfaceEditorial editorialDao = new EditorialDao();
     public static InterfaceLibro libroDao = new LibroDao();
@@ -275,7 +266,7 @@ public class TesrMain {
             if(admin){
                 System.out.println("\n\nADMINISTRADOR: "+entidad);
                 System.out.println("-------------------------\n");
-                System.out.println("1 - BUSCAR");
+                System.out.println("1 - BUSCAR POR TÍTULO O ISBN");
                 System.out.println("2 - INSERTAR");
                 System.out.println("3 - ACTUALIZAR");
                 System.out.println("4 - ELIMINAR");
@@ -292,6 +283,35 @@ public class TesrMain {
                                 for (int i = 0; i < lb.listarLibro().size(); i++) {
                                     System.out.println(lb.listarLibro().get(i));
                                 }
+                                
+                                //ESTO ES NUEVO
+                                String bus;
+                                int opc = -1;
+                                while(opc != 0){
+                                    System.out.println("\tBÚSQUEDA POR:");
+                                    System.out.println("1 - ISBN:");
+                                    System.out.println("2 - TÍTULO:");
+                                    System.out.println("0 - SALIR:");
+                                    switch(opc){
+                                        case 1:
+                                            System.out.println("Introduzca el término de búsqueda:");
+                                            bus = input.nextLine();
+                                            lb.termino(bus,"isbn");
+                                            break;
+                                        case 2:
+                                            System.out.println("Introduzca el término de búsqueda:");
+                                            bus = input.nextLine();
+                                            lb.termino(bus,"titulo");
+                                            break;
+                                        case 0:
+                                            break;
+                                        default:
+                                            System.out.println("Seleccione una de las opciones (0 - 1)");
+                                            break;
+                                    }
+                                }
+                                
+                                //HASTA AQUÍ ES LO NUEVO
                                 break;
                             case 2:
                                 System.out.println("INTRODUCIR LIBRO:");
@@ -443,9 +463,47 @@ public class TesrMain {
                         switch (opcion) {
                             case 1:
                                 // VISUALIZAR USUARIOS
-                                for (int i = 0; i < Usuario.ListarUsuarios().size(); i++) {
-                                    System.out.println(Usuario.ListarUsuarios().get(i).toString());
+                                for (int i = 0; i < Usuario.listarUsuarios().size(); i++) {
+                                    System.out.println(Usuario.listarUsuarios().get(i).toString());
                                 }
+                                
+                                //ESTO ES NUEVO
+                                    String bus;
+                                    int opc = -1;
+                                    while(opc != 0){
+                                        System.out.println("\tBÚSQUEDA POR:");
+                                        System.out.println("\t1 - USUARIO:");
+                                        System.out.println("\t2 - NOMBRE:");
+                                        System.out.println("\t2 - APELLIDOS:");
+                                        System.out.println("\t0 - SALIR:");
+                                        opc = input.nextInt();
+                                        input.nextLine();
+                                        switch(opc){
+                                            case 1:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                administrador.termino(bus,"usuario");
+                                                break;
+                                            case 2:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                administrador.termino(bus,"nombre");
+                                                break;
+                                            case 3:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                administrador.termino(bus,"apellidos");
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                System.out.println("Seleccione una de las opciones (0 - 2)");
+                                                break;
+                                        }
+                                    }
+
+                                    //HASTA AQUÍ ES LO NUEVO
+                                    
                                 break;
                             case 2:
                                 // AÑADIR USUARIO
@@ -492,6 +550,36 @@ public class TesrMain {
                                     for (int i = 0; i < lb.listarLibro().size(); i++) {
                                         System.out.println(lb.listarLibro().get(i));
                                     }
+                                    //ESTO ES NUEVO
+                                    String bus;
+                                    int opc = -1;
+                                    while(opc != 0){
+                                        System.out.println("\tBÚSQUEDA POR:");
+                                        System.out.println("\t1 - ISBN:");
+                                        System.out.println("\t2 - TÍTULO:");
+                                        System.out.println("\t0 - SALIR:");
+                                        opc = input.nextInt();
+                                        input.nextLine();
+                                        switch(opc){
+                                            case 1:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                lb.termino(bus,"isbn");
+                                                break;
+                                            case 2:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                lb.termino(bus,"titulo");
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                System.out.println("Seleccione una de las opciones (0 - 2)");
+                                                break;
+                                        }
+                                    }
+
+                                    //HASTA AQUÍ ES LO NUEVO
                                     
                                     break;
                                 case 2:
@@ -569,7 +657,7 @@ public class TesrMain {
                     }
                 }else if (entidad.equals("CUENTA")){
                     int edad;
-                    if(usuario.getFechaNac()==null && usuario.getFechaNac().toString().equals("") && usuario.getFechaNac().toString().contains(" ")){
+                    if(usuario.getFechaNac()== null || usuario.getFechaNac().toString().equals("") || usuario.getFechaNac().toString().contains(" ")){
                         edad = 0;
                     }else{
                         edad = (int) ChronoUnit.YEARS.between(usuario.getFechaNac().toLocalDate(),LocalDate.now());
@@ -587,6 +675,7 @@ public class TesrMain {
                     System.out.println("1 - ACTUALIZAR");
                     System.out.println("2 - ELIMINAR");
                     System.out.println("0 - Salir");
+                    
                     opcion = input.nextInt();
                     input.nextLine();
                     switch(opcion){

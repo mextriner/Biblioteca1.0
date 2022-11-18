@@ -373,5 +373,34 @@ public class Libro implements Serializable{
         return lb;
     }
     
+    //ESTO ES NUEVO
+    public static void buscarLibroTitulo(String titulo){
+        Libro lb = new Libro();
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            if(lb.listarLibro().get(i).getTitulo().equals(titulo) &&
+                    lb.listarLibro().get(i).getTitulo().contains(titulo)){
+                lb = lb.listarLibro().get(i);
+                System.out.println(lb);
+            }
+        }
+    }
     
+    public static void buscarLibroIsbn(String isbn){
+        Libro lb = new Libro();
+        for (int i = 0; i < lb.listarLibro().size(); i++) {
+            if(lb.listarLibro().get(i).getIsbn().equals(isbn) &&
+                    lb.listarLibro().get(i).getIsbn().contains(isbn)){
+                lb = lb.listarLibro().get(i);
+                System.out.println(lb);
+            }
+        } 
+    }
+    
+    public static void termino(String bus, String term){
+       if (bus.equals("titulo")){
+            buscarLibroTitulo(term);
+       }else if(bus.equals("isbn")){
+           buscarLibroIsbn(term);
+       }
+    }
 }

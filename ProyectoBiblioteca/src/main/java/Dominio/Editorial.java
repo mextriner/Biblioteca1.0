@@ -136,13 +136,14 @@ public class Editorial implements Serializable{
         }
         Editorial editorial = new Editorial();
 
-        System.out.println("Inserte el ISBN del libro que quiere eliminar");
-        String isbn = in.nextLine();
-        while(!entrada(isbn)){
-            System.out.println("Este libro no existe en la Base de Datos.\n"
-                    + "Introduzca un ISBN correcto.");
-            isbn = in.nextLine();
+        System.out.println("Inserte el ID de la editorial que quiere eliminar");
+        int id = in.nextInt();
+        in.nextLine();
+        while(editorialId(id) == null){
+            System.out.println("Esta Editorial no existe en la Base de Datos.\n"
+                    + "Introduzca un ID correcto.");
+            id = in.nextInt();
         }
-        editorialDao.eliminar(libroIsbn(isbn));
+        editorialDao.eliminar(editorialId(id));
     }
 }
