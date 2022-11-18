@@ -123,7 +123,7 @@ public class Autor implements Serializable{
     public static void buscarAutorNombre(String titulo){
        
         for (int i = 0; i < autores().size(); i++) {
-            if(autores().get(i).getNombre().equals(titulo) &&
+            if(autores().get(i).getNombre().equals(titulo) ||
                     autores().get(i).getNombre().contains(titulo)){
                 System.out.println(autores().get(i));
             }
@@ -132,20 +132,13 @@ public class Autor implements Serializable{
     
     public static void buscarAutorApellido(String isbn){
         for (int i = 0; i < autores().size(); i++) {
-            if(autores().get(i).getApellido().equals(isbn) &&
+            if(autores().get(i).getApellido().equals(isbn) ||
                     autores().get(i).getApellido().contains(isbn)){
                 System.out.println(autores().get(i));
             }
         } 
     }
     
-    public static void termino(String bus, String term){
-       if (bus.equals("nombre")){
-            buscarAutorNombre(term);
-       }else if(bus.equals("apellidos")){
-           buscarAutorApellido(term);
-       }
-    }
     
     //HASTA AQUÍ ES LO NUEVO
     

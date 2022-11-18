@@ -405,18 +405,19 @@ public class Usuario implements Serializable{
     public static void buscarUsuario(String usur){
         
         for (int i = 0; i < listarUsuarios().size(); i++) {
-            if(listarUsuarios().get(i).getUsuario().equals(usur) &&
+            if(listarUsuarios().get(i).getUsuario().equals(usur) ||
                     listarUsuarios().get(i).getUsuario().contains(usur)){
-                System.out.println(listarUsuarios());
+                System.out.println(listarUsuarios().get(i));
             }
         }
     }
     public static void buscarNombre(String usur){
-        
         for (int i = 0; i < listarUsuarios().size(); i++) {
-            if(listarUsuarios().get(i).getNombre().equals(usur) &&
+            if(listarUsuarios().get(i).getNombre() != null){
+                if(listarUsuarios().get(i).getNombre().equals(usur) ||
                     listarUsuarios().get(i).getNombre().contains(usur)){
-                System.out.println(listarUsuarios());
+                System.out.println(listarUsuarios().get(i));
+                }
             }
         }
     }
@@ -424,21 +425,13 @@ public class Usuario implements Serializable{
     public static void buscarApellido(String usur){
         
         for (int i = 0; i < listarUsuarios().size(); i++) {
-            if(listarUsuarios().get(i).getApellido().equals(usur) &&
+            if(listarUsuarios().get(i).getApellido() != null){
+                if(listarUsuarios().get(i).getApellido().equals(usur) ||
                     listarUsuarios().get(i).getNombre().contains(usur)){
-                System.out.println(listarUsuarios());
+                System.out.println(listarUsuarios().get(i));
+                }
             }
         }
-    }
-    
-    public static void termino(String bus, String term){
-       if (bus.equals("usuario")){
-            buscarNombre(term);
-       }else if(bus.equals("nombre")){
-           buscarNombre(term);
-       }else if (bus.equals("apellidos")){
-           buscarApellido(term);
-       }
     }
     
 }

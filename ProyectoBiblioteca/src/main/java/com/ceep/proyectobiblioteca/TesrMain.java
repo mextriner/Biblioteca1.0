@@ -12,6 +12,7 @@ import Dominio.Autor;
 import Dominio.Libro;
 import Dominio.Usuario;
 import Datos.UsuarioDao;
+import Dominio.Editorial;
 import Interfaces.InterfaceAutor;
 import Interfaces.InterfaceEditorial;
 import Interfaces.InterfaceLibro;
@@ -266,7 +267,7 @@ public static InterfaceAutor autorDao = new AutorDao();
             if(admin){
                 System.out.println("\n\nADMINISTRADOR: "+entidad);
                 System.out.println("-------------------------\n");
-                System.out.println("1 - BUSCAR POR TÍTULO O ISBN");
+                System.out.println("1 - BUSCAR");
                 System.out.println("2 - INSERTAR");
                 System.out.println("3 - ACTUALIZAR");
                 System.out.println("4 - ELIMINAR");
@@ -289,19 +290,21 @@ public static InterfaceAutor autorDao = new AutorDao();
                                 int opc = -1;
                                 while(opc != 0){
                                     System.out.println("\tBÚSQUEDA POR:");
-                                    System.out.println("1 - ISBN:");
-                                    System.out.println("2 - TÍTULO:");
-                                    System.out.println("0 - SALIR:");
+                                    System.out.println("\t1 - ISBN:");
+                                    System.out.println("\t2 - TÍTULO:");
+                                    System.out.println("\t0 - SALIR:");
+                                    opc = input.nextInt();
+                                    input.nextLine();
                                     switch(opc){
                                         case 1:
                                             System.out.println("Introduzca el término de búsqueda:");
                                             bus = input.nextLine();
-                                            lb.termino(bus,"isbn");
+                                            lb.buscarLibroIsbn(bus);
                                             break;
                                         case 2:
                                             System.out.println("Introduzca el término de búsqueda:");
                                             bus = input.nextLine();
-                                            lb.termino(bus,"titulo");
+                                            lb.buscarLibroTitulo(bus);
                                             break;
                                         case 0:
                                             break;
@@ -344,6 +347,34 @@ public static InterfaceAutor autorDao = new AutorDao();
                                 for (int i = 0; i < Autor.autores().size(); i++) {
                                     System.out.println(Autor.autores().get(i).toString());
                                 }
+                                
+                                 String bus;
+                                    int opc = -1;
+                                    while(opc != 0){
+                                        System.out.println("\tBÚSQUEDA POR:");
+                                        System.out.println("\t1 - NOMBRE:");
+                                        System.out.println("\t2 - APELLIDOS:");
+                                        System.out.println("\t0 - SALIR:");
+                                        opc = input.nextInt();
+                                        input.nextLine();
+                                        switch(opc){
+                                            case 1:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                Autor.buscarAutorNombre(bus);
+                                                break;
+                                            case 2:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                Autor.buscarAutorApellido(bus);
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                System.out.println("Seleccione una de las opciones (0 - 2)");
+                                                break;
+                                        }
+                                    }
                                 break;
                             case 2:
                                 //INSERTAR AUTOR
@@ -397,20 +428,43 @@ public static InterfaceAutor autorDao = new AutorDao();
                         }
                         break;
                     case "EDITORIAL":
+                        
                         switch (opcion) {
                             case 1:
-                                // Perform "original number" case.
+                                System.out.println("LISTA DE EDITORIALES:");
+                                for (int i = 0; i < Editorial.listarEditorial().size(); i++) {
+                                    System.out.println(Editorial.listarEditorial().get(1));
+                                }
+                                System.out.println("BÚSQUEDA POR NOMBRE:");
+                                String bus;
+                                bus = input.nextLine();
+                                Editorial.buscarEditorialNombre(bus);
+                                // Perform "original number" case.B
                                 break;
                             case 2:
-                                // Perform "encrypt number" case.
+                                System.out.println("INSERTAR EDITORIAL");
+                                Editorial.darAlta();
+                                // Perform "encrypt number" case.I
                                 break;
                             case 3:
-                                // Perform "decrypt number" case.
+                                System.out.println("ACTUALIZAR EDITORIAL:");
+                                System.out.println("EDITORIALES: ");
+                                for (int i = 0; i < Editorial.listarEditorial().size(); i++) {
+                                    System.out.println(Editorial.listarEditorial().get(i).toString());
+                                }
+                                System.out.println("seleccione la Editorial que desee modificar:");
+                                int ed = input.nextInt();
+                                input.nextLine();
+                                Editorial.actualizarEditorial(Editorial.editorialId(ed));
+                                // Perform "decrypt number" case.A
                                 break;
                             case 4:
-                                // Perform "decrypt number" case.
+                                System.out.println("ELIMINAR: ");
+                                Editorial.eliminarEditorial();
+                                // Perform "decrypt number" case.E
                                 break;
                             case 0:
+                                Editorial.actualizarArchivoEditorial();
                                 System.out.println("");
                                 break;
                             default:
@@ -474,7 +528,7 @@ public static InterfaceAutor autorDao = new AutorDao();
                                         System.out.println("\tBÚSQUEDA POR:");
                                         System.out.println("\t1 - USUARIO:");
                                         System.out.println("\t2 - NOMBRE:");
-                                        System.out.println("\t2 - APELLIDOS:");
+                                        System.out.println("\t3 - APELLIDOS:");
                                         System.out.println("\t0 - SALIR:");
                                         opc = input.nextInt();
                                         input.nextLine();
@@ -482,17 +536,17 @@ public static InterfaceAutor autorDao = new AutorDao();
                                             case 1:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.termino(bus,"usuario");
+                                                administrador.buscarUsuario(bus);
                                                 break;
                                             case 2:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.termino(bus,"nombre");
+                                                administrador.buscarNombre(bus);
                                                 break;
                                             case 3:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.termino(bus,"apellidos");
+                                                administrador.buscarApellido(bus);
                                                 break;
                                             case 0:
                                                 break;
@@ -564,12 +618,12 @@ public static InterfaceAutor autorDao = new AutorDao();
                                             case 1:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                lb.termino(bus,"isbn");
+                                                lb.buscarLibroIsbn(bus);
                                                 break;
                                             case 2:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                lb.termino(bus,"titulo");
+                                                lb.buscarLibroTitulo(bus);
                                                 break;
                                             case 0:
                                                 break;
@@ -605,6 +659,33 @@ public static InterfaceAutor autorDao = new AutorDao();
                                     System.out.println("BUSCADOR DE LIBROS");
                                     for (int i = 0; i < Autor.autores().size(); i++) {
                                         System.out.println(Autor.autores().get(i).toString());
+                                    }
+                                    String bus;
+                                    int opc = -1;
+                                    while(opc != 0){
+                                        System.out.println("\tBÚSQUEDA POR:");
+                                        System.out.println("\t1 - NOMBRE:");
+                                        System.out.println("\t2 - APELLIDOS:");
+                                        System.out.println("\t0 - SALIR:");
+                                        opc = input.nextInt();
+                                        input.nextLine();
+                                        switch(opc){
+                                            case 1:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                Autor.buscarAutorNombre(bus);
+                                                break;
+                                            case 2:
+                                                System.out.println("Introduzca el término de búsqueda:");
+                                                bus = input.nextLine();
+                                                Autor.buscarAutorApellido(bus);
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                System.out.println("Seleccione una de las opciones (0 - 2)");
+                                                break;
+                                        }
                                     }
                                     // Perform "original number" case.
                                     break;

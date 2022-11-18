@@ -134,7 +134,6 @@ public class Editorial implements Serializable{
         for (int i = 0; i < listarEditorial().size(); i++) {
             System.out.println(listarEditorial().get(i).toString());
         }
-        Editorial editorial = new Editorial();
 
         System.out.println("Inserte el ID de la editorial que quiere eliminar");
         int id = in.nextInt();
@@ -145,5 +144,49 @@ public class Editorial implements Serializable{
             id = in.nextInt();
         }
         editorialDao.eliminar(editorialId(id));
+    }
+    
+    public static void actualizarEditorial(Editorial editorial){
+        Scanner in = new Scanner (System.in);
+        String bus;
+        int opc = -1;
+        while(opc != 0){
+            System.out.println("\tATRIBUTOS:");
+            System.out.println("\t1 - NOMBRE:");
+            System.out.println("\t2 - DIRECCIÓN:");
+            System.out.println("\t0 - SALIR:");
+            opc = in.nextInt();
+            in.nextLine();
+            switch(opc){
+                case 1:
+                    System.out.println("Introduzca el Nombre de la Editorial:");
+                    bus = in.nextLine();
+                    editorial.setNombre(bus);
+                    editorialDao.actualizar(editorial);
+                    break;
+                case 2:
+                    System.out.println("Introduzca la Dirección de la Editorial:");
+                    bus = in.nextLine();
+                    editorial.setDireccion(bus);
+                    editorialDao.actualizar(editorial);
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Seleccione una de las opciones (0 - 2)");
+                    break;
+            }
+        }
+    }
+    
+    public static void buscarEditorialNombre(String titulo){
+        Editorial ed = new Editorial();
+        for (int i = 0; i < listarEditorial().size(); i++) {
+            if(listarEditorial().get(i).getNombre().equals(titulo) ||
+                    listarEditorial().get(i).getNombre().contains(titulo)){
+                ed = listarEditorial().get(i);
+                System.out.println(ed);
+            }
+        }
     }
 }
