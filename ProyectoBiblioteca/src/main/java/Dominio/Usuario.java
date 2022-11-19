@@ -271,7 +271,7 @@ public class Usuario implements Serializable{
         System.out.println("Introduzca su usuario");
         String usar = in.nextLine();
         while(Usuario.entrada(usar)){
-            System.out.println("Este nombre ya existe"
+            System.out.println("Este nombre ya existe. "
                     + "Escoja otro nombre de usuario");
             usar = in.nextLine();
         }
