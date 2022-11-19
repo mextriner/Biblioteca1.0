@@ -130,10 +130,10 @@ public class Autor implements Serializable{
         }
     }
     
-    public static void buscarAutorApellido(String isbn){
+    public static void buscarAutorApellido(String titulo){
         for (int i = 0; i < autores().size(); i++) {
-            if(autores().get(i).getApellido().equals(isbn) ||
-                    autores().get(i).getApellido().contains(isbn)){
+            if(autores().get(i).getApellido().equals(titulo) ||
+                    autores().get(i).getApellido().contains(titulo)){
                 System.out.println(autores().get(i));
             }
         } 

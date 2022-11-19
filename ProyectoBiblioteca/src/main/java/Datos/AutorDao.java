@@ -43,7 +43,6 @@ public class AutorDao implements InterfaceAutor{
         Connection conn = null;
         PreparedStatement stmt= null;
         ResultSet rs = null;
-        Autor autor = null;
         List<Autor> autores = new ArrayList<>();
         
         conn = getConnection();

@@ -33,13 +33,6 @@ public class Libro implements Serializable{
     public Libro() {
     }
 
-    public Libro(String titulo, String idioma, Date fechaPubli, boolean bestSeller) {
-        this.titulo = titulo;
-        this.idioma = idioma;
-        this.fechaPubli = fechaPubli;
-        this.bestSeller = bestSeller;
-    }
-
     public Libro(String isbn, String titulo, String idioma, Date fechaPubli, boolean bestSeller) {
         this.isbn = isbn;
         this.titulo = titulo;

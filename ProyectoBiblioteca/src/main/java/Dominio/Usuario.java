@@ -189,11 +189,7 @@ public class Usuario implements Serializable{
         }
         return usur;
     }
-    
-   
-    
-    
-    
+     
     //Comprueba si el nombre introducido ya existe
     public static boolean entrada(String nom){
         Usuario usr = null;
@@ -251,8 +247,6 @@ public class Usuario implements Serializable{
             System.out.println("Operación cancelada.");
         }
     }
-    
-    
     
     public static void iniciarSesion(String admin){
         Usuario usr = null;
