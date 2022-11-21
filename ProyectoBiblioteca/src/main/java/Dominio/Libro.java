@@ -290,8 +290,9 @@ public class Libro implements Serializable{
                                 + " Introduca un valor:");
                         vl = in.nextLine();
                     }
+                    
+                    libroDao.actualizarIsbn(lb,vl);
                     lb.setIsbn(vl);
-                    libroDao.actualizar(lb);
                     break;
                 
                 case 2:

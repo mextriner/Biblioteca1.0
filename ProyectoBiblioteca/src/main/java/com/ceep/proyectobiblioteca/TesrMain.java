@@ -47,7 +47,6 @@ public static InterfaceAutor autorDao = new AutorDao();
         // TODO code application logic here
         
         
-        
 //        Editorial editorial = new Editorial("Anaya","Avda. de Pardo Rosas");
 //        editorialDao.insertar(editorial);
 //        editorial.actualizarArchivoEditorial();

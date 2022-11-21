@@ -27,7 +27,7 @@ public class LibroDao implements InterfaceLibro{
      private static final String SQL_SELECT ="SELECT * FROM libro";
     private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo,"
             + "idioma, fechaPublicacion, bestSeller, portada) VALUES (?,?,?,?,?,?)";
-    
+    private static final String SQL_UPDATE_ISBN = "UPDATE libro SET isbn = ? WHERE isbn = ?"; 
     private static final String SQL_UPDATE = "UPDATE libro SET "
             + "titulo = ?,"
             + "idioma = ?,"
@@ -155,6 +155,48 @@ public class LibroDao implements InterfaceLibro{
             stmt.setDate(3, libro.getFechaPubli());
             stmt.setBoolean(4, libro.isBestSeller());
             stmt.setString(5, libro.getIsbn());
+            
+            
+            //4. EJECUTO LA QUERY
+            
+            registro = stmt.executeUpdate();
+            
+            
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }finally{
+            try{
+                close(stmt);
+                close(conn);
+            }catch(SQLException ex){
+                ex.printStackTrace(System.out);
+            
+            }
+            
+        }
+        return registro;
+    }
+    
+    public int actualizarIsbn (Libro libro, String prevIsbn){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int registro = 0;
+        try{
+             //1. ESTABLECER CONEXIÓN
+        
+            conn = getConnection();
+            
+            //2. PREPARO LA INSTRUCCIÓN EJECUTABLE EN MYSQL
+            
+            stmt = conn.prepareStatement(SQL_UPDATE_ISBN);
+            
+            //SE TRANSFORMA LA RUTA DE LA IMAGEN A FLIEINPUTSTREAM
+            
+            //3. ASIGNAR LOS VALORES A LOS INTERROGANTES DE LA CONSULTA
+            
+            
+            stmt.setString(1, prevIsbn);
+            stmt.setString(2, libro.getIsbn());
             
             
             //4. EJECUTO LA QUERY

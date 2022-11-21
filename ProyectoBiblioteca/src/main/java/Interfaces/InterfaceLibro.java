@@ -15,12 +15,12 @@ import java.util.List;
 public interface InterfaceLibro {
     public List <Libro> seleccionar() throws SQLException ;
     
-    
-    
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
     public int insertar (Libro libro);
     
     public int actualizar (Libro libro);
+    
+    public int actualizarIsbn (Libro libro, String prevIsbn);
     
     public int actualizarPortada (Libro libro);
     

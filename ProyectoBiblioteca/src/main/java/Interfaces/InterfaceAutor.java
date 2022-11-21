@@ -14,14 +14,16 @@ import java.util.List;
  */
 public interface InterfaceAutor {
     
-    
+    //DEVUELVE UN LIST CON TODOS LOS AUTORES DE LA BASE DE DATOS
     public List <Autor> seleccionar() throws SQLException ;
     
     //MÉTODO QUE INSERTA UNA PERSONA EN EL SISTEMA
     public int insertar (Autor autor);
     
+    //ACTUALIZA LA ENTRADA DE UN AUTOR EN LA BASE DE DATOS
     public int actualizar (Autor autor);
     
+    //ELIMINA LA ENTRADA DE UN AUTOR
     public int eliminar (Autor autor);
 }
 
