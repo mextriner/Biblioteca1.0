@@ -7,7 +7,7 @@ package Dominio;
 import Datos.EditorialDao;
 import Interfaces.InterfaceEditorial;
 import ManejoArchivos.ManejoDeArchivos;
-import static com.ceep.proyectobiblioteca.TesrMain.editorialDao;
+import static com.ceep.proyectobiblioteca.TestMain.editorialDao;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;

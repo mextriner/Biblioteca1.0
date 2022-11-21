@@ -119,7 +119,7 @@ public class Autor implements Serializable{
         return nAutor;
     }
      
-    //ESTO ES NUEVO
+    //FILTRADO DE AUTORES POR NOMBRE O APELLIDO
     public static void buscarAutorNombre(String titulo){
        
         for (int i = 0; i < autores().size(); i++) {
@@ -140,7 +140,7 @@ public class Autor implements Serializable{
     }
     
     
-    //HASTA AQUÍ ES LO NUEVO
+    //HASTA AQUÍ CAPA VISTA
     
     
     public static Autor archivoPk(int primaryKey){
@@ -170,6 +170,7 @@ public class Autor implements Serializable{
         ManejoDeArchivos.escribirArchivo("autor.txt",contenido);
     }
      
+    //cAPA VISTA
     public static Autor darAlta(){
     Scanner in = new Scanner (System.in);
     InterfaceAutor autorDao = new AutorDao();

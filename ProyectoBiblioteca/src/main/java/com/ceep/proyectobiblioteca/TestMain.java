@@ -26,7 +26,7 @@ import java.util.Scanner;
  *
  * @author MaximoMestriner
  */
-public class TesrMain {
+public class TestMain {
 public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceUsuario usuarioDao = new UsuarioDao();
     public static InterfaceEditorial editorialDao = new EditorialDao();
@@ -171,10 +171,10 @@ public static InterfaceAutor autorDao = new AutorDao();
                 System.out.println("-------------------------\n");
                 System.out.println("1 - LIBRO");
                 System.out.println("2 - AUTOR");
-                System.out.println("3 - CATEGORÍA");
+                System.out.println("3 - CATEGORÍA (EN DESARROLLO)");
                 System.out.println("4 - EDITORIAL");
-                System.out.println("5 - PROVEEDOR");
-                System.out.println("6 - UNIDAD");
+                System.out.println("5 - PROVEEDOR (EN DESARROLLO)");
+                System.out.println("6 - UNIDAD (EN DESARROLLO)");
                 System.out.println("7 - USUARIO");
                 System.out.println("0 - Salir");
                 opcion = input.nextInt();
