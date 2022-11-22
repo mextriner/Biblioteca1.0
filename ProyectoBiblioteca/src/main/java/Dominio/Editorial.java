@@ -81,7 +81,7 @@ public class Editorial implements Serializable{
         return editorial;
     }
     
-    
+    //DEVUELVE LA DEITORIAL CUYO ID ES IGUAL AL DEL PARÁMETRO
     public static Editorial editorialId(int id){
         Editorial editorial = null;
         for (int i = 0; i < listarEditorial().size(); i++) {
@@ -92,6 +92,8 @@ public class Editorial implements Serializable{
         }
         return editorial;
     }
+    
+    //A PARTIR DE AQUÍ ES CAPA VISTA
     
     public static void actualizarArchivoEditorial(){
         String contenido ="";

@@ -179,6 +179,7 @@ public class Usuario implements Serializable{
         return fileUsur;
     }
     
+    // DEVUELVE UN USUARIO CUYO NOMBRE DE USUARIO ES IGUAL AL DEL PARÁMETRO
     public static Usuario comprobarId(String primaryKey){
         Usuario usur = null;
         for (int i = 0; i < listarUsuariosClave().size(); i++) {
@@ -202,6 +203,7 @@ public class Usuario implements Serializable{
         return existe;
     }
     
+    //PARTE DE LA CAPA VISTA PARA ELIMINAR USUARIO SIENDO ADMINISTRADOR
     public static void eliminarUsuario(){
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca el usuario que quiere eliminar:");
@@ -224,6 +226,7 @@ public class Usuario implements Serializable{
         }
     }
     
+    //PARTE DE LA CAPA VISTA PARA ELIMINAR USUARIO
     public static void eliminarUsuario(Usuario usuraio){
         Scanner in = new Scanner (System.in);
         System.out.println("Introduzca la contraseña:");
@@ -248,6 +251,7 @@ public class Usuario implements Serializable{
         }
     }
     
+    //PARTE DE LA CAPA VISTA PARA INICIAR SESIÓN
     public static void iniciarSesion(String admin){
         Usuario usr = null;
         Scanner in = new Scanner (System.in);
@@ -259,6 +263,7 @@ public class Usuario implements Serializable{
         }
     }
     
+    //PARTE DE LA CAPA VISTA PARA DAR DE ALTA
     public static Usuario darAlta(){
         Scanner in = new Scanner (System.in);
         InterfaceUsuario usuarioDao = new UsuarioDao();
@@ -277,6 +282,7 @@ public class Usuario implements Serializable{
         return usr;
     }
     
+    //PARTE DE LA CAPA VISTA PARA ACTUALIZAR
     public static void actualizarUsuario(String usu){
         Usuario u = comprobarId(usu);
          InterfaceUsuario usuarioDao = new UsuarioDao();
@@ -396,6 +402,8 @@ public class Usuario implements Serializable{
        
     }
     
+    
+    //BUSCADOR POR NOMBRE DE USUARIO
     public static void buscarUsuario(String usur){
         
         for (int i = 0; i < listarUsuarios().size(); i++) {
@@ -405,6 +413,8 @@ public class Usuario implements Serializable{
             }
         }
     }
+    
+    //BUSCADOR POR NOMBRE
     public static void buscarNombre(String usur){
         for (int i = 0; i < listarUsuarios().size(); i++) {
             if(listarUsuarios().get(i).getNombre() != null){
@@ -416,6 +426,7 @@ public class Usuario implements Serializable{
         }
     }
     
+    //BUSCADOR POR APELLIDO
     public static void buscarApellido(String usur){
         
         for (int i = 0; i < listarUsuarios().size(); i++) {

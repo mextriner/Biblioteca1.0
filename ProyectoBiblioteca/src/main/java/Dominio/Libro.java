@@ -152,7 +152,7 @@ public class Libro implements Serializable{
     }
     
     
-    
+    //PARTE DE LA CAPA VISTA PARA ELIMINAR LIBRO
     public static void eliminarLibro(){
         
         Scanner in = new Scanner (System.in);
@@ -367,7 +367,7 @@ public class Libro implements Serializable{
         return lb;
     }
     
-    //ESTO ES NUEVO
+    //FILTRA LOS LIBROS POR TÍTULO
     public static void buscarLibroTitulo(String titulo){
         Libro lb = new Libro();
         for (int i = 0; i < lb.listarLibro().size(); i++) {
@@ -379,6 +379,7 @@ public class Libro implements Serializable{
         }
     }
     
+    //FILTRA LOS LIBROS POR ISBN
     public static void buscarLibroIsbn(String isbn){
         Libro lb = new Libro();
         for (int i = 0; i < lb.listarLibro().size(); i++) {
