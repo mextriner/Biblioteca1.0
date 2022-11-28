@@ -10,7 +10,7 @@
     import static AccesoDatos.Conexion.close;
     import Dominio.Autor;
     import static AccesoDatos.Conexion.getConnection;
-    import Interfaces.InterfaceAutor;
+    import DatosInterfaces.InterfaceAutor;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
     import java.sql.ResultSet;

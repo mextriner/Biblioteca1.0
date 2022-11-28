@@ -5,7 +5,7 @@
 package Dominio;
 
 import Datos.EditorialDao;
-import Interfaces.InterfaceEditorial;
+import DatosInterfaces.InterfaceEditorial;
 import ManejoArchivos.ManejoDeArchivos;
 import static com.ceep.proyectobiblioteca.TestMain.editorialDao;
 import java.io.Serializable;
@@ -27,7 +27,7 @@ public class Editorial implements Serializable{
         this.nombre = nombre;
         this.direccion = direccion;
     }
-
+ 
     public Editorial(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;

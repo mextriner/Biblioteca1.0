@@ -8,7 +8,7 @@ package Datos;
 import Dominio.Editorial;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
-import Interfaces.InterfaceEditorial;
+import DatosInterfaces.InterfaceEditorial;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

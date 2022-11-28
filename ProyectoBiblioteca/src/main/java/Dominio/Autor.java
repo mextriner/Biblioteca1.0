@@ -6,7 +6,7 @@
 package Dominio;
 
 import Datos.AutorDao;
-import Interfaces.InterfaceAutor;
+import DatosInterfaces.InterfaceAutor;
 import ManejoArchivos.ManejoDeArchivos;
 import java.io.Serializable;
 import java.sql.Date;

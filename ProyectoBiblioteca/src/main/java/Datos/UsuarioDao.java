@@ -6,7 +6,7 @@
 package Datos;
 
 import Dominio.Usuario;
-import Interfaces.InterfaceUsuario;
+import DatosInterfaces.InterfaceUsuario;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
 import java.sql.Connection;

@@ -6,7 +6,7 @@
 package Dominio;
 
 import Datos.UsuarioDao;
-import Interfaces.InterfaceUsuario;
+import DatosInterfaces.InterfaceUsuario;
 import ManejoArchivos.ManejoDeArchivos;
 import java.io.Serializable;
 import java.sql.Date;

@@ -13,10 +13,10 @@ import Dominio.Libro;
 import Dominio.Usuario;
 import Datos.UsuarioDao;
 import Dominio.Editorial;
-import Interfaces.InterfaceAutor;
-import Interfaces.InterfaceEditorial;
-import Interfaces.InterfaceLibro;
-import Interfaces.InterfaceUsuario;
+import DatosInterfaces.InterfaceAutor;
+import DatosInterfaces.InterfaceEditorial;
+import DatosInterfaces.InterfaceLibro;
+import DatosInterfaces.InterfaceUsuario;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 

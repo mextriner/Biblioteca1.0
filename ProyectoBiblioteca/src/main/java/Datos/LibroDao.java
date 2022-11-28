@@ -8,7 +8,7 @@ package Datos;
 import Dominio.Libro;
 import static AccesoDatos.Conexion.close;
 import static AccesoDatos.Conexion.getConnection;
-import Interfaces.InterfaceLibro;
+import DatosInterfaces.InterfaceLibro;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
