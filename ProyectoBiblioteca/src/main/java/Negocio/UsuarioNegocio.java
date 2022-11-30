@@ -116,4 +116,16 @@ public class UsuarioNegocio {
             System.out.println("Operación cancelada.");
         }
     }
+    
+    //PARTE DE LA CAPA VISTA PARA INICIAR SESIÓN
+    public void iniciarSesion(String admin){
+        Usuario usr = null;
+        Scanner in = new Scanner (System.in);
+        System.out.println("Introduzca la contraseña de Administrador:");
+        String key = in.nextLine();
+        while(!key.equals(usr.comprobarId(admin).getClave())){
+            System.out.println("Contraseña incorrecta, pruebe de nuevo:");
+            key = in.nextLine();
+        }
+    }
 }
