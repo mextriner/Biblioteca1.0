@@ -71,7 +71,7 @@ public static InterfaceAutor autorDao = new AutorDao();
             
             System.out.println("\tBIBLIOTECA VIRTUAL\n");
             System.out.println("INICIAR SESIÓN");
-            System.out.println("-----------------------------\n");
+            System.out.println("---------------\n");
             System.out.println("1 - INICIAR SESIÓN COMO ADMIN");
             System.out.println("2 - INICIAR SESIÓN COMO USUARIO");
             System.out.println("3 - REGISTRAR NUEVO USUARIO");
