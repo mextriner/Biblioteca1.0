@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class ManejoDeArchivos {
     
     public static void crearArchivo(String nombre){
-        String direccion = "src/main/java/Datos/"+nombre;
+        String direccion = "src/main/java/DatosFichero/"+nombre;
         File archivo = new File(direccion);
         try{
             PrintWriter salida = new PrintWriter(archivo);
@@ -34,7 +34,7 @@ public class ManejoDeArchivos {
     
     //DESCARTA EL CONTENIDO EXISTENTE Y AÑADE EL NUEVO
     public static void escribirArchivo(String nombre, String contenido){
-        String direccion = "src/main/java/Datos/"+nombre;
+        String direccion = "src/main/java/DatosFichero/"+nombre;
         PrintWriter salida = null;
         File archivo = new File(direccion);
         
@@ -53,7 +53,7 @@ public class ManejoDeArchivos {
     
     //AGREGA CONTENIDO ADEMÁS DEL EXISTENTE
     public static void agregarArchivo(String nombre, String contenido){
-        String direccion = "src/main/java/Datos/"+nombre;
+        String direccion = "src/main/java/DatosFichero/"+nombre;
         PrintWriter salida = null;
         File archivo = new File(direccion);
         try {
@@ -71,7 +71,7 @@ public class ManejoDeArchivos {
     
     
      public static String cadenaArchivo(String nombre){
-         String direccion = "src/main/java/Datos/"+nombre;
+         String direccion = "src/main/java/DatosFichero/"+nombre;
          File archivo = new File(direccion);
          BufferedReader entrada = null;
          String total = "";
@@ -94,7 +94,7 @@ public class ManejoDeArchivos {
      }
      
      public static void leerArchivo(String nombre){
-         String direccion = "src/main/java/Datos/"+nombre;
+         String direccion = "src/main/java/DatosFichero/"+nombre;
          File archivo = new File(direccion);
          BufferedReader entrada = null;
         try {
@@ -113,7 +113,7 @@ public class ManejoDeArchivos {
      }
      
      public static void leerArchivoPorPalabra(String nombre){
-         String direccion = "src/main/java/Datos/"+nombre;
+         String direccion = "src/main/java/DatosFichero/"+nombre;
          File archivo = new File(direccion);
          Scanner entrada = null;
          

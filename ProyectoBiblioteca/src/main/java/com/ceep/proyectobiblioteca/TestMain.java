@@ -17,6 +17,8 @@ import DatosInterfaces.InterfaceAutor;
 import DatosInterfaces.InterfaceEditorial;
 import DatosInterfaces.InterfaceLibro;
 import DatosInterfaces.InterfaceUsuario;
+import Negocio.UsuarioNegocio;
+import NegocioInterfaces.InterfazNegUsuario;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -31,6 +33,8 @@ public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceUsuario usuarioDao = new UsuarioDao();
     public static InterfaceEditorial editorialDao = new EditorialDao();
     public static InterfaceLibro libroDao = new LibroDao();
+    
+    public static InterfazNegUsuario negocioUsuario = new UsuarioNegocio();
     
     //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
@@ -61,7 +65,7 @@ public static InterfaceAutor autorDao = new AutorDao();
     //MENU PARA SELECCIONAR EL TIPO DE USUARIO (ADMIN O USUARIO)
     
     public static void menu(){
-        Usuario.actualizarArchivoUsuarios();
+        negocioUsuario.actualizarArchivoUsuarios();
         int opcion;
         
         opcion = -1;
@@ -83,7 +87,7 @@ public static InterfaceAutor autorDao = new AutorDao();
             switch (opcion) {
                 case 1:
                     // FUNCION INICIAR SESION (ADMIN)
-                    administrador.iniciarSesion(administrador.getUsuario());
+                    negocioUsuario.iniciarSesion(administrador.getUsuario());
                     menuEntidad(true);
                     break;
                 case 2:
@@ -91,13 +95,13 @@ public static InterfaceAutor autorDao = new AutorDao();
                     System.out.println("Introduzca su usuario:");
                     String nom = input.nextLine();
                     //SI EL USUARIO EXISTE PUEDES INTRODUCIR TU CONTRASEÑA
-                    if(usuario.entrada(nom)){
+                    if(negocioUsuario.entrada(nom)){
                         System.out.println("Introduzca la contraseña o pulse intro para salir:");
                         String clave = input.nextLine();
                         if(clave.isEmpty()){
                             break;
                         }
-                        while(!clave.equals(Usuario.comprobarId(nom).getClave())){
+                        while(!clave.equals(negocioUsuario.comprobarId(nom).getClave())){
                             System.out.println("Contraseña incorrecta, pruebe de nuevo o pulse intro para salir:");
                             clave = input.nextLine();
                             if(clave.isEmpty()){
@@ -110,7 +114,7 @@ public static InterfaceAutor autorDao = new AutorDao();
                         
                         //LA VARIABLE GLOBAL usuario SE IGUALA AL Usuario CON EL
                         //QUE SE HA INICIADO SESIÓN
-                        usuario = Usuario.comprobarId(nom);
+                        usuario = negocioUsuario.comprobarId(nom);
                         menuEntidad(false);
                         //SI EL USUARIO NO EXISTE PUEDES CREAR UNA NUEVA CUENTA
                     }else{
@@ -123,7 +127,7 @@ public static InterfaceAutor autorDao = new AutorDao();
                             ac = input.nextLine().charAt(0);
                         }
                         if (ac == 's'){
-                            usuario = usuario.darAlta();
+                            usuario = negocioUsuario.darAlta();
                         }else{
                             //SI NO QUIERE DARSE DE ALTA VUELVE AL MENU PRINCIPAL
                             System.out.println("Operación cancelada.");
@@ -135,11 +139,11 @@ public static InterfaceAutor autorDao = new AutorDao();
                     break;
                 case 3:
                     // REGISTRAR UN NUEVO USUARIO
-                    usuario = usuario.darAlta();
+                    usuario = negocioUsuario.darAlta();
                     menuEntidad(false);
                     break;
                 case 0:
-                    Usuario.actualizarArchivoUsuarios();
+                    negocioUsuario.actualizarArchivoUsuarios();
                     System.out.println("");
                     break;
                 default:
@@ -218,7 +222,7 @@ public static InterfaceAutor autorDao = new AutorDao();
             
             }else if(!admin){
                 
-                Usuario.actualizarArchivoUsuarios();
+                negocioUsuario.actualizarArchivoUsuarios();
                 System.out.println("\n\n"+"USUARIO: "+ usuario.getUsuario());
                 System.out.println("-------------------------\n");
                 System.out.println("1 - LIBROS");
@@ -516,8 +520,8 @@ public static InterfaceAutor autorDao = new AutorDao();
                         switch (opcion) {
                             case 1:
                                 // VISUALIZAR USUARIOS
-                                for (int i = 0; i < Usuario.listarUsuarios().size(); i++) {
-                                    System.out.println(Usuario.listarUsuarios().get(i).toString());
+                                for (int i = 0; i < negocioUsuario.listarUsuarios().size(); i++) {
+                                    System.out.println(negocioUsuario.listarUsuarios().get(i).toString());
                                 }
                                 
                                 //ESTO ES NUEVO
@@ -535,17 +539,17 @@ public static InterfaceAutor autorDao = new AutorDao();
                                             case 1:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.buscarUsuario(bus);
+                                                negocioUsuario.buscarUsuario(bus);
                                                 break;
                                             case 2:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.buscarNombre(bus);
+                                                negocioUsuario.buscarNombre(bus);
                                                 break;
                                             case 3:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                administrador.buscarApellido(bus);
+                                                negocioUsuario.buscarApellido(bus);
                                                 break;
                                             case 0:
                                                 break;
@@ -560,7 +564,7 @@ public static InterfaceAutor autorDao = new AutorDao();
                                 break;
                             case 2:
                                 // AÑADIR USUARIO
-                                Usuario.darAlta();
+                                negocioUsuario.darAlta();
                                 break;
                             case 3:
                                 //ACTUALIZAR.
@@ -568,11 +572,11 @@ public static InterfaceAutor autorDao = new AutorDao();
                                 break;
                             case 4:
                                 //ELIMINAR USUARIO
-                                Usuario.eliminarUsuario();
+                                negocioUsuario.eliminarUsuario();
                                 opcion = 0;
                                 break;
                             case 0:
-                                Usuario.actualizarArchivoUsuarios();
+                                negocioUsuario.actualizarArchivoUsuarios();
                                 System.out.println("");
                                 break;
                             default:
@@ -761,19 +765,19 @@ public static InterfaceAutor autorDao = new AutorDao();
                     switch(opcion){
                         case 1:
                             //ACTUALIZAR
-                            Usuario.actualizarUsuario(usuario.getUsuario());
+                            negocioUsuario.actualizarUsuario(usuario.getUsuario());
                             break;
                         case 2:
                             //ELIMINAR
-                            Usuario.eliminarUsuario(usuario);
-                            Usuario.actualizarArchivoUsuarios();
+                            negocioUsuario.eliminarUsuario(usuario);
+                            negocioUsuario.actualizarArchivoUsuarios();
                             System.exit(0);
                             opcion = 0;
                             
                             break;
                         case 0:
                             //ACTUALIZAR FICHERO USUARIOS Y SALIR
-                            Usuario.actualizarArchivoUsuarios();
+                            negocioUsuario.actualizarArchivoUsuarios();
                             break;
                     }   
                 }
