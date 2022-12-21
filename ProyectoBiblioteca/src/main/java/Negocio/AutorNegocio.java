@@ -6,8 +6,11 @@
 package Negocio;
 
 import Datos.AutorDao;
+import DatosFichero.AutorTxt;
 import DatosInterfaces.InterfaceAutor;
 import Dominio.Autor;
+import InterfazDatosFichero.InterfazTxtAutor;
+import NegocioInterfaces.InterfazNegAutor;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,12 +20,14 @@ import java.util.Scanner;
  *
  * @author Alumno Mañana
  */
-public class AutorNegocio {
+public class AutorNegocio implements InterfazNegAutor{
     private final InterfaceAutor autorDao;
 
     public AutorNegocio() {
         this.autorDao = new AutorDao();
     }
+    
+    private static InterfazTxtAutor autorTxt = new AutorTxt();
     
     public List <Autor> autores(){
         List <Autor> aut = null;
@@ -64,6 +69,10 @@ public class AutorNegocio {
                 System.out.println(autores().get(i));
             }
         } 
+    }
+    
+    public void actualizarTxt(){
+        autorTxt.actualizarFicheroAutor();
     }
     
     

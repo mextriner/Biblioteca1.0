@@ -17,7 +17,9 @@ import DatosInterfaces.InterfaceAutor;
 import DatosInterfaces.InterfaceEditorial;
 import DatosInterfaces.InterfaceLibro;
 import DatosInterfaces.InterfaceUsuario;
+import Negocio.AutorNegocio;
 import Negocio.UsuarioNegocio;
+import NegocioInterfaces.InterfazNegAutor;
 import NegocioInterfaces.InterfazNegUsuario;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -35,6 +37,8 @@ public static InterfaceAutor autorDao = new AutorDao();
     public static InterfaceLibro libroDao = new LibroDao();
     
     public static InterfazNegUsuario negocioUsuario = new UsuarioNegocio();
+    public static InterfazNegAutor negocioAutor = new AutorNegocio();
+    
     
     //DECLARO UN Scanner input PARA LOS INPUT POR TECLADO
     public static Scanner input = new Scanner(System.in);
@@ -347,8 +351,8 @@ public static InterfaceAutor autorDao = new AutorDao();
                                 
                                 //BUSCAR AUTORES
                                 System.out.println("BUSCADOR DE AUTORES\n\n");
-                                for (int i = 0; i < Autor.autores().size(); i++) {
-                                    System.out.println(Autor.autores().get(i).toString());
+                                for (int i = 0; i < negocioAutor.autores().size(); i++) {
+                                    System.out.println(negocioAutor.autores().get(i).toString());
                                 }
                                 
                                  String bus;
@@ -364,12 +368,12 @@ public static InterfaceAutor autorDao = new AutorDao();
                                             case 1:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                Autor.buscarAutorNombre(bus);
+                                                negocioAutor.buscarAutorNombre(bus);
                                                 break;
                                             case 2:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                Autor.buscarAutorApellido(bus);
+                                                negocioAutor.buscarAutorApellido(bus);
                                                 break;
                                             case 0:
                                                 break;
@@ -382,22 +386,22 @@ public static InterfaceAutor autorDao = new AutorDao();
                             case 2:
                                 //INSERTAR AUTOR
                                 System.out.println("INSERTAR AUTOR\n\n");
-                                Autor.darAlta();
+                                negocioAutor.darAlta();
                                 System.out.println("Pulse Intro para continual");
                                 input.nextLine();
                                 break;
                             case 3:
                                 // ACTUALIZAR
-                                Autor.autorActualizar();
+                                negocioAutor.autorActualizar();
                                 break;
                             case 4:
                                 // ELIMINAR
                                 System.out.println("ELIMINAR AUTOR");
-                                Autor.eliminarAutor();
+                                negocioAutor.eliminarAutor();
                                 opcion = 0;
                                 break;
                             case 0:
-                                Autor.actualizarFicheroAutor();
+                                negocioAutor.actualizarTxt();
                                 System.out.println("");
                                 break;
                             default:
@@ -660,8 +664,8 @@ public static InterfaceAutor autorDao = new AutorDao();
                             switch (opcion) {
                                 case 1:
                                     System.out.println("BUSCADOR DE LIBROS");
-                                    for (int i = 0; i < Autor.autores().size(); i++) {
-                                        System.out.println(Autor.autores().get(i).toString());
+                                    for (int i = 0; i < negocioAutor.autores().size(); i++) {
+                                        System.out.println(negocioAutor.autores().get(i).toString());
                                     }
                                     String bus;
                                     int opc = -1;
@@ -676,12 +680,12 @@ public static InterfaceAutor autorDao = new AutorDao();
                                             case 1:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                Autor.buscarAutorNombre(bus);
+                                                negocioAutor.buscarAutorNombre(bus);
                                                 break;
                                             case 2:
                                                 System.out.println("Introduzca el término de búsqueda:");
                                                 bus = input.nextLine();
-                                                Autor.buscarAutorApellido(bus);
+                                                negocioAutor.buscarAutorApellido(bus);
                                                 break;
                                             case 0:
                                                 break;
