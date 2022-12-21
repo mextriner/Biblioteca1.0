@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -172,35 +172,35 @@ public class Autor implements Serializable{
      
     //cAPA VISTA
     public static Autor darAlta(){
-    Scanner in = new Scanner (System.in);
-    InterfaceAutor autorDao = new AutorDao();
-    System.out.println("Nombre de Autor");
-    String nom = in.nextLine();
-    System.out.println("Apellidos de Autor");
-    String ape = in.nextLine();
-    System.out.println("Nacionalidad de Autor");
-    String nac = in.nextLine();
-    System.out.println("Fecha de nacimiento de Autor (aaaa-mm-dd)");
-    String fn = in.nextLine();
-    Autor autor = new Autor (nom,ape,nac,Date.valueOf(fn));
-    autorDao.insertar(autor);
-    return autor;
-}
+        Scanner in = new Scanner (System.in);
+        InterfaceAutor autorDao = new AutorDao();
+        System.out.println("Nombre de Autor");
+        String nom = in.nextLine();
+        System.out.println("Apellidos de Autor");
+        String ape = in.nextLine();
+        System.out.println("Nacionalidad de Autor");
+        String nac = in.nextLine();
+        System.out.println("Fecha de nacimiento de Autor (aaaa-mm-dd)");
+        String fn = in.nextLine();
+        Autor autor = new Autor (nom,ape,nac,Date.valueOf(fn));
+        autorDao.insertar(autor);
+        return autor;
+    }
 
 
     public static void eliminarAutor(){
-            System.out.println("TABLA AUTORES:\n\n");
-            for (int i = 0; i < autores().size(); i++) {
-                System.out.println(autores().get(i).toString());
-            }
-            Scanner in = new Scanner (System.in);
-            System.out.println("Inserte el ID del autor que quiere eliminar");
-            int id = in.nextInt();
-            System.out.println("Pulse intro para continuar");
-            in.nextLine();
-            InterfaceAutor autorDao = new AutorDao();
-            autorDao.eliminar(autor(id));
+        System.out.println("TABLA AUTORES:\n\n");
+        for (int i = 0; i < autores().size(); i++) {
+            System.out.println(autores().get(i).toString());
         }
+        Scanner in = new Scanner (System.in);
+        System.out.println("Inserte el ID del autor que quiere eliminar");
+        int id = in.nextInt();
+        System.out.println("Pulse intro para continuar");
+        in.nextLine();
+        InterfaceAutor autorDao = new AutorDao();
+        autorDao.eliminar(autor(id));
+    }
         
         
     public static void autorActualizar(){
